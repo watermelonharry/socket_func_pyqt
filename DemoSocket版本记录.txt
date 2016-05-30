@@ -1,0 +1,13 @@
+DemoSocket-20160526：
+1,使用Threading包进行socket_listen,sock_process
+2.Threading子线程无法更新Ui主线程中的状态。
+
+DemoSocket-20160527：
+1.重写socket_server类，使用QThread和QMutex进行线程新建及主窗口更新。
+2.设置了sserver的emit信号
+
+
+DemoSocket-20160530：
+1.设置UI进程socketFunc； 接收进程sserver； 发送进程clientThread;
+2.使用self.RUN_FLAG来控制两个子进程的运行
+3.使用update_signal信号、emit来打印子进程信息
