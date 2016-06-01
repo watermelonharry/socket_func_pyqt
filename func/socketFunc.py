@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+<<<<<<< HEAD
 #dlkjhdjkhsakljdhslakjdshalksjdlkasdbasjdhalskdhakl;j
+=======
+##hhahahahahhahahah
+>>>>>>> parent of e0d3b52... 20160601-1507
 """
 Module implementing SocketUi.
 """
@@ -290,7 +294,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         Slot documentation goes here.
         """
         # TODO: not implemented yet
-        self.say_hi('SQLLL button clicked')
+        self.say_hi('save log button clicked')
     
     @pyqtSignature("")
     def on_sock_close_btn_clicked(self):
