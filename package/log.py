@@ -30,12 +30,12 @@ class logfile(object):
 
     def done(self):
         self._file.close()
-        self.say('log wrote, file closed.')
+        #self.say('log wrote, file closed.')
 
     def open(self):
         try:
             self._file = open(self._filename, self._mode)
-            self.say('log file opened')
+            #self.say('log file opened')
         except Exception as e:
             self._file = None
             self.say(str(e))

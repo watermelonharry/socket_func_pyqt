@@ -7,7 +7,11 @@ Module implementing SocketUi.
 
 from PyQt4.QtCore import pyqtSignature, QMutex, QMutexLocker, QThread,  pyqtSignal,  SIGNAL
 from PyQt4.QtGui import QDialog
+from PyQt4 import QtGui
 from ui.Ui_socketUI import Ui_SocketUi
+##yingyan_web UI
+from yingyanFunc import YingyanFunc
+
 ## log write module
 from package import log  
 import socket
@@ -292,6 +296,16 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         # TODO: not implemented yet
         self.say_hi('SQLLL button clicked')
+        
+        ##show SQLLL window
+        myapp = QtGui.QDialog()
+        yingyan_web = YingyanFunc()
+        yingyan_web.setupUi(myapp)
+        myapp.show()
+        myapp.exec_()
+        
+        self.say_hi('sql window create')
+        
     
     @pyqtSignature("")
     def on_sock_close_btn_clicked(self):

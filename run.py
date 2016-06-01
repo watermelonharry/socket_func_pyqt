@@ -7,3 +7,4 @@ if __name__ == "__main__":
     myapp = SocketFunc()
     myapp.show()
     sys.exit(app.exec_())
+    
