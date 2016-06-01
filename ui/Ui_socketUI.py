@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\DemoSocket\ui\socketUI.ui'
+# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\DemoSocket\socket_func_pyqt\ui\socketUI.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -57,7 +57,7 @@ class Ui_SocketUi(object):
         self.sock_clear_btn.setGeometry(QtCore.QRect(30, 270, 75, 23))
         self.sock_clear_btn.setObjectName(_fromUtf8("sock_clear_btn"))
         self.sock_save_log_btn = QtGui.QPushButton(SocketUi)
-        self.sock_save_log_btn.setEnabled(False)
+        self.sock_save_log_btn.setEnabled(True)
         self.sock_save_log_btn.setGeometry(QtCore.QRect(30, 300, 75, 23))
         self.sock_save_log_btn.setCheckable(False)
         self.sock_save_log_btn.setObjectName(_fromUtf8("sock_save_log_btn"))
@@ -69,6 +69,7 @@ class Ui_SocketUi(object):
         self.sock_quit_btn.setObjectName(_fromUtf8("sock_quit_btn"))
         self.sock_ip = QtGui.QLineEdit(SocketUi)
         self.sock_ip.setGeometry(QtCore.QRect(250, 20, 191, 31))
+        self.sock_ip.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.sock_ip.setObjectName(_fromUtf8("sock_ip"))
         self.sock_input_3 = QtGui.QLineEdit(SocketUi)
         self.sock_input_3.setGeometry(QtCore.QRect(220, 90, 541, 31))
@@ -88,7 +89,7 @@ class Ui_SocketUi(object):
         self.label_3.setText(_translate("SocketUi", "输入", None))
         self.sock_send_btn.setText(_translate("SocketUi", "发送", None))
         self.sock_clear_btn.setText(_translate("SocketUi", "clear", None))
-        self.sock_save_log_btn.setText(_translate("SocketUi", "save log", None))
+        self.sock_save_log_btn.setText(_translate("SocketUi", "SQLLLL", None))
         self.sock_close_btn.setText(_translate("SocketUi", "关闭服务", None))
         self.sock_quit_btn.setText(_translate("SocketUi", "quit", None))
         self.sock_ip.setText(_translate("SocketUi", "10.180.61.89:9876", None))
