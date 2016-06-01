@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-#dlkjhdjkhsakljdhslakjdshalksjdlkasdbasjdhalskdhakl;j
+##20160601-1507
+##one thread, one window version
 """
 Module implementing SocketUi.
 """
