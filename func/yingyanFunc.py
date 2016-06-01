@@ -32,6 +32,5 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         Slot documentation goes here.
         """
         print('halt btn clicked')
-        QtGui.QMessageBox.about(self,u"第一个PyQt程序", "\t Hello World \t\t")
         time.sleep(5)
         print('awake from 5 secs sleep')

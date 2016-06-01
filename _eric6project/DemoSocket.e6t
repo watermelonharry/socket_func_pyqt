@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-6.0.dtd">
 <!-- eric6 tasks file for project DemoSocket -->
-<!-- Saved: 2016-06-01, 16:47:43 -->
+<!-- Saved: 2016-06-01, 17:15:46 -->
 <Tasks version="6.0">
   <ProjectScanFilter></ProjectScanFilter>
-  <Task priority="1" completed="False" type="1" uid="{fa29bd32-b3d6-4c8d-b61c-455d3eb6b139}">
+  <Task priority="1" completed="False" type="1" uid="{15b9afb6-3a43-4061-8c8d-2975ec64e06a}">
     <Summary>TODO: not implemented yet</Summary>
     <Description></Description>
-    <Created>2016-06-01, 16:47:40</Created>
+    <Created>2016-06-01, 17:15:43</Created>
     <Resource>
       <Filename>func/socketFunc.py</Filename>
-      <Linenumber>235</Linenumber>
+      <Linenumber>237</Linenumber>
     </Resource>
   </Task>
-  <Task priority="1" completed="False" type="1" uid="{5ee7e9e1-075b-410b-9e59-020806c99a9c}">
+  <Task priority="1" completed="False" type="1" uid="{16381d4a-fb5c-41ff-8415-b648dc9d5eac}">
     <Summary>TODO: not implemented yet</Summary>
     <Description></Description>
-    <Created>2016-06-01, 16:47:40</Created>
+    <Created>2016-06-01, 17:15:43</Created>
     <Resource>
       <Filename>func/socketFunc.py</Filename>
-      <Linenumber>248</Linenumber>
+      <Linenumber>250</Linenumber>
     </Resource>
   </Task>
-  <Task priority="1" completed="False" type="1" uid="{85f20402-644e-434d-8e46-6ca171559f77}">
+  <Task priority="1" completed="False" type="1" uid="{3f8c4fdd-14d9-481b-94f8-38cc59d6e21e}">
     <Summary>TODO: not implemented yet</Summary>
     <Description></Description>
-    <Created>2016-06-01, 16:47:40</Created>
+    <Created>2016-06-01, 17:15:43</Created>
     <Resource>
       <Filename>func/socketFunc.py</Filename>
-      <Linenumber>262</Linenumber>
+      <Linenumber>264</Linenumber>
     </Resource>
   </Task>
-  <Task priority="1" completed="False" type="1" uid="{94dcda8c-0efc-4657-bd84-475264c5610e}">
+  <Task priority="1" completed="False" type="1" uid="{ed08067d-6ba2-45c0-885a-d797d328f8ce}">
     <Summary>TODO: not implemented yet</Summary>
     <Description></Description>
-    <Created>2016-06-01, 16:47:40</Created>
+    <Created>2016-06-01, 17:15:43</Created>
     <Resource>
       <Filename>func/socketFunc.py</Filename>
-      <Linenumber>275</Linenumber>
+      <Linenumber>277</Linenumber>
     </Resource>
   </Task>
-  <Task priority="1" completed="False" type="1" uid="{f369f0a7-5d1f-4bf8-aff5-0e5872c98ad1}">
+  <Task priority="1" completed="False" type="1" uid="{8914ac56-937d-4b36-9a36-01cd8fcdc98e}">
     <Summary>TODO: not implemented yet</Summary>
     <Description></Description>
-    <Created>2016-06-01, 16:47:40</Created>
+    <Created>2016-06-01, 17:15:43</Created>
     <Resource>
       <Filename>func/socketFunc.py</Filename>
-      <Linenumber>287</Linenumber>
+      <Linenumber>289</Linenumber>
     </Resource>
   </Task>
-  <Task priority="1" completed="False" type="1" uid="{1eaa85bf-4242-47ad-98c2-6ef221150b43}">
+  <Task priority="1" completed="False" type="1" uid="{2af67eb7-7a46-4965-9dd4-fffd07037c1a}">
     <Summary>TODO: not implemented yet</Summary>
     <Description></Description>
-    <Created>2016-06-01, 16:47:40</Created>
+    <Created>2016-06-01, 17:15:43</Created>
     <Resource>
       <Filename>func/socketFunc.py</Filename>
-      <Linenumber>297</Linenumber>
+      <Linenumber>299</Linenumber>
     </Resource>
   </Task>
-  <Task priority="1" completed="False" type="1" uid="{e8ebb2c9-ae94-4bcb-9ea4-3ca867962475}">
+  <Task priority="1" completed="False" type="1" uid="{46d656c3-46e6-4fa1-ab59-e3d74da9d293}">
     <Summary>TODO: not implemented yet</Summary>
     <Description></Description>
-    <Created>2016-06-01, 16:47:40</Created>
+    <Created>2016-06-01, 17:15:43</Created>
     <Resource>
       <Filename>func/socketFunc.py</Filename>
-      <Linenumber>315</Linenumber>
+      <Linenumber>313</Linenumber>
     </Resource>
   </Task>
 </Tasks>

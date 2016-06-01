@@ -208,6 +208,8 @@ class SocketFunc(QDialog, Ui_SocketUi):
             self.log.write('enter-socketFuc-class-INIT-'+  str(self))
         
         self.sock.update_signal.connect(self. say_hi)
+        #try to make sub dialog constant
+        self.web_dailog = YingyanFunc()
     
     def __str__(self):
         return('sockFunc-para:')
@@ -298,11 +300,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.say_hi('SQLLL button clicked')
         
         ##show SQLLL window
-        myapp = QtGui.QDialog()
-        yingyan_web = YingyanFunc()
-        yingyan_web.setupUi(myapp)
-        myapp.show()
-        myapp.exec_()
+        self.web_dailog.show()
         
         self.say_hi('sql window create')
         
