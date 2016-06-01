@@ -138,7 +138,7 @@
   </widget>
   <widget class="QPushButton" name="sock_save_log_btn">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -149,7 +149,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>SQLLLL</string>
+    <string>save log</string>
    </property>
    <property name="checkable">
     <bool>false</bool>
