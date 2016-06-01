@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 <<<<<<< HEAD
-<<<<<<< HEAD
 #dlkjhdjkhsakljdhslakjdshalksjdlkasdbasjdhalskdhakl;j
-=======
-##hhahahahahhahahah
->>>>>>> parent of e0d3b52... 20160601-1507
 =======
 ##hhahahahahhahahah
 >>>>>>> parent of e0d3b52... 20160601-1507
