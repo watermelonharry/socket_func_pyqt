@@ -145,6 +145,8 @@ class sserver(QThread):
     def process_data(self):
         try:
             data = self.client.recv(2048)
+            #implement received data PROCESSING here
+            self.return_signal.emit(data)
         
             self.update_main('enter-sserver-func-PROCDATA-recv:'+str(data))
             self.client.send('GET')
@@ -209,7 +211,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         
         self.sock.update_signal.connect(self. say_hi)
         #try to make sub dialog constant
-        self.web_dailog = YingyanFunc()
+        self.web_dailog = YingyanFunc(upsignal = self.sock.update_signal,  downsignal = self.sock.return_signal)
     
     def __str__(self):
         return('sockFunc-para:')

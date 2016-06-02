@@ -40,8 +40,8 @@
   <widget class="QPushButton" name="web_fresh_btn">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
+     <x>30</x>
+     <y>500</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -50,18 +50,73 @@
     <string>刷新</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="web_halt_btn">
+  <widget class="QPushButton" name="web_emit_btn">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>10</y>
+     <x>120</x>
+     <y>500</y>
      <width>75</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>HALT 5s</string>
+    <string>emit</string>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="web_group_box">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>530</y>
+     <width>211</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="title">
+    <string>DATA</string>
+   </property>
+   <widget class="QLabel" name="web_time_label">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>35</y>
+      <width>101</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>None</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="web_const_time_label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TIME:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="web_test_label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>80</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>FOR TEST</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>

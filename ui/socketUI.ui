@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>807</width>
-    <height>431</height>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>GPRS服务</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -21,7 +21,7 @@
     <rect>
      <x>140</x>
      <y>140</y>
-     <width>631</width>
+     <width>451</width>
      <height>261</height>
     </rect>
    </property>
@@ -202,7 +202,7 @@
     <rect>
      <x>220</x>
      <y>90</y>
-     <width>541</width>
+     <width>371</width>
      <height>31</height>
     </rect>
    </property>

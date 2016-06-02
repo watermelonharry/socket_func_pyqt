@@ -25,10 +25,10 @@ except AttributeError:
 class Ui_SocketUi(object):
     def setupUi(self, SocketUi):
         SocketUi.setObjectName(_fromUtf8("SocketUi"))
-        SocketUi.resize(807, 431)
+        SocketUi.resize(807, 432)
         SocketUi.setSizeGripEnabled(True)
         self.sock_show_tb = QtGui.QTextBrowser(SocketUi)
-        self.sock_show_tb.setGeometry(QtCore.QRect(140, 140, 631, 261))
+        self.sock_show_tb.setGeometry(QtCore.QRect(140, 140, 451, 261))
         self.sock_show_tb.setObjectName(_fromUtf8("sock_show_tb"))
         self.sock_getip_btn = QtGui.QPushButton(SocketUi)
         self.sock_getip_btn.setGeometry(QtCore.QRect(30, 180, 75, 23))
@@ -72,7 +72,7 @@ class Ui_SocketUi(object):
         self.sock_ip.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.sock_ip.setObjectName(_fromUtf8("sock_ip"))
         self.sock_input_3 = QtGui.QLineEdit(SocketUi)
-        self.sock_input_3.setGeometry(QtCore.QRect(220, 90, 541, 31))
+        self.sock_input_3.setGeometry(QtCore.QRect(220, 90, 371, 31))
         self.sock_input_3.setObjectName(_fromUtf8("sock_input_3"))
 
         self.retranslateUi(SocketUi)
@@ -80,7 +80,7 @@ class Ui_SocketUi(object):
         QtCore.QMetaObject.connectSlotsByName(SocketUi)
 
     def retranslateUi(self, SocketUi):
-        SocketUi.setWindowTitle(_translate("SocketUi", "Dialog", None))
+        SocketUi.setWindowTitle(_translate("SocketUi", "GPRS服务", None))
         self.sock_getip_btn.setText(_translate("SocketUi", "获取ip", None))
         self.sock_start_btn.setText(_translate("SocketUi", "开启服务", None))
         self.label.setText(_translate("SocketUi", "设定ip 端口:", None))
