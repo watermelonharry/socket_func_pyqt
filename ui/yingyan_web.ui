@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>轨迹监控</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -82,20 +82,23 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>35</y>
-      <width>101</width>
-      <height>20</height>
+      <y>20</y>
+      <width>100</width>
+      <height>12</height>
      </rect>
     </property>
     <property name="text">
      <string>None</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="web_const_time_label">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>40</y>
+      <y>20</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -104,7 +107,33 @@
      <string>TIME:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="web_test_label">
+   <widget class="QLabel" name="web_recdata_label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>140</y>
+      <width>171</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>received data</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>50</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>LONGI:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -114,10 +143,85 @@
      </rect>
     </property>
     <property name="text">
-     <string>FOR TEST</string>
+     <string>LATI:</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>110</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ALTIT:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="web_longi_label">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>50</y>
+      <width>100</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>None</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="web_lati_label">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>80</y>
+      <width>100</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>None</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="web_altitu_label">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>110</y>
+      <width>100</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>None</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <zorder>web_time_label</zorder>
+   <zorder>web_const_time_label</zorder>
+   <zorder>web_recdata_label</zorder>
+   <zorder>label</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_3</zorder>
+   <zorder>webView</zorder>
+   <zorder>web_longi_label</zorder>
+   <zorder>web_lati_label</zorder>
+   <zorder>web_altitu_label</zorder>
   </widget>
+  <zorder>webView</zorder>
+  <zorder>web_group_box</zorder>
+  <zorder>web_fresh_btn</zorder>
+  <zorder>web_emit_btn</zorder>
  </widget>
  <customwidgets>
   <customwidget>

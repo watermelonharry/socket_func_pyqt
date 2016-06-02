@@ -42,5 +42,8 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
     
     def update_status(self, str_arg):
         #str will be processed first
-        self.web_time_label.setText(str(time.asctime()))
-        self.web_test_label.setText(str_arg)
+        self.web_time_label.setText(str(time.asctime()).split(' ')[3])
+        self.web_recdata_label.setText(str_arg)
+        self.web_longi_label.setText(str_arg)
+        self.web_lati_label.setText(str_arg)
+        self.web_altitu_label.setText(str_arg)
