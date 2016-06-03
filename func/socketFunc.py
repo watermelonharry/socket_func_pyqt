@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-##20160603-1344
-##test for branch
+##20160603-1455
 """
 Module implementing SocketUi.
 """
@@ -13,72 +12,9 @@ from ui.Ui_socketUI import Ui_SocketUi
 from yingyanFunc import YingyanFunc
 
 ## log write module
-from package import log  
+from package import log
 import socket
 import time
-
-##holding the established connetion with the socket client
-##only to sending back data to client from server
-class clientthread(QThread):
-    def __init__(self,  parent = None,  mutex = None,  client = None,  upsignal = None, resignal = None,  id = 0):
-        super(clientthread,  self).__init__(parent)
-        self.mutex = mutex
-        self.client = client
-        self.upsignal = upsignal
-        self.resignal  = resignal
-        self.id = id
-        self.RUN_FLAG = True
-        self.SEND_DATA = []
-        self.SEND_FLAG = False
-        
-        with QMutexLocker(self.mutex):
-            self.update_main('enter-client-class-INIT-'+ str(self))
-    
-    def __str__(self):
-        return('client-id-'+ str(self.id))
-    
-    #show operations in GUI
-    def update_main(self,  str_arg):
-        self.upsignal.emit(str_arg)
-        
-    def run(self):
-        self.RUN_FLAG = True
-        
-        while self.RUN_FLAG:
-            if self.SEND_FLAG:
-                with QMutexLocker(self.mutex):
-                    self.send_back()
-                    
-        self.update_main('end client thread')
-    
-    ##implement SEND TO  CLIENT method here 
-    def send_back(self):
-        
-        with QMutexLocker(self.mutex):
-            while len(self.SEND_DATA) != 0:
-                data = self.SEND_DATA.pop()
-                message = 'send from client Thread '+str(self.id)+'- function send_back = '+data
-                self.client.send(data)
-                self.update_main(message)
-            self.SEND_FLAG = False
-    
-    ##change the connected client
-    def set_para(self,  client = None):
-        self.client = client
-    
-    ##stop the thread
-    def close(self):
-        self.RUN_FLAG = False
-        self.SEND_FLAG = False
-        self.SEND_DATA = []
-        self.update_main('enter client func-CLOSE-')
-    
-    def send(self, str_arg):
-        with QMutexLocker(self.mutex):
-            self.SEND_DATA.append(str_arg)
-            self.SEND_FLAG = True
-
-
 
 ##set the socket server and running in QThread
 ##accept only 1 connection with clients
@@ -87,7 +23,7 @@ class clientthread(QThread):
 class sserver(QThread):
     update_signal = pyqtSignal(str)
     return_signal = pyqtSignal(str)
-    
+
     def __init__(self,  parent =None,  mutex = None,  host = 'localhost',  port = 9876,  mode = 'TCP'):
         super(sserver,  self).__init__(parent)
         self.mutex = mutex
@@ -97,13 +33,13 @@ class sserver(QThread):
         self.sserver = None
         self.RUN_FLAG = True
         self.client = None
-        
+
         with QMutexLocker(self.mutex):
-                self.update_signal.emit('enter-sserver-class- '+ str(self))
-    
+            self.update_signal.emit('enter-sserver-class- '+ str(self))
+
     def __str__(self):
         return('sserver-host:'+ str(self.host)+':'+str(self.port)+'; mode-'+ self.mode)
-    
+
     ##set socket parameters
     def setpara(self, host = None,  port = None,  mode = None):
         if self.sserver is not None:
@@ -116,51 +52,57 @@ class sserver(QThread):
             if mode is not None:
                 self.mode = mode
             self.update_main('enter-sserver-func-SETPARA-sucess-SET ' + str(self))
-    
+
+
+    ##show server messages in main window
     def update_main(self,  str_arg):
         self.update_signal.emit(str_arg)
-            
-    def run(self):  
+
+    ##what the THREAD mainly do
+    def run(self):
         self.RUN_FLAG = True
         self.create_server()
-                
+
         while self.RUN_FLAG:
             if self.process_data() is False:
                 self.listen()
         self.update_main('end-sserver-thread')
-    
+
+    ##triggered from dialog button, set the RUN_FLAG to stop thread, and eliminate the socket/client
     def close(self):
         self.RUN_FLAG = False
         if self.client is not None:
+            self.client.send('<SERVER CLOSED NOW>')
             self.client.close()
         if self.sserver is not None:
             self.sserver.close()
         self.client = None
         self.sserver = None
         self.update_main('enter-sserver-func-CLOSE-')
-    
-    
+
+
     ##process recv data here
     def process_data(self):
         try:
             data = self.client.recv(2048)
             #implement received data PROCESSING here
             self.return_signal.emit(data)
-        
+
             self.update_main('enter-sserver-func-PROCDATA-recv:'+str(data))
             self.client.send('GET')
             return True
         except Exception as e:
             ##closed by remote client
-            self.update_main('enter-sserver-func-PROCDATA-CLOSE SSEVER OR CLIENT')
-            self.clientThread.close()
+            self.update_main('enter-sserver-func-PROCDATA-CLOSE BY CLIENT')
+            self.client = None
             return False
-        
+
+    ##create a new socket server instance and make it listen, accept client connection in FUNCTION: self.listen()
     def create_server(self):
         if self.sserver is not None:
             self.update_main('enter-sserver-func-CREATESERVER-eror-CLOSE SERVER FIRST')
             return
-        
+
         try:
             self.sserver = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -172,19 +114,23 @@ class sserver(QThread):
             self.update_main('enter-sserver-func-CREATESERVER-error-' + str(e))
             self.sserver = None
             self.RUN_FLAG = False
-            return 
+            return
         self.listen()
-        
+
+    ##accept connection from client if there's no connection alive
     def listen(self):
         if self.RUN_FLAG and self.sserver is not None:
             (client,  address) = self.sserver.accept()
-            self.clientThread.set_para(client)
-            self.clientThread.start()
             self.client = client
             self.update_main('enter-sserver-func-CREATESERVER-connected-client:'+ str(address))
-            
-    def send_data(self):
-        if 
+
+    ##send data to client, mainly triggered by SEND_BUTTON in main window
+    def send_data(self, str_arg):
+        if self.client is not None:
+            self.client.send(str_arg)
+            self.update_main('enter-sserver-func-SENDDATA-sucess')
+        else:
+            self.update_main('enter-sserver-func-SENDDATA-error:NO CONNECTION')
 
 class SocketFunc(QDialog, Ui_SocketUi):
     """
@@ -193,37 +139,41 @@ class SocketFunc(QDialog, Ui_SocketUi):
     def __init__(self, parent=None):
         """
         Constructor
-        
+
         @param parent reference to the parent widget
         @type QWidget
         """
         QDialog.__init__(self, parent)
         self.setupUi(self)
-        
+
         self.sock = sserver()
         self.host = 'localhost'
         self.port = 9876
         self.mode = 'TCP'
-        
+
         self.mutex = QMutex()
         self.log = log.logfile('log_socke_func')
         if self.log is not None:
             self.log.write('enter-socketFuc-class-INIT-'+  str(self))
-        
+
         self.sock.update_signal.connect(self. say_hi)
         #try to make sub dialog constant
         self.web_dailog = YingyanFunc(upsignal = self.sock.update_signal,  downsignal = self.sock.return_signal)
-    
+
     def __str__(self):
         return('sockFunc-para:')
 
     def say_hi(self,  words):
-        self.sock_show_tb.append(str(words))
+        ##show in the info area in dialog
+        try:
+            self.sock_show_tb.append(str(words))
+        except Exception as e:
+            self.sock_show_tb.append('<ERROR: invalid input from client>')
         ##add log
         self.log.write(str(words))
-        
-        
-    
+
+
+
     @pyqtSignature("")
     def on_sock_clear_btn_clicked(self):
         """
@@ -231,7 +181,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         self.say_hi('clear button clicked')
         self.sock_show_tb.clear()
-    
+
     @pyqtSignature("")
     def on_sock_getip_btn_clicked(self):
         """
@@ -244,7 +194,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.port = int(str_in[1])
         self.sock.setpara(host = self.host,  port = self.port)
         self.say_hi('set host/port to ' + ':'.join(str_in))
-    
+
     @pyqtSignature("")
     def on_sock_start_btn_clicked(self):
         """
@@ -256,9 +206,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.say_hi(str(self.sock))
         self.sock.start()
 
-    
 
-    
+
+
     @pyqtSignature("")
     def on_sock_tcp_rbtn_clicked(self):
         """
@@ -270,7 +220,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
             self.say_hi('tcp checked')
         if self.sock_udp_rbtn.isChecked():
             self.say_hi('udp checked')
-    
+
 
     @pyqtSignature("")
     def on_sock_udp_rbtn_clicked(self):
@@ -283,7 +233,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
             self.say_hi('tcp checked')
         if self.sock_udp_rbtn.isChecked():
             self.say_hi('udp checked')
-    
+
     @pyqtSignature("")
     def on_sock_send_btn_clicked(self):
         """
@@ -292,8 +242,8 @@ class SocketFunc(QDialog, Ui_SocketUi):
         # TODO: not implemented yet
         message = str(self.sock_input_3.text())
         self.say_hi('send button clicked,data:' + message)
-        self.sock.clientThread.send(message)
-    
+        self.sock.send_data(message)
+
     @pyqtSignature("")
     def on_sock_save_log_btn_clicked(self):
         """
@@ -301,13 +251,13 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         # TODO: not implemented yet
         self.say_hi('SQLLL button clicked')
-        
+
         ##show SQLLL window
         self.web_dailog.show()
-        
+
         self.say_hi('sql window create')
-        
-    
+
+
     @pyqtSignature("")
     def on_sock_close_btn_clicked(self):
         """
