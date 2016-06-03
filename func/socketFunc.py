@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-##20160601-1507
-##one thread, one window version
+##20160603-1344
+##test for branch
 """
 Module implementing SocketUi.
 """
@@ -97,8 +97,7 @@ class sserver(QThread):
         self.sserver = None
         self.RUN_FLAG = True
         self.client = None
-        self.clientThread = clientthread(mutex = self.mutex,  upsignal = self. update_signal, resignal = self.return_signal,  id = 111)
-    
+        
         with QMutexLocker(self.mutex):
                 self.update_signal.emit('enter-sserver-class- '+ str(self))
     
@@ -132,7 +131,6 @@ class sserver(QThread):
     
     def close(self):
         self.RUN_FLAG = False
-        self.clientThread.close()
         if self.client is not None:
             self.client.close()
         if self.sserver is not None:
@@ -140,6 +138,7 @@ class sserver(QThread):
         self.client = None
         self.sserver = None
         self.update_main('enter-sserver-func-CLOSE-')
+    
     
     ##process recv data here
     def process_data(self):
@@ -183,7 +182,9 @@ class sserver(QThread):
             self.clientThread.start()
             self.client = client
             self.update_main('enter-sserver-func-CREATESERVER-connected-client:'+ str(address))
-
+            
+    def send_data(self):
+        if 
 
 class SocketFunc(QDialog, Ui_SocketUi):
     """
