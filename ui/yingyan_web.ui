@@ -207,16 +207,6 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <zorder>web_time_label</zorder>
-   <zorder>web_const_time_label</zorder>
-   <zorder>web_recdata_label</zorder>
-   <zorder>label</zorder>
-   <zorder>label_2</zorder>
-   <zorder>label_3</zorder>
-   <zorder>webView</zorder>
-   <zorder>web_longi_label</zorder>
-   <zorder>web_lati_label</zorder>
-   <zorder>web_altitu_label</zorder>
   </widget>
   <zorder>webView</zorder>
   <zorder>web_group_box</zorder>

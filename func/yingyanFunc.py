@@ -4,7 +4,7 @@
 Module implementing YingyanFunc.
 """
 
-from PyQt4.QtCore import pyqtSignature
+from PyQt4.QtCore import pyqtSignature,  QUrl
 from PyQt4.QtGui import QDialog
 from PyQt4 import QtGui
 
@@ -41,7 +41,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         Slot documentation goes here.
         """
         self.upsignal.emit('emit btn clicked')
-        
+        self.webView.setUrl(QUrl('‪file:///C:/yinyandemo/index.html'))
         self.upsignal.emit('awake from 5 secs sleep')
     
     def update_status(self, str_arg):
