@@ -133,10 +133,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>clear</string>
+    <string>清除记录</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="sock_save_log_btn">
+  <widget class="QPushButton" name="sock_yingyan_web_btn">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -149,7 +149,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>SQLLLL</string>
+    <string>轨迹监控</string>
    </property>
    <property name="checkable">
     <bool>false</bool>
@@ -178,7 +178,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>quit</string>
+    <string>退出</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="sock_ip">
@@ -191,7 +191,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>10.180.61.89:9876</string>
+    <string>localhost:9876</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

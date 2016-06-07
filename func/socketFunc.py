@@ -245,17 +245,17 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.sock.send_data(message)
 
     @pyqtSignature("")
-    def on_sock_save_log_btn_clicked(self):
+    def on_sock_yingyan_web_btn_clicked(self):
         """
         Slot documentation goes here.
         """
         # TODO: not implemented yet
-        self.say_hi('SQLLL button clicked')
+        self.say_hi('yingyan_web button clicked')
 
         ##show SQLLL window
         self.web_dailog.show()
 
-        self.say_hi('sql window create')
+        self.say_hi('trace monitoring window create')
 
 
     @pyqtSignature("")
