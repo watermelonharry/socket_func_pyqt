@@ -31,9 +31,14 @@
      <height>720</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Adobe Arabic</family>
+    </font>
+   </property>
    <property name="url">
     <url>
-     <string>https://passport.baidu.com/v2/?login&amp;fr=old&amp;login&amp;u=http://yingyan.baidu.com/track.html?i=107208</string>
+     <string>file:///C:/local/yinyandemo/index.html</string>
     </url>
    </property>
   </widget>

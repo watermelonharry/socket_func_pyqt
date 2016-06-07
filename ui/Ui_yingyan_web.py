@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\DemoSocket\socket_func_pyqt\ui\yingyan_web.ui'
+# Form implementation generated from reading ui file 'C:\Users\Harry\PyQtProjects\DemoSocket\socket_func_pyqt\ui\yingyan_web.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -30,8 +30,10 @@ class Ui_yingyan_web(object):
         yingyan_web.setSizeGripEnabled(True)
         self.webView = QtWebKit.QWebView(yingyan_web)
         self.webView.setGeometry(QtCore.QRect(0, 0, 1280, 720))
-        self.webView.setUrl(QtCore.QUrl(_fromUtf8("file:///C:/yinyandemo/index.html")))
-        #https://passport.baidu.com/v2/?login&fr=old&login&u=http://yingyan.baidu.com/track.html?i=107208
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Adobe Arabic"))
+        self.webView.setFont(font)
+        self.webView.setUrl(QtCore.QUrl(_fromUtf8("file:///C:/local/yinyandemo/index.html")))
         self.webView.setObjectName(_fromUtf8("webView"))
         self.web_fresh_btn = QtGui.QPushButton(yingyan_web)
         self.web_fresh_btn.setGeometry(QtCore.QRect(30, 500, 75, 23))

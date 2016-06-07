@@ -5,7 +5,7 @@ import threading
 import requests
 
 ##config file path
-CONFIG_PATH = 'C:\\Users\\Harry\\Desktop\\gps_config.dat'
+CONFIG_PATH = 'C:\\local\\gps_config.dat'
 CONFIG_URL = 'http://api.map.baidu.com/trace/v2/track/addpoint'
 ##input : str 'year month day hour minute sec' in decimal
 ##return : int(UNIX_TIMESTAMP)
