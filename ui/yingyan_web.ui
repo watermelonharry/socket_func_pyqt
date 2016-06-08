@@ -16,6 +16,11 @@
     <height>720</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Agency FB</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>轨迹监控</string>
   </property>
@@ -45,8 +50,8 @@
   <widget class="QPushButton" name="web_fresh_btn">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>500</y>
+     <x>50</x>
+     <y>695</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -58,8 +63,8 @@
   <widget class="QPushButton" name="web_emit_btn">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>500</y>
+     <x>170</x>
+     <y>695</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -72,9 +77,9 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>530</y>
-     <width>211</width>
-     <height>171</height>
+     <y>550</y>
+     <width>281</width>
+     <height>141</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -116,7 +121,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>140</y>
+      <y>110</y>
       <width>171</width>
       <height>12</height>
      </rect>
@@ -129,7 +134,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>50</y>
+      <y>40</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -142,7 +147,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>80</y>
+      <y>60</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -155,7 +160,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>110</y>
+      <y>80</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -168,7 +173,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>50</y>
+      <y>40</y>
       <width>100</width>
       <height>12</height>
      </rect>
@@ -184,7 +189,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>80</y>
+      <y>60</y>
       <width>100</width>
       <height>12</height>
      </rect>
@@ -200,7 +205,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>110</y>
+      <y>80</y>
       <width>100</width>
       <height>12</height>
      </rect>
