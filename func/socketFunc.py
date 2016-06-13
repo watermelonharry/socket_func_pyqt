@@ -122,6 +122,7 @@ class sserver(QThread):
         if self.RUN_FLAG and self.sserver is not None:
             (client,  address) = self.sserver.accept()
             self.client = client
+            self.send_data('-connected-')
             self.update_main('enter-sserver-func-CREATESERVER-connected-client:'+ str(address))
 
     ##send data to client, mainly triggered by SEND_BUTTON in main window
