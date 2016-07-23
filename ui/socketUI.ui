@@ -172,7 +172,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>330</y>
+     <y>360</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -205,6 +205,25 @@
      <width>371</width>
      <height>31</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sock_pickPoint_btn">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>330</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>地图选点</string>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
    </property>
   </widget>
  </widget>

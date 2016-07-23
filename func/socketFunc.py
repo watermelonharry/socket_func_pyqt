@@ -8,8 +8,10 @@ from PyQt4.QtCore import pyqtSignature, QMutex, QMutexLocker, QThread,  pyqtSign
 from PyQt4.QtGui import QDialog
 from PyQt4 import QtGui
 from ui.Ui_socketUI import Ui_SocketUi
+
 ##yingyan_web UI
 from yingyanFunc import YingyanFunc
+from pickFunc import PickPointfunc
 
 ## log write module
 from package import log
@@ -137,6 +139,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
     """
     Class documentation goes here.
     """
+    toPickPointSignal = pyqtSignal(str)
+    fromPickPointSignal =  pyqtSignal(str)
+
     def __init__(self, parent=None):
         """
         Constructor
@@ -160,6 +165,12 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.sock.update_signal.connect(self. say_hi)
         #try to make sub dialog constant
         self.web_dailog = YingyanFunc(upsignal = self.sock.update_signal,  downsignal = self.sock.return_signal)
+        # pick point function
+#        self.toPickPointSignal = pyqtSignal(str)
+#        self.fromPickPointSignal =  pyqtSignal(str)
+        #receive data from PickPointFunc
+        self.fromPickPointSignal.connect(self.say_hi)
+        self.pick_point_dialog = PickPointfunc(upsignal = self.fromPickPointSignal,  downsignal = self.toPickPointSignal )
 
     def __str__(self):
         return('sockFunc-para:')
@@ -258,6 +269,16 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
         self.say_hi('trace monitoring window create')
 
+    @pyqtSignature("")
+    def on_sock_pickPoint_btn_clicked(self):
+        """
+        Slot documentation goes here.
+        """
+        # TODO: not implemented yet
+        self.say_hi('pick point btn button clicked')
+        ##show SQLLL window
+        self.pick_point_dialog.show()
+        self.say_hi('pickpoint window create')
 
     @pyqtSignature("")
     def on_sock_close_btn_clicked(self):

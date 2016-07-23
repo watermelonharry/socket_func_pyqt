@@ -65,7 +65,7 @@ class Ui_SocketUi(object):
         self.sock_close_btn.setGeometry(QtCore.QRect(30, 240, 75, 23))
         self.sock_close_btn.setObjectName(_fromUtf8("sock_close_btn"))
         self.sock_quit_btn = QtGui.QPushButton(SocketUi)
-        self.sock_quit_btn.setGeometry(QtCore.QRect(30, 330, 75, 23))
+        self.sock_quit_btn.setGeometry(QtCore.QRect(30, 360, 75, 23))
         self.sock_quit_btn.setObjectName(_fromUtf8("sock_quit_btn"))
         self.sock_ip = QtGui.QLineEdit(SocketUi)
         self.sock_ip.setGeometry(QtCore.QRect(250, 20, 191, 31))
@@ -74,6 +74,11 @@ class Ui_SocketUi(object):
         self.sock_input_3 = QtGui.QLineEdit(SocketUi)
         self.sock_input_3.setGeometry(QtCore.QRect(220, 90, 371, 31))
         self.sock_input_3.setObjectName(_fromUtf8("sock_input_3"))
+        self.sock_pickPoint_btn = QtGui.QPushButton(SocketUi)
+        self.sock_pickPoint_btn.setEnabled(True)
+        self.sock_pickPoint_btn.setGeometry(QtCore.QRect(30, 330, 75, 23))
+        self.sock_pickPoint_btn.setCheckable(False)
+        self.sock_pickPoint_btn.setObjectName(_fromUtf8("sock_pickPoint_btn"))
 
         self.retranslateUi(SocketUi)
         QtCore.QObject.connect(self.sock_quit_btn, QtCore.SIGNAL(_fromUtf8("clicked()")), SocketUi.close)
@@ -93,6 +98,7 @@ class Ui_SocketUi(object):
         self.sock_close_btn.setText(_translate("SocketUi", "关闭服务", None))
         self.sock_quit_btn.setText(_translate("SocketUi", "退出", None))
         self.sock_ip.setText(_translate("SocketUi", "localhost:9876", None))
+        self.sock_pickPoint_btn.setText(_translate("SocketUi", "地图选点", None))
 
 
 if __name__ == "__main__":

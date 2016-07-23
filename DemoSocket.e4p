@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project DemoSocket -->
-<!-- Saved: 2016-06-08, 10:09:35 -->
+<!-- Saved: 2016-07-23, 13:28:37 -->
 <!-- Copyright (C) 2016 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -16,6 +16,7 @@
   <Sources>
     <Source>__init__.py</Source>
     <Source>func/__init__.py</Source>
+    <Source>func/pickFunc.py</Source>
     <Source>func/socketFunc.py</Source>
     <Source>func/yingyanFunc.py</Source>
     <Source>package/__init__.py</Source>
@@ -23,6 +24,7 @@
     <Source>package/log.py</Source>
     <Source>package/sockserver.py</Source>
     <Source>run.py</Source>
+    <Source>ui/Ui_pick_point.py</Source>
     <Source>ui/Ui_socketUI.py</Source>
     <Source>ui/Ui_yingyan_web.py</Source>
     <Source>ui/__init__.py</Source>
