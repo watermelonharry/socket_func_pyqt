@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\Demo\ui\pick_point.ui'
+# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\DemoSocket\socket_func_pyqt\ui\pick_point.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -35,7 +35,7 @@ class Ui_PickPoint(object):
         self.pp_testbrowser.setGeometry(QtCore.QRect(480, 510, 401, 121))
         self.pp_testbrowser.setObjectName(_fromUtf8("pp_testbrowser"))
         self.pp_button = QtGui.QPushButton(PickPoint)
-        self.pp_button.setGeometry(QtCore.QRect(390, 600, 75, 23))
+        self.pp_button.setGeometry(QtCore.QRect(390, 510, 75, 23))
         self.pp_button.setObjectName(_fromUtf8("pp_button"))
 
         self.retranslateUi(PickPoint)
