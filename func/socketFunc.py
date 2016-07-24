@@ -169,7 +169,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
 #        self.toPickPointSignal = pyqtSignal(str)
 #        self.fromPickPointSignal =  pyqtSignal(str)
         #receive data from PickPointFunc
-        self.fromPickPointSignal.connect(self.say_hi)
+        self.fromPickPointSignal.connect(self.processPickData)
         self.pick_point_dialog = PickPointfunc(upsignal = self.fromPickPointSignal,  downsignal = self.toPickPointSignal )
 
     def __str__(self):
@@ -184,8 +184,25 @@ class SocketFunc(QDialog, Ui_SocketUi):
         ##add log
         self.log.write(str(words))
 
+    def processPickData(self,  str_data):
+        p_list = str_data.split('|')
+        if p_list[0] == 'fromPickPoint':
+            count = 1
+            for p in p_list[1:-1]:
+                self.say_hi('point'+ str(count)+':'+p)
+                count+= 1
+        else:
+            self.say_hi(str_data)
 
-
+    def uniqueId(self):
+        import datetime
+        import time
+        uniID = str(time.mktime(time.localtime()))[:-2] + str(datetime.datetime.now().microsecond / 1000)
+        return uniID
+    
+    def xorFormat(self, str_arg):
+        return reduce(lambda x,y: chr(ord(x)^ord(y)), list(str_arg))
+        
     @pyqtSignature("")
     def on_sock_clear_btn_clicked(self):
         """

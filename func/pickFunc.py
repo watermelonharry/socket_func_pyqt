@@ -46,7 +46,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         
         self.add_test(str_arg)
         self.add_test(" added.")
-        self.outsignal.emit(str_arg)
+        self.outsignal.emit('fromPickPoint|'+str_arg)
     
     @pyqtSlot(str)
     #input str_arg: longi-lati
@@ -75,7 +75,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         jscript = """
         var count = markers.length;
         var pass_buffer = "";
-	    for (var i = 0; i<markers.length -1; i++){
+	    for (var i = 0; i<markers.length ; i++){
 			map.removeOverlay(markers[i]);
             pass_buffer += String(points[i].lng) + "-" +String(points[i].lat) + "|";
 		}
