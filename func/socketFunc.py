@@ -91,7 +91,7 @@ class sserver(QThread):
             self.return_signal.emit(data)
 
             self.update_main('enter-sserver-func-PROCDATA-recv:'+str(data))
-            self.client.send('GET')
+            #self.client.send('GET')
             return True
         except Exception as e:
             ##closed by remote client
@@ -131,7 +131,7 @@ class sserver(QThread):
     def send_data(self, str_arg):
         if self.client is not None:
             self.client.send(str_arg)
-            self.update_main('enter-sserver-func-SENDDATA-sucess')
+            self.update_main('enter-sserver-func-SENDDATA-sucess:' + str_arg)
         else:
             self.update_main('enter-sserver-func-SENDDATA-error:NO CONNECTION')
 
@@ -159,6 +159,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
         self.mutex = QMutex()
         self.log = log.logfile('log_socke_func')
+        self.orderDict = {}
         if self.log is not None:
             self.log.write('enter-socketFuc-class-INIT-'+  str(self))
 
@@ -187,10 +188,13 @@ class SocketFunc(QDialog, Ui_SocketUi):
     def processPickData(self,  str_data):
         p_list = str_data.split('|')
         if p_list[0] == 'fromPickPoint':
-            count = 1
-            for p in p_list[1:-1]:
-                self.say_hi('point'+ str(count)+':'+p)
-                count+= 1
+            orderId = self.uniqueId()
+            self.orderDict[orderId] = '='.join(str(x) for x in p_list[1:-1])
+            order = orderId+'=SD='+str(len(p_list) -2 )+'='+self.orderDict.get(orderId)+'='
+            order += self.xorFormat(order)
+            print(order)
+    
+            self.sock.send_data(order)         
         else:
             self.say_hi(str_data)
 
@@ -198,10 +202,10 @@ class SocketFunc(QDialog, Ui_SocketUi):
         import datetime
         import time
         uniID = str(time.mktime(time.localtime()))[:-2] + str(datetime.datetime.now().microsecond / 1000)
-        return uniID
+        return str(uniID)
     
     def xorFormat(self, str_arg):
-        return reduce(lambda x,y: chr(ord(x)^ord(y)), list(str_arg))
+        return str(reduce(lambda x,y: chr(ord(x)^ord(y)), list(str_arg)))
         
     @pyqtSignature("")
     def on_sock_clear_btn_clicked(self):

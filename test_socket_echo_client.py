@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+# Python Network Programming Cookbook -- Chapter - 1
+# This program is optimized for Python 2.7.
+# It may run on any other version with/without modifications.
+
+import socket
+import sys
+import  time
+
+import argparse
+
+
+def echo_client(host, port):
+    """ A simple echo client """
+    # Create a TCP/IP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # Connect the socket to the server
+    server_address = (host, port)
+    print "Connecting to %s port %s" % server_address
+    sock.connect(server_address)
+
+    while True:
+        # Send data
+        try:
+            # Send data
+            # message = raw_input()
+            # print "Sending %s" % message
+            # sock.sendall(message)
+            # # Look for the response
+            message = raw_input()
+            data = sock.recv(1024)
+            sock.sendall(data.split('=')[0] + '=SDY')
+            print("Received: %s" ) % data
+        except socket.errno, e:
+            print "Socket error: %s" %str(e)
+        except Exception, e:
+            print "Other exception: %s" %str(e)
+        # finally:
+        #     print "Closing connection to the server"
+        #     # sock.close()
+    
+if __name__ == '__main__':
+    # parser = argparse.ArgumentParser(description='Socket Server Example')
+    # parser.add_argument('--port', action="store", dest="port", type=int, required=True)
+    # given_args = parser.parse_args()
+    # port = given_args.port
+    host = 'localhost'
+    port = 9876
+    echo_client(host, port)
