@@ -27,7 +27,10 @@ def echo_client(host, port):
             # print "Sending %s" % message
             # sock.sendall(message)
             # # Look for the response
-            message = raw_input()
+            message = raw_input('\ncontinue? [Y / N]')
+            if message == 'N' or message == 'n':
+                break
+            
             data = sock.recv(1024)
             sock.sendall(data.split('=')[0] + '=SDY')
             print("Received: %s" ) % data
@@ -38,12 +41,17 @@ def echo_client(host, port):
         # finally:
         #     print "Closing connection to the server"
         #     # sock.close()
+    sock.close()
     
 if __name__ == '__main__':
-    # parser = argparse.ArgumentParser(description='Socket Server Example')
-    # parser.add_argument('--port', action="store", dest="port", type=int, required=True)
-    # given_args = parser.parse_args()
-    # port = given_args.port
-    host = 'localhost'
-    port = 9876
+    parser = argparse.ArgumentParser(description='Socket Server Example')
+    parser.add_argument('-port', action="store", dest="port", type=int, required=True)
+    parser.add_argument('-host', action="store", dest="host", type=str, required=True)
+    given_args = parser.parse_args()
+    if given_args.port != None and given_args.host != None:
+        port = given_args.port
+        host = given_args.host
+    else:
+        host = 'localhost'
+        port = 9876
     echo_client(host, port)
