@@ -47,10 +47,53 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
     def update_status(self, str_arg):
         #the str_arg includes all data, will be processed first
         #(longitude, latitude, time) will be pass to gps_loader and upload to BAIDU
-        #other info will be pass to local textbrowser 
+        #other info will be pass to local textbrowser
+
+
         self.web_time_label.setText(str(time.asctime()).split(' ')[3])
+
+        argList = self.ExtractCommandData(str_arg)
         self.web_recdata_label.setText(str_arg)
-        self.web_longi_label.setText(str_arg)
-        self.web_lati_label.setText(str_arg)
-        self.web_altitu_label.setText(str_arg)
-    
+
+        if argList is not None:
+            self.web_longi_label.setText(argList[2])
+            self.web_lati_label.setText(argList[3])
+            self.web_altitu_label.setText(argList[4])
+        else:
+            pass
+
+    def ExtractCommandData(self, strArg):
+        data = strArg.split('=')
+        argList = [data[0],data[1]]
+        if str(reduce(lambda x,y: chr(ord(x)^ord(y)), list('='.join(data[:-1]) + '='))) == data[-1]:
+            if data[0] == '0':
+                if data[1] == 'L':      # command 1
+                    argList.append(data[2])     #longitude
+                    argList.append(data[3])     #latitude
+                    argList.append(data[4])     #height
+                    argList.append(data[5])     #speed
+                else:
+                    #todo: wrong heartbeat info
+                    argList = None
+            else:
+                if data[1] == 'P':      #command 2
+                    #todo: param check
+                    pass
+                else:
+                    argList = None
+
+                if data[1] == 'S':      #command 3
+                    #todo: param set
+                    pass
+                else:
+                    argList = None
+
+                if data[1] == 'D':      #command 4
+                    #todo: set points
+                    pass
+                else:
+                    argList = None
+        else:
+            argList = None
+
+        return argList
