@@ -1,0 +1,16 @@
+def xorFormat(str_arg):
+    return str(reduce(lambda x,y: chr(ord(x)^ord(y)), list(str_arg)))
+
+def correctHeartBeatGenerate():
+    '''
+    generate location data
+    '''
+    pass
+
+def wrongHeartBeatGenerate():
+    '''
+    :param:
+    :return: wrong location data
+    '''
+    pass
+
