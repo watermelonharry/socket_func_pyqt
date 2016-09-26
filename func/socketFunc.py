@@ -142,6 +142,12 @@ class SocketFunc(QDialog, Ui_SocketUi):
     toPickPointSignal = pyqtSignal(str)
     fromPickPointSignal =  pyqtSignal(str)
 
+    toYingyanFuncSignal = pyqtSignal(str)
+    fromYingyanFuncSignal = pyqtSignal(str)
+
+    toSocketfuncSignal = pyqtSignal(str)
+    fromSocketfuncSignal = pyqtSignal(str)
+
     def __init__(self, parent=None):
         """
         Constructor
