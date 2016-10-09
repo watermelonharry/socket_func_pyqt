@@ -23,10 +23,10 @@ import time
 ##showing received data in run method
 ##send data to client in another thread -- self.clientThread
 class sserver(QThread):
-    update_signal = pyqtSignal(str)
+    # update_signal = pyqtSignal(str)
     return_signal = pyqtSignal(str)
 
-    def __init__(self,  parent =None,  mutex = None,  host = 'localhost',  port = 9876,  mode = 'TCP'):
+    def __init__(self,  parent =None,  mutex = None,  host = 'localhost',  port = 9876,  mode = 'TCP', upMainSig = None,  recSignal = None):
         super(sserver,  self).__init__(parent)
         self.mutex = mutex
         self.host = host
@@ -35,9 +35,11 @@ class sserver(QThread):
         self.sserver = None
         self.RUN_FLAG = True
         self.client = None
+        self.updateMain = upMainSig
+        self.recDataSignal = recSignal
 
         with QMutexLocker(self.mutex):
-            self.update_signal.emit('enter-sserver-class- '+ str(self))
+            self.updateMain.emit('enter-sserver-class- '+ str(self))
 
     def __str__(self):
         return('sserver-host:'+ str(self.host)+':'+str(self.port)+'; mode-'+ self.mode)
@@ -58,7 +60,7 @@ class sserver(QThread):
 
     ##show server messages in main window
     def update_main(self,  str_arg):
-        self.update_signal.emit(str_arg)
+        self.updateMain.emit(str_arg)
 
     ##what the THREAD mainly do
     def run(self):
@@ -88,7 +90,7 @@ class sserver(QThread):
         try:
             data = self.client.recv(2048)
             #implement received data PROCESSING here
-            self.return_signal.emit(data)
+            self.recDataSignal.emit(data)
 
             self.update_main('enter-sserver-func-PROCDATA-recv:'+str(data))
             #self.client.send('GET')
@@ -139,6 +141,8 @@ class SocketFunc(QDialog, Ui_SocketUi):
     """
     Class documentation goes here.
     """
+    updateMainSignal = pyqtSignal(str)
+
     toPickPointSignal = pyqtSignal(str)
     fromPickPointSignal =  pyqtSignal(str)
 
@@ -158,7 +162,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         QDialog.__init__(self, parent)
         self.setupUi(self)
 
-        self.sock = sserver()
+        self.sock = sserver(upMainSig=self.updateMainSignal,recSignal=self.fromSocketfuncSignal)
         self.host = 'localhost'
         self.port = 9876
         self.mode = 'TCP'
@@ -169,18 +173,20 @@ class SocketFunc(QDialog, Ui_SocketUi):
         if self.log is not None:
             self.log.write('enter-socketFuc-class-INIT-'+  str(self))
 
-        self.sock.update_signal.connect(self. say_hi)
+        self.updateMainSignal.connect(self.say_hi)
+        self.fromSocketfuncSignal.connect(self.sockToYingyan)
         #try to make sub dialog constant
-        self.web_dailog = YingyanFunc(upsignal = self.sock.update_signal,  downsignal = self.sock.return_signal)
-        # pick point function
-#        self.toPickPointSignal = pyqtSignal(str)
-#        self.fromPickPointSignal =  pyqtSignal(str)
-        #receive data from PickPointFunc
+        self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal)
+
+        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal)
         self.fromPickPointSignal.connect(self.processPickData)
-        self.pick_point_dialog = PickPointfunc(upsignal = self.fromPickPointSignal,  downsignal = self.toPickPointSignal )
 
     def __str__(self):
         return('sockFunc-para:')
+
+    def sockToYingyan(self,message):
+        """将sock接收的数据转发到yinyan窗口"""
+        self.toYingyanFuncSignal.emit(message)
 
     def say_hi(self,  words):
         ##show in the info area in dialog
@@ -292,7 +298,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.say_hi('yingyan_web button clicked')
 
         ##show SQLLL window
-        self.web_dailog.show()
+        self.YingyanDailog.show()
 
         self.say_hi('trace monitoring window create')
 
@@ -304,7 +310,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         # TODO: not implemented yet
         self.say_hi('pick point btn button clicked')
         ##show SQLLL window
-        self.pick_point_dialog.show()
+        self.PickPointDialog.show()
         self.say_hi('pickpoint window create')
 
     @pyqtSignature("")

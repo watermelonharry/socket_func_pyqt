@@ -4,7 +4,7 @@
 Module implementing YingyanFunc.
 """
 
-from PyQt4.QtCore import pyqtSignature,  QUrl
+from PyQt4.QtCore import pyqtSignature,  pyqtSignal
 from PyQt4.QtGui import QDialog
 from PyQt4 import QtGui
 
@@ -18,7 +18,8 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
     """
     Class documentation goes here.
     """
-    def __init__(self, parent=None,  upsignal = None,  downsignal = None):
+    toGpsUploaderSignal = pyqtSignal(str)
+    def __init__(self, parent=None, updateMainSignal = None, recDataSignal = None):
         """
         Constructor
         
@@ -28,22 +29,20 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         QDialog.__init__(self, parent)
         self.setupUi(self)
         #SIGNALS used to update main window
-        self.upsignal = upsignal
+        self.updateMainSignal = updateMainSignal
         #SIGNALS used to receive data
-        self.downsignal = downsignal
-        self.downsignal.connect(self.update_status)
+        self.recDataSignal = recDataSignal
+        self.recDataSignal.connect(self.update_status)
         #upload data to BAIDU
-        self.uploader = GpsUploader(upsignal, downsignal)
+        self.uploader = GpsUploader(self.updateMainSignal, self.toGpsUploaderSignal)
     
     @pyqtSignature("")
     def on_web_emit_btn_clicked(self):
         """
         Slot documentation goes here.
         """
-        self.upsignal.emit('emit btn clicked')
-        
-        self.upsignal.emit('awake from 5 secs sleep')
-    
+        self.updateMainSignal.emit('emit btn clicked')
+
     def update_status(self, str_arg):
         #the str_arg includes all data, will be processed first
         #(longitude, latitude, time) will be pass to gps_loader and upload to BAIDU
@@ -59,8 +58,13 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
             self.web_longi_label.setText(argList[2])
             self.web_lati_label.setText(argList[3])
             self.web_altitu_label.setText(argList[4])
+            self.uploadGpsData('str args here')
         else:
             pass
+
+    def uploadGpsData(self,str_arg):
+        #TODO:发送至gpsuploader并启动上传
+        pass
 
     def ExtractCommandData(self, strArg):
         data = strArg.split('=')
