@@ -178,7 +178,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         #try to make sub dialog constant
         self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal)
 
-        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal)
+        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal)
         self.fromPickPointSignal.connect(self.processPickData)
 
     def __str__(self):
@@ -198,17 +198,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.log.write(str(words))
 
     def processPickData(self,  str_data):
-        p_list = str_data.split('|')
-        if p_list[0] == 'fromPickPoint':
-            orderId = self.uniqueId()
-            self.orderDict[orderId] = '='.join(str(x) for x in p_list[1:-1])
-            order = orderId+'=SD='+str(len(p_list) -2 )+'='+self.orderDict.get(orderId)+'='
-            order += self.xorFormat(order)
-            print(order)
-    
-            self.sock.send_data(order)         
-        else:
-            self.say_hi(str_data)
+        """处理来自pickPoint窗口的格式化数据（转发至socket.send）"""
+        self.sock.send_data(str_data)
+        self.say_hi(str_data)
 
     def uniqueId(self):
         import datetime

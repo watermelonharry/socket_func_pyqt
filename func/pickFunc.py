@@ -15,7 +15,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     Class documentation goes here.
     """
     js_signal = pyqtSignal(str)
-    def __init__(self, parent=None,  upsignal = None,  downsignal = None):
+    def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None):
         """
         Constructor
         
@@ -24,10 +24,15 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         QDialog.__init__(self, parent)
         self.setupUi(self)
-        self.js_signal.connect(self.add_test)
+        self.js_signal.connect(self.ShowInTab)
         self.points = []
         self.insignal = downsignal
         self.outsignal = upsignal
+        self.updateMainSignal = updateMainSignal
+        self.insignal.connect(self.ReiceveStrData)
+
+        #存储已发送命令 用于验证发送成功
+        self.orderDict={}
         
         self.pp_webView.page().mainFrame().addToJavaScriptWindowObject("js_buffer", self)
     
@@ -38,15 +43,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
     #must be a slot so the JS could call the function
     @pyqtSlot(str) 
-    def add_test(self, str_arg):
+    def ShowInTab(self, str_arg):
         self.pp_testbrowser.append(str_arg)
-    
-    @pyqtSlot(str)
-    def receive_from_js(self, str_arg):
-        
-        self.add_test(str_arg)
-        self.add_test(" added.")
-        self.outsignal.emit('fromPickPoint|'+str_arg)
     
     @pyqtSlot(str)
     #input str_arg: longi-lati
@@ -77,8 +75,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         var pass_buffer = "";
 	    for (var i = 0; i<markers.length ; i++){
 			map.removeOverlay(markers[i]);
-            pass_buffer += String(points[i].lng) + "-" +String(points[i].lat) + "|";
+            pass_buffer += String(points[i].lng) + "|" +String(points[i].lat) + "=";
 		}
+		pass_buffer = String(markers.length) + "=" + pass_buffer
 		markers = [];
         points = [];
         p_count = 1;
@@ -99,4 +98,33 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         # TODO: not implemented yet
         #QMessageBox.about(self,u"success", "<loading map finished>\n<ready for next operation>")
-        self.outsignal.emit('Loading map done...')
+        self.updateMainSignal.emit('Loading map done...')
+
+    #test: receive message from yingyanFunc
+    def ReiceveStrData(self,strArg):
+        self.pp_testbrowser.append(strArg)
+
+    @pyqtSlot(str)
+    def receive_from_js(self, str_arg):
+        """处理从JS传来的点，格式化后发送到socket.send"""
+        self.ShowInTab(str_arg)
+        self.ShowInTab(" added.")
+        self.processPickData(str_arg[:-1])
+
+    def processPickData(self, str_data):
+        orderId = self.uniqueId()
+        order = orderId + '=D=' + str_data +"="
+        order += self.xorFormat(order)
+        print(order)
+
+        self.orderDict[orderId] = order
+        self.outsignal.emit(order)
+
+    def uniqueId(self):
+        import datetime
+        import time
+        uniID = str(time.mktime(time.localtime()))[:-2] + str(datetime.datetime.now().microsecond / 1000)
+        return str(uniID)
+
+    def xorFormat(self, str_arg):
+        return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))
