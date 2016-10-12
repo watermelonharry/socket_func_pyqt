@@ -1,0 +1,85 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";font-family:"微软雅黑";}
+		#allmap{width:100%;height:100%;} 
+		p{margin-left:5px; font-size:14px;}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=znRegmlIFbPc0LHl1IUUnQju"></script>
+	<title>click the map</title>
+</head>
+<body>
+	<div id="allmap"></div>
+<!-- 	<div id="show_data">
+	<p>clicked to show longitude and latitude</p>
+	</div> -->
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	map.setMapStyle({style:'midnight'});
+	map.enableScrollWheelZoom(); 
+	var points = [];
+	var markers = [];
+	map.centerAndZoom(new BMap.Point(120.13143165691, 30.272977524721), 15);
+
+
+	var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+	var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+	var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL}); //右上角，仅包含平移和缩放按钮
+	/*缩放控件type有四种类型:
+	BMAP_NAVIGATION_CONTROL_SMALL：仅包含平移和缩放按钮；BMAP_NAVIGATION_CONTROL_PAN:仅包含平移按钮；BMAP_NAVIGATION_CONTROL_ZOOM：仅包含缩放按钮*/
+	
+	//添加控件和比例尺
+	map.addControl(top_left_control);        
+	map.addControl(top_left_navigation);     
+	map.addControl(top_right_navigation);
+
+	var p_count = 1;
+	
+	function pick_one_p(e){
+		//alert(e.point.lng + ", " + e.point.lat);
+		var new_p = new BMap.Point(e.point.lng, e.point.lat);
+		points.push(new_p);
+
+		var marker = new BMap.Marker(new_p);
+		map.addOverlay(marker)
+		markers.push(marker);
+
+		//添加标签
+		var label = new BMap.Label(p_count,{offset:new BMap.Size(5,0)});
+		p_count++;
+		marker.setLabel(label);
+
+		// document.getElementById("show_data").innerHTML= show_all(points);//(e.point.lng + ", " + e.point.lat);
+
+		js_buffer.add_one_point_js(String(e.point.lng) + "-"+ String(e.point.lat))
+
+	
+	}
+
+	function remove_last_p(e){
+
+
+		js_buffer.delete_one_point_js(String(p_count - 1));
+		p_count --;
+		var delete_marker = markers.pop(p_count - 1);
+		map.removeOverlay(delete_marker);
+
+		alert(p_count + "," + length(markers));
+
+
+	
+	}
+
+
+
+	map.addEventListener("click", pick_one_p);
+	map.addEventListener("rightclick", remove_last_p);
+
+
+
+</script>

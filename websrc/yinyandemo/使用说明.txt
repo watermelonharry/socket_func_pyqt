@@ -1,0 +1,10 @@
+1.主要逻辑代码都在\static\js\track\demo.js文件中；
+
+2.ak和serviceid可以在demo.js开头设置（Test_ak、ServiceId），也可以写在地址栏中（?i=你的serviceid&k=你的服务端类型ak），
+例如：file:///D:/web%20demo%20v2.0/index.html?i=12345&k=FGHJFGHJGHJGH
+
+3.demo中的轨迹数据是通过鹰眼api获取的，需要使用服务端类型的ak；
+
+4.建议增加一个自己的服务来转发请求，可以避免ak暴露；
+
+5.demo中是利用jsonp的callback方式来解决跨域问题的，百度地图开放平台大部分get请求类型的api都支持callback；
