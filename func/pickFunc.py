@@ -26,13 +26,17 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.setupUi(self)
         self.js_signal.connect(self.ShowInTab)
         self.points = []
-        self.insignal = downsignal
-        self.outsignal = upsignal
+        #输入信号
+        self.toPickPointSignal = downsignal
+        #输出信号
+        self.fromPickPointSignal = upsignal
+        #更新显示
         self.updateMainSignal = updateMainSignal
-        self.insignal.connect(self.ReiceveStrData)
+        self.toPickPointSignal.connect(self.ReiceveStrData)
 
         #存储已发送命令 用于验证发送成功
         self.orderDict={}
+        self.WAITFLAG = False
         
         self.pp_webView.page().mainFrame().addToJavaScriptWindowObject("js_buffer", self)
     
@@ -61,13 +65,13 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.pp_testbrowser.append('point '+ str(len(self.points) +1)+' deleted:'+ str(delete_p[0]) + '-' + str(delete_p[1]))
         
     @pyqtSignature("")
-    def on_pp_button_clicked(self):
+    def on_pick_send_btn_clicked(self):
         """
         Slot documentation goes here.
         """
         # TODO: not implemented yet
-        p = self.pp_webView.page().mainFrame().documentElement().findFirst('div[id=show_data]')
-        self.js_signal.emit(p.toPlainText())
+        # p = self.pp_webView.page().mainFrame().documentElement().findFirst('div[id=show_data]')
+        # self.js_signal.emit(p.toPlainText())
         
         #jstest
         jscript = """
@@ -87,7 +91,26 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         
         #self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
         self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
-    
+
+    @pyqtSignature("")
+    def on_pick_clear_btn_clicked(self):
+        """
+        清除按钮
+        删除已选点 显示记录
+        :return:
+        """
+        self.pp_testbrowser.clear()
+        jscript = """
+        	    for (var i = 0; i<markers.length ; i++){
+        			map.removeOverlay(markers[i]);
+        		}
+        		markers = [];
+                points = [];
+                p_count = 1;
+                """
+        # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
+        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+
     @pyqtSignature("bool")
     def on_pp_webView_loadFinished(self, p0):
         """
@@ -102,14 +125,26 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
     #test: receive message from yingyanFunc
     def ReiceveStrData(self,strArg):
-        self.pp_testbrowser.append(strArg)
+        # self.ShowInTab(strArg)
+        if self.WAITFLAG is True:
+            data = strArg.split('=')
+            if data[2]=='Y':
+                self.ShowInTab('send success.')
+                self.WAITFLAG = False
+                #test
+                self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
 
     @pyqtSlot(str)
     def receive_from_js(self, str_arg):
         """处理从JS传来的点，格式化后发送到socket.send"""
-        self.ShowInTab(str_arg)
-        self.ShowInTab(" added.")
-        self.processPickData(str_arg[:-1])
+        if self.WAITFLAG is False:
+            self.ShowInTab(str_arg)
+            self.ShowInTab(" added.")
+            self.processPickData(str_arg[:-1])
+            self.WAITFLAG = True
+        else:
+            self.ShowInTab('data sending, please wait...')
+
 
     def processPickData(self, str_data):
         orderId = self.uniqueId()
@@ -118,7 +153,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         print(order)
 
         self.orderDict[orderId] = order
-        self.outsignal.emit(order)
+        self.fromPickPointSignal.emit(order)
 
     def uniqueId(self):
         import datetime

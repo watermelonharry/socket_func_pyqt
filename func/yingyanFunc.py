@@ -18,8 +18,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
     """
     Class documentation goes here.
     """
-    toGpsUploaderSignal = pyqtSignal(str)
-    def __init__(self, parent=None, updateMainSignal = None, recDataSignal = None):
+    def __init__(self, parent=None, updateMainSignal = None, recDataSignal = None, toPickSignal = None):
         """
         Constructor
         
@@ -31,10 +30,13 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         #SIGNALS used to update main window
         self.updateMainSignal = updateMainSignal
         #SIGNALS used to receive data
-        self.recDataSignal = recDataSignal
-        self.recDataSignal.connect(self.update_status)
+        self.toYingyanFuncSignal = recDataSignal
+        self.toYingyanFuncSignal.connect(self.ExtractCommandData)
+        #发送至pickFunc
+        self.toPickPointSignal= toPickSignal
+
         #upload data to BAIDU
-        self.uploader = GpsUploader(self.updateMainSignal, self.toGpsUploaderSignal)
+        # self.uploader = GpsUploader(self.updateMainSignal, self.toGpsUploaderSignal)
     
     @pyqtSignature("")
     def on_web_emit_btn_clicked(self):
@@ -43,7 +45,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         """
         self.updateMainSignal.emit('emit btn clicked')
 
-    def update_status(self, str_arg):
+    def update_status(self, str_arg, argList):
         #the str_arg includes all data, will be processed first
         #(longitude, latitude, time) will be pass to gps_loader and upload to BAIDU
         #other info will be pass to local textbrowser
@@ -51,7 +53,6 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
 
         self.web_time_label.setText(str(time.asctime()).split(' ')[3])
 
-        argList = self.ExtractCommandData(str_arg)
         self.web_recdata_label.setText(str_arg)
 
         if argList is not None:
@@ -67,6 +68,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         pass
 
     def ExtractCommandData(self, strArg):
+        strArg = str(strArg)
         data = strArg.split('=')
         argList = [data[0],data[1]]
         if str(reduce(lambda x,y: chr(ord(x)^ord(y)), list('='.join(data[:-1]) + '='))) == data[-1]:
@@ -76,6 +78,8 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     argList.append(data[3])     #latitude
                     argList.append(data[4])     #height
                     argList.append(data[5])     #speed
+
+                    self.update_status(strArg,argList)
                 else:
                     #todo: wrong heartbeat info
                     argList = None
@@ -94,10 +98,18 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
 
                 if data[1] == 'D':      #command 4
                     #todo: set points
-                    pass
+                    self.SendToPickFunc(strArg)
                 else:
                     argList = None
         else:
             argList = None
 
-        return argList
+
+    def SendToPickFunc(self,strArg):
+        """
+        发送至pickFunc
+        """
+        #test
+        self.updateMainSignal.emit('yinyan-to pickpiont:' + str(strArg)[:-1])
+
+        self.toPickPointSignal.emit(strArg)

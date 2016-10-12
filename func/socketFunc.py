@@ -171,12 +171,13 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.log = log.logfile('log_socke_func')
         self.orderDict = {}
         if self.log is not None:
-            self.log.write('enter-socketFuc-class-INIT-'+  str(self))
+            with QMutexLocker(self.mutex):
+                self.log.write('enter-socketFuc-class-INIT-'+  str(self))
 
         self.updateMainSignal.connect(self.say_hi)
         self.fromSocketfuncSignal.connect(self.sockToYingyan)
         #try to make sub dialog constant
-        self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal)
+        self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal, toPickSignal= self.toPickPointSignal)
 
         self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal)
         self.fromPickPointSignal.connect(self.processPickData)
@@ -195,7 +196,8 @@ class SocketFunc(QDialog, Ui_SocketUi):
         except Exception as e:
             self.sock_show_tb.append('<ERROR: invalid input from client>')
         ##add log
-        self.log.write(str(words))
+        with QMutexLocker(self.mutex):
+            self.log.write(str(words))
 
     def processPickData(self,  str_data):
         """处理来自pickPoint窗口的格式化数据（转发至socket.send）"""
@@ -314,3 +316,16 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.say_hi('close button clicked')
         #self.sock.stop_tcp_server()
         self.sock.close()
+
+    def xorFormat(self, str_arg):
+        return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))    \
+
+    @pyqtSignature("")
+    def on_sock_test_btn_clicked(self):
+        """
+        测试按钮
+        """
+        #test
+        self.updateMainSignal.emit('test btn clicked')
+        testStr = '1=D=Y='
+        self.sockToYingyan(testStr + self.xorFormat(testStr))

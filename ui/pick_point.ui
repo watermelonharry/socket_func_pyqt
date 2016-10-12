@@ -10,8 +10,14 @@
     <height>632</height>
    </rect>
   </property>
+  <property name="cursor">
+   <cursorShape>CrossCursor</cursorShape>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>地图选点</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -24,6 +30,12 @@
      <width>891</width>
      <height>631</height>
     </rect>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
    </property>
    <property name="url">
     <url>
@@ -41,7 +53,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pp_button">
+  <widget class="QPushButton" name="pick_send_btn">
    <property name="geometry">
     <rect>
      <x>390</x>
@@ -51,7 +63,62 @@
     </rect>
    </property>
    <property name="text">
-    <string>get</string>
+    <string>确定</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pick_clear_btn">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>540</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>清除</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pick_refresh_btn">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>570</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>刷新</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pick_path_btn">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>510</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>轨迹模式</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pick_obstacle_btn">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>540</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
+   </property>
+   <property name="text">
+    <string>障碍模式</string>
    </property>
   </widget>
  </widget>
@@ -63,5 +130,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pick_refresh_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>pp_webView</receiver>
+   <slot>reload()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>427</x>
+     <y>581</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>445</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

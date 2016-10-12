@@ -79,6 +79,9 @@ class Ui_SocketUi(object):
         self.sock_pickPoint_btn.setGeometry(QtCore.QRect(30, 330, 75, 23))
         self.sock_pickPoint_btn.setCheckable(False)
         self.sock_pickPoint_btn.setObjectName(_fromUtf8("sock_pickPoint_btn"))
+        self.sock_test_btn = QtGui.QPushButton(SocketUi)
+        self.sock_test_btn.setGeometry(QtCore.QRect(630, 180, 71, 28))
+        self.sock_test_btn.setObjectName(_fromUtf8("sock_test_btn"))
 
         self.retranslateUi(SocketUi)
         QtCore.QObject.connect(self.sock_quit_btn, QtCore.SIGNAL(_fromUtf8("clicked()")), SocketUi.close)
@@ -99,6 +102,7 @@ class Ui_SocketUi(object):
         self.sock_quit_btn.setText(_translate("SocketUi", "退出", None))
         self.sock_ip.setText(_translate("SocketUi", "localhost:9876", None))
         self.sock_pickPoint_btn.setText(_translate("SocketUi", "地图选点", None))
+        self.sock_test_btn.setText(_translate("SocketUi", "测试", None))
 
 
 if __name__ == "__main__":
