@@ -2,10 +2,10 @@
 import time
 from PyQt4.QtCore import QThread, QMutex, QMutexLocker
 import threading
-import requests
+import requests, os
 
 ##config file path
-CONFIG_PATH = 'C:\\local\\gps_config.dat'
+CONFIG_PATH = '/'.join(os.getcwd().split('\\')) + '/websrc/gps_config.dat'
 CONFIG_URL = 'http://api.map.baidu.com/trace/v2/track/addpoint'
 ##input : str 'year month day hour minute sec' in decimal
 ##return : int(UNIX_TIMESTAMP)
@@ -37,7 +37,7 @@ def current_unix():
 
 #class GpsUploader(threading.Thread):
 class GpsUploader(QThread):
-    GPSmutex = QMutex()
+    GPSMutex = QMutex()
     
     def __init__(self, upsignal = None,  downsignal = None):
         super(GpsUploader, self).__init__()

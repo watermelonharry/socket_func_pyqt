@@ -4,7 +4,9 @@
 Module implementing YingyanFunc.
 """
 
-from PyQt4.QtCore import pyqtSignature,  pyqtSignal
+from PyQt4.QtCore import pyqtSignature,  pyqtSignal, QUrl
+from PyQt4 import QtCore
+_fromUtf8 = QtCore.QString.fromUtf8
 from PyQt4.QtGui import QDialog
 from PyQt4 import QtGui
 
@@ -12,6 +14,7 @@ from package.gpsuploader import GpsUploader
 
 from ui.Ui_yingyan_web import Ui_yingyan_web
 import time
+import os
 
 
 class YingyanFunc(QDialog, Ui_yingyan_web):
@@ -26,6 +29,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         @type QWidget
         """
         QDialog.__init__(self, parent)
+
         self.setupUi(self)
         #SIGNALS used to update main window
         self.updateMainSignal = updateMainSignal
@@ -36,7 +40,9 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         self.toPickPointSignal= toPickSignal
 
         #upload data to BAIDU
-        # self.uploader = GpsUploader(self.updateMainSignal, self.toGpsUploaderSignal)
+        self.uploader = GpsUploader()
+        import os
+        self.webView.setUrl(QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/yinyandemo/index.html")))
     
     @pyqtSignature("")
     def on_web_emit_btn_clicked(self):

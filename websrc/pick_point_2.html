@@ -78,9 +78,9 @@
 	}
 
 	function pick_one_obstacle(e){
-		var myIcon = new BMap.Icon("C:\\local\\components\\markers.png", new BMap.Size(23, 25), {
+		var myIcon = new BMap.Icon("components\\markers.png", new BMap.Size(23, 25), {
             // 指定定位位置
-            offset: new BMap.Size(10, 25),
+            anchor: new BMap.Size(10, 25),
             // 当需要从一幅较大的图片中截取某部分作为标注图标时，需要指定大图的偏移位置   
             imageOffset: new BMap.Size(0, 0 - 10 * 25) // 设置图片偏移  
         });

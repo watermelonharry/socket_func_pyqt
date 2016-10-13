@@ -39,7 +39,7 @@
    </property>
    <property name="url">
     <url>
-     <string>file:///C:/local/pick_point_2.html</string>
+     <string>file:///C:/Users/Harry/Documents/PyQtProjects/DemoSocket/socket_func_pyqt/websrc/pick_point_2.html</string>
     </url>
    </property>
   </widget>

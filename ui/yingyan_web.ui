@@ -38,12 +38,12 @@
    </property>
    <property name="font">
     <font>
-     <family>Adobe Arabic</family>
+     <family>Agency FB</family>
     </font>
    </property>
    <property name="url">
     <url>
-     <string>file:///C:/local/yinyandemo/index.html</string>
+     <string>about:blank</string>
     </url>
    </property>
   </widget>

@@ -168,7 +168,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.mode = 'TCP'
 
         self.mutex = QMutex()
-        self.log = log.logfile('log_socke_func')
+        self.log = log.logfile('log')
         self.orderDict = {}
         if self.log is not None:
             with QMutexLocker(self.mutex):

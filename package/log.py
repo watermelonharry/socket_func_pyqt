@@ -2,7 +2,11 @@
 import os
 import time
 
-PATH = None
+if __name__ != '__main__':
+    import os
+    PATH = '/'.join(os.getcwd().split('\\'))+'/log/'
+else:
+    PATH = ''
 PRINT = True
 
 class logfile(object):
@@ -24,7 +28,7 @@ class logfile(object):
             else:
                 self._file.write(time.ctime()+'--'+ str(loglist)+'\n')
         else:
-            self.say('creat file first!')
+            self.say('create file first!')
 
         self.done()
 
@@ -34,7 +38,7 @@ class logfile(object):
 
     def open(self):
         try:
-            self._file = open(self._filename, self._mode)
+            self._file = open(PATH+self._filename, self._mode)
             #self.say('log file opened')
         except Exception as e:
             self._file = None
@@ -44,8 +48,8 @@ class logfile(object):
         self.done()
         self._mode = mode
         try:
-            self._file = open(self._filename, self._mode)
-            self.say('log file creat')
+            self._file = open(PATH+ self._filename, self._mode)
+            self.say('log file create')
         except Exception as e:
             self._file = None
             self.say(str(e))
