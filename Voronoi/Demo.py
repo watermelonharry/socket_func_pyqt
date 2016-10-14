@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import Tkinter as tk
 import numpy as np
 from Voronoi import Voronoi
