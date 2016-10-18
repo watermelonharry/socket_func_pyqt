@@ -3,6 +3,7 @@
 """
 Module implementing PickPoint_func.
 """
+from Voronoi import Voronoi
 
 from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot
 from PyQt4.QtGui import QDialog,  QMessageBox
@@ -28,6 +29,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.setupUi(self)
         self.js_signal.connect(self.ShowInTab)
         self.points = []
+        self.lines = []
         #输入信号
         self.toPickPointSignal = downsignal
         #输出信号
@@ -61,15 +63,15 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     #input str_arg: longi-lati
     def add_one_point_js(self, str_arg):
         
-        self.points.append(str_arg.split('-'))
-        self.pp_testbrowser.append('point '+ str(len(self.points))+' added:'+str_arg)
+        # self.points.append(str_arg.split('-'))
+        self.pp_testbrowser.append('point added:'+str_arg)
     
-    @pyqtSlot(str)
-    #input str_arg: point number
-    def delete_one_point_js(self, str_arg):
-        
-        delete_p = list(self.points.pop(len(self.points) -1))
-        self.pp_testbrowser.append('point '+ str(len(self.points) +1)+' deleted:'+ str(delete_p[0]) + '-' + str(delete_p[1]))
+    # @pyqtSlot(str)
+    # #input str_arg: point number
+    # def delete_one_point_js(self, str_arg):
+    #
+    #     delete_p = list(self.points.pop(len(self.points) -1))
+    #     self.pp_testbrowser.append('point '+ str(len(self.points) +1)+' deleted:'+ str(delete_p[0]) + '-' + str(delete_p[1]))
         
     @pyqtSignature("")
     def on_pick_send_btn_clicked(self):
@@ -118,6 +120,22 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
         self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
 
+    @pyqtSignature("")
+    def on_pick_showPath_btn_clicked(self):
+        """
+        生成轨迹按钮
+        :return:
+        """
+        ptest = (120.131971, 30.272011)
+        jscript = """
+        var testp = new BMap.Point(120.131971, 30.272011);
+        map.centerAndZoom(testp, 17);
+        var testmarker = new BMap.Marker(testp);
+        map.addOverlay(testmarker);
+        """
+        # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
+        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+
     @pyqtSignature("bool")
     def on_pp_webView_loadFinished(self, p0):
         """
@@ -155,6 +173,16 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
     def processPickData(self, str_data):
         orderId = self.uniqueId()
+
+        for pointTuple in str_data.split('=')[1:]:
+            plist = pointTuple.split('|')
+            plongi,plati = float(plist[0]), float(plist[1])
+            self.points.append((plongi,plati))
+        vp = Voronoi(self.points)
+        vp.process()
+        self.lines = vp.get_output()
+
+
         order = orderId + '=D=' + str_data +"="
         order += self.xorFormat(order)
         print(order)

@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>887</width>
-    <height>632</height>
+    <height>631</height>
    </rect>
   </property>
   <property name="cursor">
-   <cursorShape>CrossCursor</cursorShape>
+   <cursorShape>ArrowCursor</cursorShape>
   </property>
   <property name="contextMenuPolicy">
    <enum>Qt::NoContextMenu</enum>
@@ -30,6 +30,9 @@
      <width>891</width>
      <height>631</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
    </property>
    <property name="mouseTracking">
     <bool>true</bool>
@@ -119,6 +122,19 @@
    </property>
    <property name="text">
     <string>障碍模式</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pick_showPath_btn">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>570</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>显示轨迹</string>
    </property>
   </widget>
  </widget>

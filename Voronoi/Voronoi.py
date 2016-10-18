@@ -18,12 +18,20 @@ class Voronoi:
         self.x1 = -50.0
         self.y0 = 550.0
         self.y1 = 550.0
+        self.START = True
 
         # insert points to site event
         for pts in points:
             point = Point(pts[0], pts[1])
             self.points.push(point)
             # keep track of bounding box size
+            if self.START is True:
+                self.x0 = point.x
+                self.x1 = point.x
+                self.y0 = point.y
+                self.y1 = point.y
+                self.START = False
+
             if point.x < self.x0: self.x0 = point.x
             if point.y < self.y0: self.y0 = point.y
             if point.x > self.x1: self.x1 = point.x

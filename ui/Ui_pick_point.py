@@ -25,12 +25,13 @@ except AttributeError:
 class Ui_PickPoint(object):
     def setupUi(self, PickPoint):
         PickPoint.setObjectName(_fromUtf8("PickPoint"))
-        PickPoint.resize(887, 632)
-        PickPoint.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
+        PickPoint.resize(887, 631)
+        PickPoint.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         PickPoint.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
         PickPoint.setSizeGripEnabled(True)
         self.pp_webView = QtWebKit.QWebView(PickPoint)
         self.pp_webView.setGeometry(QtCore.QRect(0, 0, 891, 631))
+        self.pp_webView.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.pp_webView.setMouseTracking(True)
         self.pp_webView.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
         self.pp_webView.setUrl(QtCore.QUrl(_fromUtf8("file:///C:/Users/Harry/Documents/PyQtProjects/DemoSocket/socket_func_pyqt/websrc/pick_point_2.html")))
@@ -54,6 +55,9 @@ class Ui_PickPoint(object):
         self.pick_obstacle_btn.setGeometry(QtCore.QRect(300, 540, 75, 23))
         self.pick_obstacle_btn.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.pick_obstacle_btn.setObjectName(_fromUtf8("pick_obstacle_btn"))
+        self.pick_showPath_btn = QtGui.QPushButton(PickPoint)
+        self.pick_showPath_btn.setGeometry(QtCore.QRect(300, 570, 75, 23))
+        self.pick_showPath_btn.setObjectName(_fromUtf8("pick_showPath_btn"))
 
         self.retranslateUi(PickPoint)
         QtCore.QObject.connect(self.pick_refresh_btn, QtCore.SIGNAL(_fromUtf8("clicked()")), self.pp_webView.reload)
@@ -66,6 +70,7 @@ class Ui_PickPoint(object):
         self.pick_refresh_btn.setText(_translate("PickPoint", "刷新", None))
         self.pick_path_btn.setText(_translate("PickPoint", "轨迹模式", None))
         self.pick_obstacle_btn.setText(_translate("PickPoint", "障碍模式", None))
+        self.pick_showPath_btn.setText(_translate("PickPoint", "显示轨迹", None))
 
 from PyQt4 import QtWebKit
 
