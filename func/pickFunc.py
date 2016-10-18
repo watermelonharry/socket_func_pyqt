@@ -3,7 +3,7 @@
 """
 Module implementing PickPoint_func.
 """
-from Voronoi import Voronoi
+from Voronoi.Voronoi import Voronoi
 
 from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot
 from PyQt4.QtGui import QDialog,  QMessageBox
@@ -29,7 +29,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.setupUi(self)
         self.js_signal.connect(self.ShowInTab)
         self.points = []
-        self.lines = []
+        self.lines = None
         #输入信号
         self.toPickPointSignal = downsignal
         #输出信号
@@ -126,13 +126,13 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         生成轨迹按钮
         :return:
         """
-        ptest = (120.131971, 30.272011)
+        ptest = (120.13143165691, 30.272977524721)
         jscript = """
-        var testp = new BMap.Point(120.131971, 30.272011);
+        var testp = new BMap.Point(%f, %f);
         map.centerAndZoom(testp, 17);
         var testmarker = new BMap.Marker(testp);
         map.addOverlay(testmarker);
-        """
+        """%ptest
         # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
         self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
 
