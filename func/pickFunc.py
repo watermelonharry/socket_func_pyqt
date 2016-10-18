@@ -29,7 +29,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.setupUi(self)
         self.js_signal.connect(self.ShowInTab)
         self.points = []
-        self.lines = []
+        self.lines = None
         #输入信号
         self.toPickPointSignal = downsignal
         #输出信号
