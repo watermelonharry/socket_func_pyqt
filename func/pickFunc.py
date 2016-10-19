@@ -3,7 +3,7 @@
 """
 Module implementing PickPoint_func.
 """
-from Voronoi import Voronoi
+from Voronoi.Voronoi import Voronoi
 
 from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot
 from PyQt4.QtGui import QDialog,  QMessageBox
@@ -126,15 +126,40 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         生成轨迹按钮
         :return:
         """
-        ptest = (120.131971, 30.272011)
+        # ptest = (120.131971, 30.272011)
+        # jscript = """
+        # var testp = new BMap.Point(%f,%f);
+        # map.centerAndZoom(testp, 17);
+        # var testmarker = new BMap.Marker(testp);
+        # map.addOverlay(testmarker);
+        # """ %ptest
+        # # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
+        # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+
+     #    for line in self.lines:
+     #        point1 = (line[0], line[1])
+     #        point2 = (line[2], line[3])
+     #        jscrpit = """
+     #    var polyline = new BMap.Polyline([
+	# 	new BMap.Point(%f, %f),
+	# 	new BMap.Point(%f, %f),
+	# ], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+    #
+	#     map.addOverlay(polyline);   //增加折线
+     #    """%(line[0], line[1], line[2], line[3])
+     #        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+     #
+     #
         jscript = """
-        var testp = new BMap.Point(120.131971, 30.272011);
-        map.centerAndZoom(testp, 17);
-        var testmarker = new BMap.Marker(testp);
-        map.addOverlay(testmarker);
-        """
-        # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
+        var polyline = new BMap.Polyline([
+		new BMap.Point(120.13143165691, 30.272977524721),
+		new BMap.Point(120.14143165691, 30.282977524721),
+	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+
+	    map.addOverlay(polyline);   //增加折线
+	    """
         self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+
 
     @pyqtSignature("bool")
     def on_pp_webView_loadFinished(self, p0):
