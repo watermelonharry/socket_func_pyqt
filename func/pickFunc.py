@@ -87,7 +87,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         var count = markers.length;
         var pass_buffer = "";
 	    for (var i = 0; i<markers.length ; i++){
-			map.removeOverlay(markers[i]);
+			//map.removeOverlay(markers[i]);
             pass_buffer += String(points[i].lng) + "|" +String(points[i].lat) + "=";
 		}
 		pass_buffer = String(markers.length) + "=" + pass_buffer
@@ -150,14 +150,28 @@ class PickPointfunc(QDialog, Ui_PickPoint):
      #        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
      #
      #
+        try:
+            lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
+        except Exception as e:
+            print(e.message)
         jscript = """
-        var polyline = new BMap.Polyline([
-		new BMap.Point(120.13143165691, 30.272977524721),
-		new BMap.Point(120.14143165691, 30.282977524721),
+        var lineMarkers = [];
+        var lineData = "%s";
+        var lineList = lineData.split("=");
+        //document.write(lineData + "<br />");
+        //document.write(lineList[0] + "<br />");
+
+        for (var i = 0; i<lineList.length ; i++){
+			var lines = lineList[i].split("|");
+			var polyline = new BMap.Polyline([
+		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
+		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
 	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
 
-	    map.addOverlay(polyline);   //增加折线
-	    """
+	        map.addOverlay(polyline);   //增加折线
+		}
+
+	    """%lineData
         self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
 
 
@@ -203,7 +217,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             plist = pointTuple.split('|')
             plongi,plati = float(plist[0]), float(plist[1])
             self.points.append((plongi,plati))
-        vp = Voronoi(self.points)
+
+        vp = Voronoi(self.points[:])
         vp.process()
         self.lines = vp.get_output()
 

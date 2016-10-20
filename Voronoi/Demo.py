@@ -73,6 +73,10 @@ class MainWindow:
             self.drawLinesOnCanvas(lines, tag = 'Voro')
             
             print(lines)
+            # # 测试用
+            # p2 = self.pointOnLine(points[0][0], points[0][1], lines[0][0],lines[0][1],lines[0][2],lines[0][3])
+            # self.w.create_line(points[0][0], points[0][1], p2[0], p2[1], fill='red', tag=None)
+
 
     def onClickCalculateDelau(self):
         pObj = self.w.find_all()
@@ -115,6 +119,14 @@ class MainWindow:
             if point.x >= self.width or point.x <= 0 or point.y >= self.width or point.y <= 0:
                 return None
         self.w.create_polygon(poly.a.x, poly.a.y, poly.b.x, poly.b.y, poly.c.x, poly.c.y, fill = '', outline = 'black', tag = tag)
+
+    def pointOnLine(self, m, n, x1, y1, x2, y2):
+        px = (m * (x2 - x1) ** 2 + n * (y2 - y1) * (x2 - x1) + (x1 * y2 - x2 * y1) * (y2 - y1)) / (
+        (x2 - x1) ** 2 + (y2 - y1) ** 2 + 0.0000001)
+
+        py = (m * (x2 - x1) * (y2 - y1) + n * (y2 - y1) ** 2 + (x2 * y1 - x1 * y2) * (x2 - x1)) / (
+        (x2 - x1) ** 2 + (y2 - y1) ** 2 + 0.0000001)
+        return (px, py)
 
 def main(): 
     root = tk.Tk()

@@ -111,9 +111,29 @@
 		js_buffer.add_one_point_js(String(e.point.lng) + "-"+ String(e.point.lat));
 	}
 
+	function testFunc(e){
+
+        var lineMarkers = [];
+        var lineData = "120.123191857|30.273633|171.169447106|-19.3816913406=120.123191857|30.273633|120.099686479|30.2964978935=120.126175011|30.279434|120.166030313|30.2537592433=120.126175011|30.279434|120.099686479|30.2964978935=120.099686479|30.2964978935|-309.946743008|376.827428592=120.132271405|30.28617|120.166030313|30.2537592433=120.132271405|30.28617|-196.34073351|334.120926945=120.166030313|30.2537592433|173.530946759|-13.1805238718";
+        var lineList = lineData.split("=");
+        //document.write(lineData + "<br />");
+        //document.write(lineList[0] + "<br />");
+
+        for (var i = 0; i<lineList.length ; i++){
+			var lines = lineList[i].split("|");
+			var polyline = new BMap.Polyline([
+		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
+		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
+	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+
+	        map.addOverlay(polyline);   //增加折线
+		}
+	}
+
 
 	map.addEventListener("click", pick_one_path);
-	map.addEventListener("rightclick", pick_one_obstacle);
+	//map.addEventListener("rightclick", pick_one_obstacle);
+	map.addEventListener("rightclick", testFunc);
 
 
 
