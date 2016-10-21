@@ -106,20 +106,71 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     def on_pick_clear_btn_clicked(self):
         """
         清除按钮
-        删除已选点 显示记录
+        删除已选点 路径记录 地图显示记录
         :return:
         """
         self.pp_testbrowser.clear()
+        self.WAITFLAG = False
+        self.points = []
+        self.lines = None
+
         jscript = """
-        	    for (var i = 0; i<markers.length ; i++){
-        			map.removeOverlay(markers[i]);
-        		}
+        	    map.clearOverlays();
         		markers = [];
                 points = [];
                 p_count = 1;
+                var lineMarkers = []; //路径集合
+	            var linePoints = []; //路径点集合
                 """
         # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
         self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+
+    @pyqtSignature("")
+    def on_pick_path_btn_clicked(self):
+        """
+        轨迹模式按钮
+        :return:
+        """
+        #TODO 暂时用于测试路径
+        rec = Rectangular(lineList=self.lines, startPoint=self.points[0], endPoint=self.points[1])
+        rec.process()
+        self.lines = rec.output()
+
+
+        try:
+            lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
+        except Exception as e:
+            print(e.message)
+        jscript = """
+                var lineMarkers = [];
+                var lineData = "%s";
+                var lineList = lineData.split("=");
+                //document.write(lineData + "<br />");
+                //document.write(lineList[0] + "<br />");
+
+                for (var i = 0; i<lineList.length ; i++){
+        			var lines = lineList[i].split("|");
+        			var polyline = new BMap.Polyline([
+        		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
+        		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
+        	], {strokeColor:"red", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+
+        	        map.addOverlay(polyline);   //增加折线
+        		}
+
+        	    """ % lineData
+        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+
+        pass
+
+    @pyqtSignature("")
+    def on_pick_obstacle_btn_clicked(self):
+        """
+        障碍模式按钮
+        :return:
+        """
+        #TODO 暂时用于测试路径
+        pass
 
     @pyqtSignature("")
     def on_pick_showPath_btn_clicked(self):
@@ -127,30 +178,6 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         生成轨迹按钮
         :return:
         """
-        # ptest = (120.131971, 30.272011)
-        # jscript = """
-        # var testp = new BMap.Point(%f,%f);
-        # map.centerAndZoom(testp, 17);
-        # var testmarker = new BMap.Marker(testp);
-        # map.addOverlay(testmarker);
-        # """ %ptest
-        # # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
-        # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
-
-     #    for line in self.lines:
-     #        point1 = (line[0], line[1])
-     #        point2 = (line[2], line[3])
-     #        jscrpit = """
-     #    var polyline = new BMap.Polyline([
-	# 	new BMap.Point(%f, %f),
-	# 	new BMap.Point(%f, %f),
-	# ], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
-    #
-	#     map.addOverlay(polyline);   //增加折线
-     #    """%(line[0], line[1], line[2], line[3])
-     #        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
-     #
-     #
         try:
             lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
         except Exception as e:
@@ -188,6 +215,10 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         #QMessageBox.about(self,u"success", "<loading map finished>\n<ready for next operation>")
         self.updateMainSignal.emit('Loading map done...')
 
+    def ClearMapCovers(self):
+        self.on_pick_clear_btn_clicked()
+
+
     #test: receive message from yingyanFunc
     def ReiceveStrData(self,strArg):
         # self.ShowInTab(strArg)
@@ -196,8 +227,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             if data[2]=='Y':
                 self.ShowInTab('send success.')
                 self.WAITFLAG = False
+                self.points = []
+                self.lines = None
                 #test
                 self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
+                self.ClearMapCovers()
 
     @pyqtSlot(str)
     def receive_from_js(self, str_arg):
@@ -222,9 +256,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         vp = Voronoi(self.points[:])
         vp.process()
         self.lines = vp.getOutput()
-        rec = Rectangular(lineList= self.lines, startPoint =self.points[0],endPoint= self.points[1])
-        rec.process()
-        self.lines = rec.output()
+        # rec = Rectangular(lineList= self.lines, startPoint =self.points[0],endPoint= self.points[1])
+        # rec.process()
+        # self.lines = rec.output()
 
 
         order = orderId + '=D=' + str_data +"="

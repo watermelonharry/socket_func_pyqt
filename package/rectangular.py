@@ -13,56 +13,71 @@ class Rectangular:
         self.lines = lineList
         self.startPoint = startPoint
         self.endPoint = endPoint
-        self.resLines = copy.deepcopy(lineList)
+        self.resLines = []
 
     def process(self):
         startRecord = []
         endRecord = []
-        for singleLine in self.lines:
-            #计算起始点到线段的投影点和距离
-            crossPoint, distance = self.pointOnLine(*(self.startPoint + singleLine))
+        lineDict = {}
+        for i in range(0,len(self.lines)):
+            lineDict[i] = self.lines[i]
+            # 计算起始点到线段的投影点和距离
+            crossPoint, distance = self.pointOnLine(*(self.startPoint + self.lines[i]))
             if crossPoint is not None:
-                startRecord.append((distance,crossPoint,singleLine))
-            #计算终点到线段的投影点和距离
-            crossPoint, distance = self.pointOnLine(*(self.endPoint + singleLine))
+                startRecord.append((distance, crossPoint, i))
+            # 计算终点到线段的投影点和距离
+            crossPoint, distance = self.pointOnLine(*(self.endPoint + self.lines[i]))
             if crossPoint is not None:
-                endRecord.append((distance,crossPoint,singleLine))
+                endRecord.append((distance, crossPoint, i))
+
+
 
         #按照距离排序
-        if startRecord is not None:
-            startRecord.sort(key = lambda x:x[0])
+        if startRecord is not None and len(startRecord) != 0:
+            try:
+                startRecord.sort(key = lambda x:x[0])
 
-            # 取出最近的投影点，更新lines数组
-            record = startRecord[0]
-            pointOnLine = record[1]
-            oldLine = record[2]
-            self.resLines.remove(oldLine)
-            self.resLines.append(self.startPoint + pointOnLine)
-            self.resLines += self.createNewLine(pointOnLine, oldLine)
+                # 取出最近的投影点，更新lines数组
+                record = startRecord[0]
+                pointOnLine = record[1]
+                oldLineKey = record[2]
+                oldLine = lineDict.pop(oldLineKey)
+
+                self.resLines.append(self.startPoint + pointOnLine)
+                self.resLines += self.createNewLine(pointOnLine, oldLine)
+            except Exception as e:
+                print('error in rectangular.process:', e.message)
 
         # 按照距离排序
-        if endRecord is not None:
-            endRecord.sort(key = lambda x:x[0])
+        if endRecord is not None and len(endRecord) != 0:
+            try:
+                endRecord.sort(key = lambda x:x[0])
 
-            # 取出最近的投影点，更新lines数组
-            record = endRecord[0]
-            pointOnLine = record[1]
-            oldLine = record[2]
-            self.resLines.remove(oldLine)
-            self.resLines.append(self.endPoint+pointOnLine)
-            self.resLines += self.createNewLine(pointOnLine, oldLine)
+                # 取出最近的投影点，更新lines数组
+                record = endRecord[0]
+                pointOnLine = record[1]
+                oldLineKey = record[2]
+                oldLine = lineDict.pop(oldLineKey)
+
+                self.resLines.append(self.endPoint + pointOnLine)
+                self.resLines += self.createNewLine(pointOnLine, oldLine)
+            except Exception as e:
+                print('error in rectangular.process:', e.message)
+
+        for (k, v) in lineDict.items():
+            self.resLines.append(v)
 
     def output(self):
         return self.resLines
 
     def createNewLine(self, point, line):
-        resLines = []
+        res = []
         try:
-            resLines.append(point+(line[0],line[1]))
-            resLines.append(point+(line[2],line[3]))
+            res.append(point+(line[0],line[1]))
+            res.append(point+(line[2],line[3]))
         except Exception as e:
             print ('error in rectangular.createNewLine:' + e.message)
-        return resLines
+        return res
 
     def pointOnLine(self, m,n,x1,y1,x2,y2):
         px = (m*(x2-x1)**2 + n*(y2-y1)*(x2-x1) + (x1*y2 - x2*y1)*(y2 - y1)) / ((x2-x1)**2 + (y2 -y1)**2 + 0.0000001)
