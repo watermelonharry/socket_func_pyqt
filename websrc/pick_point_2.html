@@ -124,7 +124,7 @@
 			var polyline = new BMap.Polyline([
 		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
 		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
-	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+	], {strokeColor:"yellow", strokeWeight:2, strokeOpacity:0.5});   //创建折线
 
 	        map.addOverlay(polyline);   //增加折线
 		}
@@ -132,7 +132,7 @@
 
 
 	map.addEventListener("click", pick_one_path);
-	//map.addEventListener("rightclick", pick_one_obstacle);
+	//ymap.addEventListener("rightclick", pick_one_obstacle);
 	map.addEventListener("rightclick", testFunc);
 
 

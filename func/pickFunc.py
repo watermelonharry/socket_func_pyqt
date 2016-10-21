@@ -4,6 +4,7 @@
 Module implementing PickPoint_func.
 """
 from Voronoi.Voronoi import Voronoi
+from package.rectangular import Rectangular
 
 from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot
 from PyQt4.QtGui import QDialog,  QMessageBox
@@ -166,7 +167,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 			var polyline = new BMap.Polyline([
 		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
 		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
-	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+	], {strokeColor:"yellow", strokeWeight:2, strokeOpacity:0.5});   //创建折线
 
 	        map.addOverlay(polyline);   //增加折线
 		}
@@ -220,7 +221,10 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
         vp = Voronoi(self.points[:])
         vp.process()
-        self.lines = vp.get_output()
+        self.lines = vp.getOutput()
+        rec = Rectangular(lineList= self.lines, startPoint =self.points[0],endPoint= self.points[1])
+        rec.process()
+        self.lines = rec.output()
 
 
         order = orderId + '=D=' + str_data +"="

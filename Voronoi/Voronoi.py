@@ -247,7 +247,7 @@ class Voronoi:
             p1 = o.end
             print (p0.x, p0.y, p1.x, p1.y)
 
-    def get_output(self):
+    def getOutput(self):
         res = []
         for o in self.output:
             p0 = o.start
