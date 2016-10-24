@@ -19,18 +19,44 @@ class Rectangular:
         startRecord = []
         endRecord = []
         lineDict = {}
+        washDict = {}
         for i in range(0,len(self.lines)):
+            # 创建直线索引
             lineDict[i] = self.lines[i]
-            # 计算起始点到线段的投影点和距离
-            crossPoint, distance = self.pointOnLine(*(self.startPoint + self.lines[i]))
-            if crossPoint is not None:
-                startRecord.append((distance, crossPoint, i))
-            # 计算终点到线段的投影点和距离
-            crossPoint, distance = self.pointOnLine(*(self.endPoint + self.lines[i]))
-            if crossPoint is not None:
-                endRecord.append((distance, crossPoint, i))
+            # 提取点
+            washDictKey = '|'.join(str(x) for x in lineDict[i][:2])
+            # 将点作为key存入washDict
+            if washDictKey in washDict:
+                washDict[washDictKey][0] += 1
+                washDict[washDictKey][1].append(i)
+            else:
+                washDict[washDictKey] = [1,[i]]
 
+            washDictKey = '|'.join(str(x) for x in lineDict[i][2:])
+            # 将点作为key存入washDict
+            if washDictKey in washDict:
+                washDict[washDictKey][0] += 1
+                washDict[washDictKey][1].append(i)
+            else:
+                washDict[washDictKey] = [1, [i]]
 
+        #删除使用了一次的点
+        for key, value in washDict.items():
+            if value[0] <= 1:
+                for lineDictindex in value[1]:
+                    try:
+                        lineDict.pop(lineDictindex)
+                    except Exception as e:
+                        print('error in rectangular.process:', e.message)
+            else:
+                #计算交点到起始点和终点的距离
+                distance = self.distOfPoints(*(tuple(float(x) for x in key.split('|')) + self.startPoint))
+                startRecord.append((distance, key))
+
+                distance = self.distOfPoints(*(tuple(float(x) for x in key.split('|')) + self.endPoint))
+                endRecord.append((distance, key))
+
+        maxDist = self.distOfPoints(*(self.startPoint + self.endPoint))
 
         #按照距离排序
         if startRecord is not None and len(startRecord) != 0:
@@ -39,31 +65,46 @@ class Rectangular:
 
                 # 取出最近的投影点，更新lines数组
                 record = startRecord[0]
-                pointOnLine = record[1]
-                oldLineKey = record[2]
-                oldLine = lineDict.pop(oldLineKey)
+                nearPoint = tuple(float(x) for x in record[1].split('|'))
+                self.resLines.append(self.startPoint + nearPoint)
 
-                self.resLines.append(self.startPoint + pointOnLine)
-                self.resLines += self.createNewLine(pointOnLine, oldLine)
+                #删除距离大于d = |startpoint, endpoint|的点和线段
+                deleteRecord = [x for x in startRecord if x[0] > maxDist]
+                for singleRecord in deleteRecord:
+                    keyIndex = singleRecord[1]
+                    for lineDictindex in washDict[keyIndex][1]:
+                        try:
+                            lineDict.pop(lineDictindex)
+                        except Exception as e:
+                            print('error in rectangular.process:', e.message)
+
             except Exception as e:
                 print('error in rectangular.process:', e.message)
 
         # 按照距离排序
         if endRecord is not None and len(endRecord) != 0:
             try:
-                endRecord.sort(key = lambda x:x[0])
+                endRecord.sort(key=lambda x: x[0])
 
                 # 取出最近的投影点，更新lines数组
                 record = endRecord[0]
-                pointOnLine = record[1]
-                oldLineKey = record[2]
-                oldLine = lineDict.pop(oldLineKey)
+                nearPoint = tuple(float(x) for x in record[1].split('|'))
+                self.resLines.append(self.endPoint + nearPoint)
 
-                self.resLines.append(self.endPoint + pointOnLine)
-                self.resLines += self.createNewLine(pointOnLine, oldLine)
+                # 删除距离大于d = |startpoint, endpoint|的点和线段
+                deleteRecord = [x for x in startRecord if x[0] > maxDist]
+                for singleRecord in deleteRecord:
+                    keyIndex = singleRecord[1]
+                    for lineDictindex in washDict[keyIndex][1]:
+                        try:
+                            lineDict.pop(lineDictindex)
+                        except Exception as e:
+                            print('error in rectangular.process:', e.message)
+
             except Exception as e:
                 print('error in rectangular.process:', e.message)
 
+        # 加入剩余点
         for (k, v) in lineDict.items():
             self.resLines.append(v)
 
@@ -78,6 +119,9 @@ class Rectangular:
         except Exception as e:
             print ('error in rectangular.createNewLine:' + e.message)
         return res
+
+    def distOfPoints(self,x1,y1,x2,y2):
+        return (x1 - x2)**2 + (y1 - y2)**2
 
     def pointOnLine(self, m,n,x1,y1,x2,y2):
         px = (m*(x2-x1)**2 + n*(y2-y1)*(x2-x1) + (x1*y2 - x2*y1)*(y2 - y1)) / ((x2-x1)**2 + (y2 -y1)**2 + 0.0000001)
