@@ -40,7 +40,7 @@ class Rectangular:
             else:
                 washDict[washDictKey] = [1, [i]]
 
-        #删除使用了一次的点
+        #删除使用了一次的点,越界的点，CHINA：longi-50-150，lati，0-60
         for key, value in washDict.items():
             if value[0] <= 1:
                 for lineDictindex in value[1]:
@@ -56,7 +56,7 @@ class Rectangular:
                 distance = self.distOfPoints(*(tuple(float(x) for x in key.split('|')) + self.endPoint))
                 endRecord.append((distance, key))
 
-        maxDist = self.distOfPoints(*(self.startPoint + self.endPoint))
+        maxDist = 4*self.distOfPoints(*(self.startPoint + self.endPoint))
 
         #按照距离排序
         if startRecord is not None and len(startRecord) != 0:
@@ -92,7 +92,7 @@ class Rectangular:
                 self.resLines.append(self.endPoint + nearPoint)
 
                 # 删除距离大于d = |startpoint, endpoint|的点和线段
-                deleteRecord = [x for x in startRecord if x[0] > maxDist]
+                deleteRecord = [x for x in endRecord if x[0] > maxDist]
                 for singleRecord in deleteRecord:
                     keyIndex = singleRecord[1]
                     for lineDictindex in washDict[keyIndex][1]:

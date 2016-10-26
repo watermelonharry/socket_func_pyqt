@@ -4,6 +4,7 @@
 Module implementing PickPoint_func.
 """
 from Voronoi.Voronoi import Voronoi
+from Voronoi import dijkstra
 from package.rectangular import Rectangular
 
 from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot
@@ -131,7 +132,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         轨迹模式按钮
         :return:
         """
-        #TODO 暂时用于测试路径
+        #TODO 暂时用于测试voronoi路径
         rec = Rectangular(lineList=self.lines, startPoint=self.points[0], endPoint=self.points[1])
         rec.process()
         self.lines = rec.output()
@@ -169,7 +170,34 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         障碍模式按钮
         :return:
         """
-        #TODO 暂时用于测试路径
+        #TODO 暂时用于测试dijikstra路径
+        dijktraPath = dijkstra.GetPath(self.lines, self.points[0], self.points[1])
+        self.lines = dijktraPath
+
+        try:
+            lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
+        except Exception as e:
+            print(e.message)
+        jscript = """
+                    var lineMarkers = [];
+                    var lineData = "%s";
+                    var lineList = lineData.split("=");
+                    //document.write(lineData + "<br />");
+                    //document.write(lineList[0] + "<br />");
+
+                    for (var i = 0; i<lineList.length ; i++){
+            			var lines = lineList[i].split("|");
+            			var polyline = new BMap.Polyline([
+            		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
+            		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
+            	], {strokeColor:"white", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+
+            	        map.addOverlay(polyline);   //增加折线
+            		}
+
+            	    """ % lineData
+        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+
         pass
 
     @pyqtSignature("")

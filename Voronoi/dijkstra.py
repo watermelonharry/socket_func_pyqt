@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import sys
-
 
 class Vertex:
     def __init__(self, node):
         self.id = node
         self.adjacent = {}
         # Set distance to infinity for all nodes
-        self.distance = sys.maxint
+        self.distance = 32400.0
         # Mark all nodes unvisited
         self.visited = False
         # Predecessor
@@ -80,6 +78,13 @@ class Graph:
     def get_previous(self, current):
         return self.previous
 
+    def readFromLines(self, lines):
+        """
+        读取直线list结构，保存为
+        :param lines:
+        :return:
+        """
+
 
 def shortest(v, path):
     ''' make shortest path from v.previous'''
@@ -131,38 +136,136 @@ def dijkstra(aGraph, start, target):
         unvisited_queue = [(v.get_distance(), v) for v in aGraph if not v.visited]
         heapq.heapify(unvisited_queue)
 
+def distOfPoints(x1,y1,x2,y2):
+    """
+    计算距离^2
+    :param x1:
+    :param y1:
+    :param x2:
+    :param y2:
+    :return:
+    """
+    if __name__ == '__main__':
+        return (x1 - x2)**2 + (y1 - y2)**2
+    else:
+        return ((x1 - x2)**2 + (y1 - y2)**2) *100000
+
+def GetPath(lines,StartPoint, EndPoint):
+    # 建立index 和 point字典
+
+    # 'x|y': 1
+    pointDict = {}
+    # 1: (x,y)
+    indexDict = {}
+    indexedGraph = Graph()
+    indexCount = 1
+    newLines = []
+    if lines is not None and len(lines) != 0:
+        for singleLine in lines:
+            indexedEdge = []
+            try:
+                #加入line的起点
+                pointDictKey = '|'.join(str(x) for x in singleLine[:2])
+                if pointDictKey not in pointDict:
+                    pointDict[pointDictKey] = indexCount
+                    indexDict[indexCount] = tuple(singleLine[:2])
+                    indexCount += 1
+                    indexedGraph.add_vertex(pointDict[pointDictKey])
+                indexedEdge.append(pointDict[pointDictKey])
+                # 加入line的终点
+                pointDictKey = '|'.join(str(x) for x in singleLine[2:])
+                if pointDictKey not in pointDict:
+                    pointDict[pointDictKey] = indexCount
+                    indexDict[indexCount] = tuple(singleLine[2:])
+                    indexCount += 1
+                    indexedGraph.add_vertex(pointDict[pointDictKey])
+                indexedEdge.append(pointDict[pointDictKey])
+            except Exception as e:
+                print('error in dijkstra.GetPath.create dict:', e.message)
+
+            if len(indexedEdge) == 2:
+                # 加入edge
+                try:
+                    distance = distOfPoints(*(indexDict[indexedEdge[0]] + indexDict[indexedEdge[1]]))
+                    indexedGraph.add_edge(indexedEdge[0], indexedEdge[1], distance)
+                except Exception as e:
+                    print('error in error in dijkstra.GetPath.add edge:',e.message)
+            else:
+                raise ('error in dijkstra.GetPath: invalid line.')
+
+        #计算path
+        try:
+            startIndex = pointDict['|'.join(str(x) for x in StartPoint)]
+            endIndex = pointDict['|'.join(str(x) for x in EndPoint)]
+            dijkstra(indexedGraph, indexedGraph.get_vertex(startIndex), indexedGraph.get_vertex(endIndex))
+
+            target = indexedGraph.get_vertex(endIndex)
+            path = [target.get_id()]
+            shortest(target, path)
+            path = path[::-1]
+
+            for i in range(0,len(path)-1):
+                strPoints = indexDict[path[i]]
+                endPoints = indexDict[path[i+1]]
+                newLines.append(strPoints + endPoints)
+
+            print(path)
+            print (newLines)
+            return newLines
+
+        except Exception as e:
+            print('error in  dijkstra.GetPath:', e.message)
+
+
+
 
 if __name__ == '__main__':
+    # g = Graph()
+    #
+    # g.add_vertex(1)
+    # g.add_vertex(2)
+    # g.add_vertex(3)
+    # g.add_vertex(4)
+    # g.add_vertex(5)
+    # g.add_vertex(6)
+    #
+    # g.add_edge(1, 2, 7)
+    # g.add_edge(1, 3, 9)
+    # g.add_edge(1, 6, 14)
+    # g.add_edge(2, 3, 10)
+    # g.add_edge(2, 4, 15)
+    # g.add_edge(3, 4, 11)
+    # g.add_edge(3, 6, 2)
+    # g.add_edge(4, 5, 6)
+    # g.add_edge(5, 6, 9)
+    #
+    # print 'Graph data:'
+    # for v in g:
+    #     for w in v.get_connections():
+    #         vid = v.get_id()
+    #         wid = w.get_id()
+    #         print '( %s , %s, %3d)' % (vid, wid, v.get_weight(w))
+    #
+    # dijkstra(g, g.get_vertex(1), g.get_vertex(5))
+    #
+    # target = g.get_vertex(5)
+    # path = [target.get_id()]
+    # shortest(target, path)
+    # print 'The shortest path : %s' % (path[::-1])
 
-    g = Graph()
-
-    g.add_vertex('a')
-    g.add_vertex('b')
-    g.add_vertex('c')
-    g.add_vertex('d')
-    g.add_vertex('e')
-    g.add_vertex('f')
-
-    g.add_edge('a', 'b', 7)
-    g.add_edge('a', 'c', 9)
-    g.add_edge('a', 'f', 14)
-    g.add_edge('b', 'c', 10)
-    g.add_edge('b', 'd', 15)
-    g.add_edge('c', 'd', 11)
-    g.add_edge('c', 'f', 2)
-    g.add_edge('d', 'e', 6)
-    g.add_edge('e', 'f', 9)
-
-    print 'Graph data:'
-    for v in g:
-        for w in v.get_connections():
-            vid = v.get_id()
-            wid = w.get_id()
-            print '( %s , %s, %3d)' % (vid, wid, v.get_weight(w))
-
-    dijkstra(g, g.get_vertex('a'), g.get_vertex('e'))
-
-    target = g.get_vertex('e')
-    path = [target.get_id()]
-    shortest(target, path)
-    print 'The shortest path : %s' % (path[::-1])
+    lines = [
+        (0,0,1,-1),
+        (1,-1,2,2),
+        (1,-1,2,0),
+        (2,2,3,1),
+        (2,0,3,-2),
+        (3,1,3,-2),
+        (3,1,4,2),
+        (4,2,5,1),
+        (4,2,5,-1),
+        (3,-2,5,-1),
+        (5,1,5,-1),
+        (5,1,6,0),
+        (5,-1,6,0)
+    ]
+    GetPath(lines,(0,0),(6,0))
