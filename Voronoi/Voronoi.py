@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random
 import math
 
@@ -252,5 +254,9 @@ class Voronoi:
         for o in self.output:
             p0 = o.start
             p1 = o.end
-            res.append((p0.x, p0.y, p1.x, p1.y))
+            # 范围判断 越界的点，CHINA：longi-50-150，lati，0-60
+            if p0.x >50 and p0.x<150 and p0.y>0 and p0.y<60:
+                if p1.x >50 and p1.x<150 and p1.y>0 and p1.y<60:
+                    res.append((p0.x, p0.y, p1.x, p1.y))
+            # res.append((p0.x, p0.y, p1.x, p1.y))
         return res

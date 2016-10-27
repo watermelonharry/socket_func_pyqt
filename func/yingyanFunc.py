@@ -69,9 +69,10 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         else:
             pass
 
-    def uploadGpsData(self,str_arg):
+    def uploadGpsData(self,pointTuple):
         #TODO:发送至gpsuploader并启动上传
-        pass
+        self.uploader.add_point(pointTuple)
+        self.uploader.start()
 
     def ExtractCommandData(self, strArg):
         strArg = str(strArg)
@@ -86,6 +87,8 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     argList.append(data[5])     #speed
 
                     self.update_status(strArg,argList)
+                    #todo: 上传至鹰眼
+                    self.uploadGpsData((data[2],data[3]))
                 else:
                     #todo: wrong heartbeat info
                     argList = None

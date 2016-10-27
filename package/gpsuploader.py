@@ -7,11 +7,13 @@ import requests, os
 ##config file path
 CONFIG_PATH = '/'.join(os.getcwd().split('\\')) + '/websrc/gps_config.dat'
 CONFIG_URL = 'http://api.map.baidu.com/trace/v2/track/addpoint'
-##input : str 'year month day hour minute sec' in decimal
-##return : int(UNIX_TIMESTAMP)
-
 
 def time_to_unix(time_str):
+    """
+    unix时间戳计算
+    :param time_str: str 'year month day hour minute sec' in decimal
+    :return: int(UNIX_TIMESTAMP)
+    """
     try:
         s = time.mktime(time.strptime(time_str, '%Y %m %d %H %M %S'))
         return int(s)

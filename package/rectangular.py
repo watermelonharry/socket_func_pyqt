@@ -40,7 +40,7 @@ class Rectangular:
             else:
                 washDict[washDictKey] = [1, [i]]
 
-        #删除使用了一次的点,越界的点，CHINA：longi-50-150，lati，0-60
+        #删除使用了一次的点,
         for key, value in washDict.items():
             if value[0] <= 1:
                 for lineDictindex in value[1]:
