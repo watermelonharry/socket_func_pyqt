@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\DemoSocket\socket_func_pyqt\ui\yingyan_web.ui'
+# Form implementation generated from reading ui file 'C:\Users\Harry\PyQtProjects\DemoSocket\socket_func_pyqt\ui\yingyan_web.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #

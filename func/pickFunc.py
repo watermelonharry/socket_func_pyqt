@@ -6,6 +6,7 @@ Module implementing PickPoint_func.
 from Voronoi.Voronoi import Voronoi
 from Voronoi import dijkstra
 from package.rectangular import Rectangular
+import copy
 
 from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot
 from PyQt4.QtGui import QDialog,  QMessageBox
@@ -54,6 +55,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
         self.pp_webView.page().mainFrame().addToJavaScriptWindowObject("js_buffer", self)
 
+        self.STEP = STEP_START
+
 
 
     @pyqtSignature("")
@@ -71,42 +74,62 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     def add_one_point_js(self, str_arg):
         
         # self.points.append(str_arg.split('-'))
-        self.pp_testbrowser.append('point added:'+str_arg)
+        if self.STEP is STEP_START:
+            self.ShowInTab('point added:'+str_arg)
+
+            self.points.append(tuple(float(x) for x in str_arg.split('|')))
+        else:
+            self.ShowInTab('<error:waiting for former progress to be finished>')
     
     # @pyqtSlot(str)
     # #input str_arg: point number
     # def delete_one_point_js(self, str_arg):
     #
     #     delete_p = list(self.points.pop(len(self.points) -1))
-    #     self.pp_testbrowser.append('point '+ str(len(self.points) +1)+' deleted:'+ str(delete_p[0]) + '-' + str(delete_p[1]))
+    #     self.ShowInTab('point '+ str(len(self.points) +1)+' deleted:'+ str(delete_p[0]) + '-' + str(delete_p[1]))
         
     @pyqtSignature("")
     def on_pick_send_btn_clicked(self):
         """
-        Slot documentation goes here.
+        确定按钮，按下后发送轨迹命令,等待接收飞行器回复
+        要求当前状态处于 STEP_GET_POINT
+        完成后属性变为 STEP_SEND_WAIT
+
         """
-        # TODO: not implemented yet
-        # p = self.pp_webView.page().mainFrame().documentElement().findFirst('div[id=show_data]')
-        # self.js_signal.emit(p.toPlainText())
-        
-        #jstest
-        jscript = """
-        var count = markers.length;
-        var pass_buffer = "";
-	    for (var i = 0; i<markers.length ; i++){
-			//map.removeOverlay(markers[i]);
-            pass_buffer += String(points[i].lng) + "|" +String(points[i].lat) + "=";
-		}
-		pass_buffer = String(markers.length) + "=" + pass_buffer
-		markers = [];
-        points = [];
-        p_count = 1;
-        
-        js_buffer.receive_from_js(pass_buffer);
-        """
-        
-        #self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
-        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+
+        if self.STEP is STEP_GET_POINT:
+            if len(self.lines) >= 1:
+                #TODO：生成、发送命令
+
+                orderId = self.uniqueId()
+
+                for pointTuple in str_data.split('=')[1:]:
+                    plist = pointTuple.split('|')
+                    plongi,plati = float(plist[0]), float(plist[1])
+                    self.points.append((plongi,plati))
+
+                vp = Voronoi(self.points[:])
+                vp.process()
+                self.lines = vp.getOutput()
+                # rec = Rectangular(lineList= self.lines, startPoint =self.points[0],endPoint= self.points[1])
+                # rec.process()
+                # self.lines = rec.output()
+
+
+                order = orderId + '=D=' + str_data +"="
+                order += self.xorFormat(order)
+                print(order)
+
+                self.orderDict[orderId] = order
+                self.fromPickPointSignal.emit(order)
+
+
+            else:
+                self.ShowInTab('<error: not enough points>')
+        else:
+            self.ShowInTab('<error: wrong step>')
+
+
 
     @pyqtSignature("")
     def on_pick_clear_btn_clicked(self):
@@ -119,6 +142,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.WAITFLAG = False
         self.points = []
         self.lines = None
+        self.STEP = STEP_START
 
         jscript = """
         	    map.clearOverlays();
@@ -135,75 +159,116 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     def on_pick_path_btn_clicked(self):
         """
         轨迹模式按钮
+        要求当前状态处于 STEP_START
+        完成后属性变为 STEP_GET_POINT
         :return:
         """
-        #TODO 暂时用于测试voronoi路径
-        rec = Rectangular(lineList=self.lines, startPoint=self.points[0], endPoint=self.points[1])
-        rec.process()
-        self.lines = rec.output()
+        if self.STEP is STEP_START:
+            if len(self.points) >2:
+                #处理轨迹点
+                tempPoints = copy.deepcopy(self.points)
+                tempPoints = tempPoints[0:1] + tempPoints[2:] + tempPoints[1:2]
+
+                #生成路径
+                self.lines = map(lambda x:x[0]+x[1], zip(tempPoints[:-1],tempPoints[1:]))
+
+                #改变步骤状态
+                self.STEP = STEP_GET_POINT
+
+                #路径显示
+                try:
+                    lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
+                except Exception as e:
+                    print(e.message)
+                jscript = """
+                        var lineMarkers = [];
+                        var lineData = "%s";
+                        var lineList = lineData.split("=");
+                        //document.write(lineData + "<br />");
+                        //document.write(lineList[0] + "<br />");
+
+                        for (var i = 0; i<lineList.length ; i++){
+                            var lines = lineList[i].split("|");
+                            var polyline = new BMap.Polyline([
+                            new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
+                            new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
+                    ], {strokeColor:"red", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+
+                            map.addOverlay(polyline);   //增加折线
+                        }
+
+                        """ % lineData
+                self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
 
 
-        try:
-            lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
-        except Exception as e:
-            print(e.message)
-        jscript = """
-                var lineMarkers = [];
-                var lineData = "%s";
-                var lineList = lineData.split("=");
-                //document.write(lineData + "<br />");
-                //document.write(lineList[0] + "<br />");
+            else:
+                self.ShowInTab('<error: not enough points')
 
-                for (var i = 0; i<lineList.length ; i++){
-        			var lines = lineList[i].split("|");
-        			var polyline = new BMap.Polyline([
-        		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
-        		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
-        	], {strokeColor:"red", strokeWeight:2, strokeOpacity:0.5});   //创建折线
 
-        	        map.addOverlay(polyline);   //增加折线
-        		}
+        else:
+            self.ShowInTab('<error: wrong step>')
 
-        	    """ % lineData
-        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
-
-        pass
 
     @pyqtSignature("")
     def on_pick_obstacle_btn_clicked(self):
         """
         障碍模式按钮
+        起点-终点-障碍点
+        要求当前状态处于 STEP_START
+        完成后属性变为 STEP_GET_POINT
         :return:
         """
-        #TODO 暂时用于测试dijikstra路径
-        dijktraPath = dijkstra.GetPath(self.lines, self.points[0], self.points[1])
-        self.lines = dijktraPath
 
-        try:
-            lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
-        except Exception as e:
-            print(e.message)
-        jscript = """
-                    var lineMarkers = [];
-                    var lineData = "%s";
-                    var lineList = lineData.split("=");
-                    //document.write(lineData + "<br />");
-                    //document.write(lineList[0] + "<br />");
 
-                    for (var i = 0; i<lineList.length ; i++){
-            			var lines = lineList[i].split("|");
-            			var polyline = new BMap.Polyline([
-            		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
-            		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
-            	], {strokeColor:"white", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+        if self.STEP is STEP_START and len(self.points) >2:
+            self.ShowInTab('<calculating>')
+            #计算维诺图
+            vp = Voronoi(self.points[:])
+            vp.process()
+            self.lines = vp.getOutput()
 
-            	        map.addOverlay(polyline);   //增加折线
-            		}
+            #路径初筛
+            rec = Rectangular(lineList=self.lines, startPoint=self.points[0], endPoint=self.points[1])
+            rec.process()
+            self.lines = rec.output()
 
-            	    """ % lineData
-        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+            #dijkstra筛选
+            self.lines = dijkstra.GetPath(self.lines, self.points[0], self.points[1])
 
-        pass
+            #改变步骤状态
+            self.STEP = STEP_GET_POINT
+
+            #显示到地图
+            try:
+                lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
+            except Exception as e:
+                print(e.message)
+            jscript = """
+                        var lineMarkers = [];
+                        var lineData = "%s";
+                        var lineList = lineData.split("=");
+                        //document.write(lineData + "<br />");
+                        //document.write(lineList[0] + "<br />");
+
+                        for (var i = 0; i<lineList.length ; i++){
+                            var lines = lineList[i].split("|");
+                            var polyline = new BMap.Polyline([
+                            new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
+                            new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
+                    ], {strokeColor:"white", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+
+                            map.addOverlay(polyline);   //增加折线
+                        }
+
+                        """ % lineData
+            self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+        elif len(self.points) <=2:
+            self.ShowInTab('<error: not enough points>')
+        elif self.STEP is not STEP_START:
+            self.ShowInTab('<error: wrong step>')
+        else:
+            self.ShowInTab('<error: something wrong>')
+
 
     @pyqtSignature("")
     def on_pick_showPath_btn_clicked(self):
@@ -268,14 +333,15 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
     @pyqtSlot(str)
     def receive_from_js(self, str_arg):
-        """处理从JS传来的点，格式化后发送到socket.send"""
-        if self.WAITFLAG is False:
-            self.ShowInTab(str_arg)
-            self.ShowInTab(" added.")
-            self.processPickData(str_arg[:-1])
-            self.WAITFLAG = True
-        else:
-            self.ShowInTab('data sending, please wait...')
+        # """处理从JS传来的点，格式化后发送到socket.send"""
+        # if self.WAITFLAG is False:
+        #     self.ShowInTab(str_arg)
+        #     self.ShowInTab(" added.")
+        #     self.processPickData(str_arg[:-1])
+        #     self.WAITFLAG = True
+        # else:
+        #     self.ShowInTab('data sending, please wait...')
+        pass
 
 
     def processPickData(self, str_data):

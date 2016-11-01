@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\DemoSocket\socket_func_pyqt\ui\pick_point.ui'
+# Form implementation generated from reading ui file 'C:\Users\Harry\PyQtProjects\DemoSocket\socket_func_pyqt\ui\pick_point.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -75,7 +75,7 @@ class Ui_PickPoint(object):
         self.pick_refresh_btn.setText(_translate("PickPoint", "刷新", None))
         self.pick_path_btn.setText(_translate("PickPoint", "轨迹模式", None))
         self.pick_obstacle_btn.setText(_translate("PickPoint", "障碍模式", None))
-        self.pick_showPath_btn.setText(_translate("PickPoint", "显示轨迹", None))
+        self.pick_showPath_btn.setText(_translate("PickPoint", "empty", None))
 
 from PyQt4 import QtWebKit
 

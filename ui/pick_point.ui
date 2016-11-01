@@ -140,7 +140,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>显示轨迹</string>
+    <string>empty</string>
    </property>
   </widget>
  </widget>
