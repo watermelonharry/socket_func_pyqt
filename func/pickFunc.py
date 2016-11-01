@@ -14,11 +14,16 @@ _fromUtf8 = QtCore.QString.fromUtf8
 
 from ui.Ui_pick_point import Ui_PickPoint
 
+STEP_START = 1
+STEP_GET_POINT =2
+STEP_SEND_WAIT = 3
+STEP_SEND_FAIL = 4
 
 class PickPointfunc(QDialog, Ui_PickPoint):
     """
     Class documentation goes here.
     """
+
     js_signal = pyqtSignal(str)
     def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None):
         """
