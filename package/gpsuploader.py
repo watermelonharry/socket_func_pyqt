@@ -41,7 +41,7 @@ def current_unix():
 class GpsUploader(QThread):
     GPSMutex = QMutex()
     
-    def __init__(self, upsignal = None,  downsignal = None):
+    def __init__(self, updateMainSignal = None,  recSignal = None):
         super(GpsUploader, self).__init__()
         self.para = {
                     'ak':None,
@@ -54,8 +54,8 @@ class GpsUploader(QThread):
         self.get_ak()
         self.points = []
 
-        self.upsignal = upsignal
-        self.downsignal = downsignal
+        self.updateMainSignal = updateMainSignal
+        self.recSignal = recSignal
 
     #point_tuple: (longitude, latitude, unix_time)
     #the element type can be str/int/double
@@ -76,21 +76,22 @@ class GpsUploader(QThread):
             fail_count = 0
             fail_list = []
             for point in self.points:
-                if self.set_point(*point):
+                if self.set_point(long= point[0], lat=point[1]):
                     if self.upload_one_point():
                         up_count += 1
                     else:
                         fail_count += 1
-                        fail_list.append(point)
+                        # fail_list.append(point)
                 else:
                     del_count +=1
+            self.points = []
         #release lock
-        self.points = fail_list
+        # self.points = fail_list
         self.update_main('enter-func-GpsUploader-run: '+str(up_count)+' uploaded, '+ str(fail_count)+ ' failed, '+ str(del_count)+ ' deleted.')
 
     #update to mainwindow
     def update_main(self,  str_arg):
-        self.upsignal.emit(str_arg)
+        self.updateMainSignal.emit(str_arg)
         print(str_arg)
 
     def get_ak(self):
@@ -101,8 +102,8 @@ class GpsUploader(QThread):
                     self.para[temp[0]] = temp[1][:-1]
 
             #test data
-            self.para['longitude'] = '120.13143165691'
-            self.para['latitude']='30.272977524721'
+            self.para['longitude'] = 120.13143165691
+            self.para['latitude']=30.272977524721
             self.para['loc_time'] = current_unix()
             self.para['coord_type'] = '3'
             print(self.para)

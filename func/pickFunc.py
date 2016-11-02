@@ -111,16 +111,18 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                 #加入字典
                 self.orderDict[orderId] = order
-                self.fromPickPointSignal.emit(order)
+                self.SendOrder(order)
                 #改变状态
                 self.STEP = STEP_SEND_WAIT
-                self.ShowInTab('<sending path data>')
+                self.ShowInTab('<sending path data:orderId-'+ str(orderId)+'>')
 
             else:
                 self.ShowInTab('<error: not enough points>')
         else:
             self.ShowInTab('<error: wrong step>')
 
+    def SendOrder(self,strArg):
+        self.fromPickPointSignal.emit(strArg)
 
 
     @pyqtSignature("")
@@ -135,6 +137,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.points = []
         self.pathPoints = []
         self.lines = []
+        self.orderDict = {}
         self.STEP = STEP_START
 
         jscript = """
@@ -312,26 +315,59 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.updateMainSignal.emit('Loading map done...')
 
     def ClearMapCovers(self):
-        self.on_pick_clear_btn_clicked()
+        jscript = """
+                	    map.clearOverlays();
+                		markers = [];
+                        points = [];
+                        p_count = 1;
+                        var lineMarkers = []; //路径集合
+        	            var linePoints = []; //路径点集合
+                        """
+        # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
+        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
 
 
     #test: receive message from yingyanFunc
     def ReiceveStrData(self,strArg):
         # self.ShowInTab(strArg)
         if self.STEP is STEP_SEND_WAIT:
-            data = strArg.split('=')
-            if data[2]=='Y':
-                self.ShowInTab('<send success>')
-                self.STEP = STEP_START
-                self.points = []
-                self.lines = []
-                self.pathPoints = []
-                #test
-                self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
-                self.ClearMapCovers()
+            strArg = str(strArg)
+            if self.xorFormat(strArg[:-1]) is strArg[-1]:
+                data = strArg.split('=')
+                orderId = data[0]
+
+                if data[1]=='DY':
+                    try:
+                        # 从命令集合中删除
+                        self.orderDict.pop(orderId)
+                        self.ShowInTab('<send success: orderId-' + str(orderId) + '>')
+                    except Exception as e:
+                        print('e10001')
+
+                    #清空历史数据
+                    self.STEP = STEP_START
+                    self.points = []
+                    self.lines = []
+                    self.pathPoints = []
+                    # #test
+                    self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
+
+                    #清除地图数据
+                    self.ClearMapCovers()
+
+                elif data[1] == 'DN':
+                    #todo:设置失败
+                    self.SendOrder(self.orderDict[orderId])
+
+                elif data[1] == 'DE':
+                    #todo:参数错误
+                    self.ShowInTab('<error: points info error, please reset points>')
+
             else:
+                #todo：返回命令校验未通过
                 pass
         else:
+            #todo:错误状态
             pass
 
     @pyqtSlot(str)

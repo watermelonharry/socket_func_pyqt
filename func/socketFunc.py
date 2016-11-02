@@ -325,7 +325,21 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         测试按钮
         """
-        #test
-        self.updateMainSignal.emit('test btn clicked')
-        testStr = '1=D=Y='
-        self.sockToYingyan(testStr + self.xorFormat(testStr))
+        #测试路径设置的回复解析
+        # self.updateMainSignal.emit('test btn clicked')
+        # testStr = '123456=DY='
+        # self.sockToYingyan(testStr + self.xorFormat(testStr))
+
+
+
+        #测试点上传：
+        import random
+        d = random.randint(0,10)
+        longi = 120.1314001 + d/10000.0
+        lati= 30.2729001 + d/10000.0
+
+        teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0='
+        teststr += self.xorFormat(teststr)
+        self.sockToYingyan(teststr)
+        print('send to yingyan:'+teststr)
+

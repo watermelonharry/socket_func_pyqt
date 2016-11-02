@@ -40,7 +40,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         self.toPickPointSignal= toPickSignal
 
         #upload data to BAIDU
-        self.uploader = GpsUploader()
+        self.uploader = GpsUploader(updateMainSignal=updateMainSignal)
         import os
         self.webView.setUrl(QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/yinyandemo/index.html")))
     
@@ -65,7 +65,6 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
             self.web_longi_label.setText(argList[2])
             self.web_lati_label.setText(argList[3])
             self.web_altitu_label.setText(argList[4])
-            self.uploadGpsData('str args here')
         else:
             pass
 
@@ -78,6 +77,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         strArg = str(strArg)
         data = strArg.split('=')
         argList = [data[0],data[1]]
+        # 校验通过
         if str(reduce(lambda x,y: chr(ord(x)^ord(y)), list('='.join(data[:-1]) + '='))) == data[-1]:
             if data[0] == '0':
                 if data[1] == 'L':      # command 1
@@ -88,7 +88,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
 
                     self.update_status(strArg,argList)
                     #todo: 上传至鹰眼
-                    self.uploadGpsData((data[2],data[3]))
+                    self.uploadGpsData((float(data[2]), float(data[3])))
                 else:
                     #todo: wrong heartbeat info
                     argList = None
@@ -105,7 +105,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                 else:
                     argList = None
 
-                if data[1] == 'D':      #command 4
+                if data[1][0] == 'D':      #command 4
                     #todo: set points
                     self.SendToPickFunc(strArg)
                 else:
