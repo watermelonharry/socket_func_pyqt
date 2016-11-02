@@ -37,7 +37,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.setupUi(self)
         self.js_signal.connect(self.ShowInTab)
         self.points = []
-        self.lines = None
+        self.lines = []
+        self.pathPoints = []
         #输入信号
         self.toPickPointSignal = downsignal
         #输出信号
@@ -102,27 +103,18 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 #TODO：生成、发送命令
 
                 orderId = self.uniqueId()
-
-                for pointTuple in str_data.split('=')[1:]:
-                    plist = pointTuple.split('|')
-                    plongi,plati = float(plist[0]), float(plist[1])
-                    self.points.append((plongi,plati))
-
-                vp = Voronoi(self.points[:])
-                vp.process()
-                self.lines = vp.getOutput()
-                # rec = Rectangular(lineList= self.lines, startPoint =self.points[0],endPoint= self.points[1])
-                # rec.process()
-                # self.lines = rec.output()
-
-
-                order = orderId + '=D=' + str_data +"="
+                order = orderId + '=D=' + str(len(self.pathPoints)) + '='
+                order += '='.join([str(p[0]) + '|' + str(p[1]) for p in self.pathPoints]) + '='
                 order += self.xorFormat(order)
+
                 print(order)
 
+                #加入字典
                 self.orderDict[orderId] = order
                 self.fromPickPointSignal.emit(order)
-
+                #改变状态
+                self.STEP = STEP_SEND_WAIT
+                self.ShowInTab('<sending path data>')
 
             else:
                 self.ShowInTab('<error: not enough points>')
@@ -141,7 +133,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.pp_testbrowser.clear()
         self.WAITFLAG = False
         self.points = []
-        self.lines = None
+        self.pathPoints = []
+        self.lines = []
         self.STEP = STEP_START
 
         jscript = """
@@ -159,6 +152,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     def on_pick_path_btn_clicked(self):
         """
         轨迹模式按钮
+        按照 起点-轨迹点-终点 生成轨迹
         要求当前状态处于 STEP_START
         完成后属性变为 STEP_GET_POINT
         :return:
@@ -171,6 +165,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                 #生成路径
                 self.lines = map(lambda x:x[0]+x[1], zip(tempPoints[:-1],tempPoints[1:]))
+                self.pathPoints = tempPoints
 
                 #改变步骤状态
                 self.STEP = STEP_GET_POINT
@@ -214,6 +209,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         障碍模式按钮
         起点-终点-障碍点
+        按照计算路径运行
         要求当前状态处于 STEP_START
         完成后属性变为 STEP_GET_POINT
         :return:
@@ -234,6 +230,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
             #dijkstra筛选
             self.lines = dijkstra.GetPath(self.lines, self.points[0], self.points[1])
+            self.pathPoints = [(x[0],x[1]) for x in self.lines]
+            self.pathPoints.append(self.lines[-1][2:])
 
             #改变步骤状态
             self.STEP = STEP_GET_POINT
@@ -269,36 +267,36 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         else:
             self.ShowInTab('<error: something wrong>')
 
-
-    @pyqtSignature("")
-    def on_pick_showPath_btn_clicked(self):
-        """
-        生成轨迹按钮
-        :return:
-        """
-        try:
-            lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
-        except Exception as e:
-            print(e.message)
-        jscript = """
-        var lineMarkers = [];
-        var lineData = "%s";
-        var lineList = lineData.split("=");
-        //document.write(lineData + "<br />");
-        //document.write(lineList[0] + "<br />");
-
-        for (var i = 0; i<lineList.length ; i++){
-			var lines = lineList[i].split("|");
-			var polyline = new BMap.Polyline([
-		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
-		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
-	], {strokeColor:"yellow", strokeWeight:2, strokeOpacity:0.5});   //创建折线
-
-	        map.addOverlay(polyline);   //增加折线
-		}
-
-	    """%lineData
-        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+    #todo:被注释，待使用
+    # @pyqtSignature("")
+    # def on_pick_showPath_btn_clicked(self):
+     #    """
+     #    生成轨迹按钮
+     #    :return:
+     #    """
+     #    try:
+     #        lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
+     #    except Exception as e:
+     #        print(e.message)
+     #    jscript = """
+     #    var lineMarkers = [];
+     #    var lineData = "%s";
+     #    var lineList = lineData.split("=");
+     #    //document.write(lineData + "<br />");
+     #    //document.write(lineList[0] + "<br />");
+    #
+     #    for (var i = 0; i<lineList.length ; i++){
+	# 		var lines = lineList[i].split("|");
+	# 		var polyline = new BMap.Polyline([
+	# 	    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
+	# 	    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
+	# ], {strokeColor:"yellow", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+    #
+	#         map.addOverlay(polyline);   //增加折线
+	# 	}
+    #
+	#     """%lineData
+     #    self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
 
 
     @pyqtSignature("bool")
@@ -320,16 +318,21 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     #test: receive message from yingyanFunc
     def ReiceveStrData(self,strArg):
         # self.ShowInTab(strArg)
-        if self.WAITFLAG is True:
+        if self.STEP is STEP_SEND_WAIT:
             data = strArg.split('=')
             if data[2]=='Y':
-                self.ShowInTab('send success.')
-                self.WAITFLAG = False
+                self.ShowInTab('<send success>')
+                self.STEP = STEP_START
                 self.points = []
-                self.lines = None
+                self.lines = []
+                self.pathPoints = []
                 #test
                 self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
                 self.ClearMapCovers()
+            else:
+                pass
+        else:
+            pass
 
     @pyqtSlot(str)
     def receive_from_js(self, str_arg):
