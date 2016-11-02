@@ -74,20 +74,24 @@ class GpsUploader(QThread):
             up_count = 0
             del_count = 0
             fail_count = 0
-            fail_list = []
-            for point in self.points:
-                if self.set_point(long= point[0], lat=point[1]):
-                    if self.upload_one_point():
-                        up_count += 1
+            # fail_list = []
+            if len(self.points) != 0:
+                for point in self.points:
+                    if self.set_point(long= point[0], lat=point[1]):
+                        if self.upload_one_point():
+                            up_count += 1
+                        else:
+                            fail_count += 1
+                            # fail_list.append(point)
                     else:
-                        fail_count += 1
-                        # fail_list.append(point)
-                else:
-                    del_count +=1
-            self.points = []
+                        del_count +=1
+                self.points = []
+                self.update_main(
+                'enter-func-GpsUploader-run: ' + str(up_count) + ' uploaded, ' + str(fail_count) + ' failed, ' + str(
+                    del_count) + ' deleted.')
+
         #release lock
         # self.points = fail_list
-        self.update_main('enter-func-GpsUploader-run: '+str(up_count)+' uploaded, '+ str(fail_count)+ ' failed, '+ str(del_count)+ ' deleted.')
 
     #update to mainwindow
     def update_main(self,  str_arg):

@@ -334,9 +334,11 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
         #测试点上传：
         import random
-        d = random.randint(0,10)
+        d = random.randint(-100,100)
+        e = random.randint(-100, 100)
+
         longi = 120.1314001 + d/10000.0
-        lati= 30.2729001 + d/10000.0
+        lati= 30.2729001 + e/10000.0
 
         teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0='
         teststr += self.xorFormat(teststr)
