@@ -3,6 +3,8 @@
 """
 Module implementing PickPoint_func.
 """
+from PyQt4 import QtGui
+
 from Voronoi.Voronoi import Voronoi
 from Voronoi import dijkstra
 from package.rectangular import Rectangular
@@ -280,21 +282,29 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         :return:
         """
         if self.currentLoc is not None:
-            jscript = """
+            try:
+                bdPoint = self.GtoB(self.currentLoc[0], self.currentLoc[1])
+            except Exception as e:
+                print('error in pickFunc.curLoc_btn:',e.message)
 
-            map.removeOverlay(curLocMarkers[0]);
-            curLocMarkers.pop();
 
-            var curPoint = new BMap.Point(%s);
-            map.centerAndZoom(curPoint, 15);
-            curmarker = new BMap.Marker(curPoint);  // 创建标注
-            map.addOverlay(curmarker);               // 将标注添加到地图中
-            curLocMarkers.push(curmarker);
-            curmarker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            if bdPoint is not None:
+                jscript = """
 
-            """ %','.join(self.currentLoc)
-            self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+                map.removeOverlay(curLocMarkers[0]);
+                curLocMarkers.pop();
 
+                var curPoint = new BMap.Point(%s);
+                map.centerAndZoom(curPoint, 15);
+                curmarker = new BMap.Marker(curPoint);  // 创建标注
+                map.addOverlay(curmarker);               // 将标注添加到地图中
+                curLocMarkers.push(curmarker);
+                curmarker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+                """ %','.join(self.currentLoc)
+                self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+        else:
+            QtGui.QMessageBox.about(self, u'错误提示', u'未收到当前坐标信息。')
 
     @pyqtSignature("bool")
     def on_pp_webView_loadFinished(self, p0):
@@ -345,6 +355,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         # 从命令集合中删除
                         self.orderDict.pop(orderId)
                         self.ShowInTab('<send success: orderId-' + str(orderId) + '>')
+                        QtGui.QMessageBox.about(self, u'发送成功', u'路径设置成功')
                     except Exception as e:
                         print('e10001')
 
@@ -366,6 +377,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 elif data[1] == 'DE':
                     #todo:参数错误
                     self.ShowInTab('<error: points info error, please reset points>')
+                    QtGui.QMessageBox.about(self, u'设置失败', u'路径设置失败，请检查参数。')
 
             else:
                 #todo：返回命令校验未通过
@@ -383,10 +395,41 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         pass
 
     def uniqueId(self):
+        """
+        生成基于当前unix时间戳的唯一ID
+        :return: str(unique id)
+        """
         import datetime
         import time
         uniID = str(time.mktime(time.localtime()))[:-2] + str(datetime.datetime.now().microsecond / 1000)
         return str(uniID)
 
     def xorFormat(self, str_arg):
+        """
+        计算给定str的字节异或值
+        :param str_arg:
+        :return: char
+        """
         return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))
+
+    def GtoB(self, G_lon, G_lat):
+        """
+        GPS坐标转换为百度坐标
+        :param G_lon: GPS经度
+        :param G_lat: GPS纬度
+        :return: (百度经度,百度纬度) 或 None
+        """
+        try:
+            import json
+            import requests
+            url = 'http://api.map.baidu.com/geoconv/v1/?coords=%s,%s&from=1&to=5&ak=znRegmlIFbPc0LHl1IUUnQju' % (str(G_lon), str(G_lat))
+            source_code = requests.get(url)
+            plain_text = source_code.text
+            c = json.loads(plain_text)
+            if c['status'] == 0:
+                return (str(c['result'][0]['x']),str(c['result'][0]['y']))  # lat,lon in string type
+            else:
+                return None
+        except Exception as e:
+            print('error in GtoB:', e.message)
+            return None
