@@ -415,6 +415,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     def GtoB(self, G_lon, G_lat):
         """
         GPS坐标转换为百度坐标
+        基于webAPI:http://lbsyun.baidu.com/index.php?title=webapi/guide/changeposition
         :param G_lon: GPS经度
         :param G_lat: GPS纬度
         :return: (百度经度,百度纬度) 或 None
