@@ -301,7 +301,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 curLocMarkers.push(curmarker);
                 curmarker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 
-                """ %','.join(self.currentLoc)
+                """ %','.join(bdPoint)
                 self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
         else:
             QtGui.QMessageBox.about(self, u'错误提示', u'未收到当前坐标信息。')
