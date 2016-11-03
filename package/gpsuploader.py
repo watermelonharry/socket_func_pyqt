@@ -41,7 +41,7 @@ def current_unix():
 class GpsUploader(QThread):
     GPSMutex = QMutex()
     
-    def __init__(self, updateMainSignal = None,  recSignal = None):
+    def __init__(self, updateMainSignal = None,  recSignal = None, toPickPointSignal = None):
         super(GpsUploader, self).__init__()
         self.para = {
                     'ak':None,
@@ -56,6 +56,7 @@ class GpsUploader(QThread):
 
         self.updateMainSignal = updateMainSignal
         self.recSignal = recSignal
+        self.toPickPointSignal = toPickPointSignal
 
     #point_tuple: (longitude, latitude, unix_time)
     #the element type can be str/int/double
@@ -80,6 +81,12 @@ class GpsUploader(QThread):
                     if self.set_point(long= point[0], lat=point[1]):
                         if self.upload_one_point():
                             up_count += 1
+                            #转换为百度坐标
+                            bdPoint = self.GtoB(point[0],point[1])
+
+                            #更新取点窗口的当前坐标
+                            if bdPoint is not None:
+                                self.toPickPointSignal.emit('IN=YY=LOC=' + str(bdPoint[0]) + '='+str(bdPoint[1]))
                         else:
                             fail_count += 1
                             # fail_list.append(point)
@@ -130,6 +137,28 @@ class GpsUploader(QThread):
             return True
         else:
             return False
+
+    def GtoB(self, G_lon, G_lat):
+        """
+        GPS坐标转换为百度坐标
+        :param G_lon: GPS经度
+        :param G_lat: GPS纬度
+        :return: (百度经度,百度纬度) 或 None
+        """
+        try:
+            import json
+            import base64
+            url = 'http://api.map.baidu.com/ag/coord/convert?from=0&to=4&x=%s&y=%s' % (str(G_lon), str(G_lat))
+            source_code = requests.get(url)
+            plain_text = source_code.text
+            c = json.loads(plain_text)
+            if c['error'] == 0:
+                return (base64.decodestring(c['x']), base64.decodestring(c['y']))  # lat,lon in string type
+            else:
+                return None
+        except Exception as e:
+            print('error in GtoB:', e.message)
+            return None
 
 
 

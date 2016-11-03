@@ -58,6 +58,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
         self.STEP = STEP_START
 
+        # 存储当前位置
+        self.currentLoc = None
+
 
 
     @pyqtSignature("")
@@ -270,36 +273,27 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         else:
             self.ShowInTab('<error: something wrong>')
 
-    #todo:被注释，待使用
-    # @pyqtSignature("")
-    # def on_pick_showPath_btn_clicked(self):
-     #    """
-     #    生成轨迹按钮
-     #    :return:
-     #    """
-     #    try:
-     #        lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
-     #    except Exception as e:
-     #        print(e.message)
-     #    jscript = """
-     #    var lineMarkers = [];
-     #    var lineData = "%s";
-     #    var lineList = lineData.split("=");
-     #    //document.write(lineData + "<br />");
-     #    //document.write(lineList[0] + "<br />");
-    #
-     #    for (var i = 0; i<lineList.length ; i++){
-	# 		var lines = lineList[i].split("|");
-	# 		var polyline = new BMap.Polyline([
-	# 	    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
-	# 	    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
-	# ], {strokeColor:"yellow", strokeWeight:2, strokeOpacity:0.5});   //创建折线
-    #
-	#         map.addOverlay(polyline);   //增加折线
-	# 	}
-    #
-	#     """%lineData
-     #    self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+    @pyqtSignature("")
+    def on_pick_curLoc_btn_clicked(self):
+        """
+        显示当前坐标
+        :return:
+        """
+        if self.currentLoc is not None:
+            jscript = """
+
+            map.removeOverlay(curLocMarkers[0]);
+            curLocMarkers.pop();
+
+            var curPoint = new BMap.Point(%s);
+            map.centerAndZoom(curPoint, 15);
+            curmarker = new BMap.Marker(curPoint);  // 创建标注
+            map.addOverlay(curmarker);               // 将标注添加到地图中
+            curLocMarkers.push(curmarker);
+            curmarker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+            """ %','.join(self.currentLoc)
+            self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
 
 
     @pyqtSignature("bool")
@@ -329,9 +323,19 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
     #test: receive message from yingyanFunc
     def ReiceveStrData(self,strArg):
-        # self.ShowInTab(strArg)
+        strArg = str(strArg)
+        # 内部数据收发处理
+        try:
+            innerData = strArg.split('=')
+            if innerData[0] == 'IN':
+                if innerData[1] == 'YY' and innerData[2] == 'LOC':
+                    self.currentLoc = (innerData[3],innerData[4])
+        except Exception as e:
+            print('error in ReiceveStrData.innerData:',e.message)
+
+        # 外部操作
         if self.STEP is STEP_SEND_WAIT:
-            strArg = str(strArg)
+
             if self.xorFormat(strArg[:-1]) is strArg[-1]:
                 data = strArg.split('=')
                 orderId = data[0]
@@ -372,39 +376,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
     @pyqtSlot(str)
     def receive_from_js(self, str_arg):
-        # """处理从JS传来的点，格式化后发送到socket.send"""
-        # if self.WAITFLAG is False:
-        #     self.ShowInTab(str_arg)
-        #     self.ShowInTab(" added.")
-        #     self.processPickData(str_arg[:-1])
-        #     self.WAITFLAG = True
-        # else:
-        #     self.ShowInTab('data sending, please wait...')
         pass
 
 
     def processPickData(self, str_data):
-        orderId = self.uniqueId()
-
-        for pointTuple in str_data.split('=')[1:]:
-            plist = pointTuple.split('|')
-            plongi,plati = float(plist[0]), float(plist[1])
-            self.points.append((plongi,plati))
-
-        vp = Voronoi(self.points[:])
-        vp.process()
-        self.lines = vp.getOutput()
-        # rec = Rectangular(lineList= self.lines, startPoint =self.points[0],endPoint= self.points[1])
-        # rec.process()
-        # self.lines = rec.output()
-
-
-        order = orderId + '=D=' + str_data +"="
-        order += self.xorFormat(order)
-        print(order)
-
-        self.orderDict[orderId] = order
-        self.fromPickPointSignal.emit(order)
+        pass
 
     def uniqueId(self):
         import datetime

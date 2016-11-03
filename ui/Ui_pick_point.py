@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\Harry\PyQtProjects\DemoSocket\socket_func_pyqt\ui\pick_point.ui'
+# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\DemoSocket\socket_func_pyqt\ui\pick_point.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -54,15 +54,15 @@ class Ui_PickPoint(object):
         self.pick_refresh_btn.setGeometry(QtCore.QRect(390, 570, 75, 23))
         self.pick_refresh_btn.setObjectName(_fromUtf8("pick_refresh_btn"))
         self.pick_path_btn = QtGui.QPushButton(PickPoint)
-        self.pick_path_btn.setGeometry(QtCore.QRect(300, 510, 75, 23))
+        self.pick_path_btn.setGeometry(QtCore.QRect(300, 540, 75, 23))
         self.pick_path_btn.setObjectName(_fromUtf8("pick_path_btn"))
         self.pick_obstacle_btn = QtGui.QPushButton(PickPoint)
-        self.pick_obstacle_btn.setGeometry(QtCore.QRect(300, 540, 75, 23))
+        self.pick_obstacle_btn.setGeometry(QtCore.QRect(300, 570, 75, 23))
         self.pick_obstacle_btn.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.pick_obstacle_btn.setObjectName(_fromUtf8("pick_obstacle_btn"))
-        self.pick_showPath_btn = QtGui.QPushButton(PickPoint)
-        self.pick_showPath_btn.setGeometry(QtCore.QRect(300, 570, 75, 23))
-        self.pick_showPath_btn.setObjectName(_fromUtf8("pick_showPath_btn"))
+        self.pick_curLoc_btn = QtGui.QPushButton(PickPoint)
+        self.pick_curLoc_btn.setGeometry(QtCore.QRect(300, 510, 75, 23))
+        self.pick_curLoc_btn.setObjectName(_fromUtf8("pick_curLoc_btn"))
 
         self.retranslateUi(PickPoint)
         QtCore.QObject.connect(self.pick_refresh_btn, QtCore.SIGNAL(_fromUtf8("clicked()")), self.pp_webView.reload)
@@ -75,7 +75,7 @@ class Ui_PickPoint(object):
         self.pick_refresh_btn.setText(_translate("PickPoint", "刷新", None))
         self.pick_path_btn.setText(_translate("PickPoint", "轨迹模式", None))
         self.pick_obstacle_btn.setText(_translate("PickPoint", "障碍模式", None))
-        self.pick_showPath_btn.setText(_translate("PickPoint", "empty", None))
+        self.pick_curLoc_btn.setText(_translate("PickPoint", "当前位置", None))
 
 from PyQt4 import QtWebKit
 

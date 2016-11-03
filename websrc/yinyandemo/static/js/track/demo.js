@@ -2208,7 +2208,7 @@ define('track/track', ['track/urls', 'track/draw', 'track/canvasLayer', 'track/u
                     }
                 }
             });
-        }, 25000);
+        }, 2500);
 
     }
     // 根据统计图需求 计算 24小时 每个时间段内的 轨迹点数 如果没有统计图需求 可以忽略

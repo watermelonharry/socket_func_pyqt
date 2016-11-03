@@ -105,7 +105,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>510</y>
+     <y>540</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -118,7 +118,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>540</y>
+     <y>570</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -130,17 +130,17 @@
     <string>障碍模式</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pick_showPath_btn">
+  <widget class="QPushButton" name="pick_curLoc_btn">
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>570</y>
+     <y>510</y>
      <width>75</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>empty</string>
+    <string>当前位置</string>
    </property>
   </widget>
  </widget>
