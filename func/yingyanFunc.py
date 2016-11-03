@@ -40,7 +40,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         self.toPickPointSignal= toPickSignal
 
         #upload data to BAIDU
-        self.uploader = GpsUploader(updateMainSignal=updateMainSignal)
+        self.uploader = GpsUploader(updateMainSignal=updateMainSignal,toPickPointSignal= toPickSignal)
         import os
         self.webView.setUrl(QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/yinyandemo/index.html")))
     

@@ -3,6 +3,9 @@ import time
 from PyQt4.QtCore import QThread, QMutex, QMutexLocker
 import threading
 import requests, os
+"""
+基于百度鹰眼api：http://lbsyun.baidu.com/index.php?title=yingyan/api/track
+"""
 
 ##config file path
 CONFIG_PATH = '/'.join(os.getcwd().split('\\')) + '/websrc/gps_config.dat'
@@ -81,12 +84,8 @@ class GpsUploader(QThread):
                     if self.set_point(long= point[0], lat=point[1]):
                         if self.upload_one_point():
                             up_count += 1
-                            #转换为百度坐标
-                            bdPoint = self.GtoB(point[0],point[1])
-
                             #更新取点窗口的当前坐标
-                            if bdPoint is not None:
-                                self.toPickPointSignal.emit('IN=YY=LOC=' + str(bdPoint[0]) + '='+str(bdPoint[1]))
+                            self.toPickPointSignal.emit('IN=YY=LOC=' + str(point[0]) + '='+str(point[1]))
                         else:
                             fail_count += 1
                             # fail_list.append(point)
@@ -111,15 +110,10 @@ class GpsUploader(QThread):
                 for line in data:
                     temp = line.split(':')
                     self.para[temp[0]] = temp[1][:-1]
-
-            #test data
-            self.para['longitude'] = 120.13143165691
-            self.para['latitude']=30.272977524721
             self.para['loc_time'] = current_unix()
-            self.para['coord_type'] = '3'
             print(self.para)
         except Exception as e:
-            print('error-uploader init failed.')
+            print('error-uploader init failed:', e.message)
 
     def set_point(self,long = None, lat = None, time = current_unix(), coord_type = 1):
         if long is None or lat is None:
@@ -138,27 +132,27 @@ class GpsUploader(QThread):
         else:
             return False
 
-    def GtoB(self, G_lon, G_lat):
-        """
-        GPS坐标转换为百度坐标
-        :param G_lon: GPS经度
-        :param G_lat: GPS纬度
-        :return: (百度经度,百度纬度) 或 None
-        """
-        try:
-            import json
-            import base64
-            url = 'http://api.map.baidu.com/ag/coord/convert?from=0&to=4&x=%s&y=%s' % (str(G_lon), str(G_lat))
-            source_code = requests.get(url)
-            plain_text = source_code.text
-            c = json.loads(plain_text)
-            if c['error'] == 0:
-                return (base64.decodestring(c['x']), base64.decodestring(c['y']))  # lat,lon in string type
-            else:
-                return None
-        except Exception as e:
-            print('error in GtoB:', e.message)
-            return None
+    # def GtoB(self, G_lon, G_lat):
+    #     """
+    #     GPS坐标转换为百度坐标
+    #     :param G_lon: GPS经度
+    #     :param G_lat: GPS纬度
+    #     :return: (百度经度,百度纬度) 或 None
+    #     """
+    #     try:
+    #         import json
+    #         import base64
+    #         url = 'http://api.map.baidu.com/ag/coord/convert?from=0&to=4&x=%s&y=%s' % (str(G_lon), str(G_lat))
+    #         source_code = requests.get(url)
+    #         plain_text = source_code.text
+    #         c = json.loads(plain_text)
+    #         if c['error'] == 0:
+    #             return (base64.decodestring(c['x']), base64.decodestring(c['y']))  # lat,lon in string type
+    #         else:
+    #             return None
+    #     except Exception as e:
+    #         print('error in GtoB:', e.message)
+    #         return None
 
 
 
