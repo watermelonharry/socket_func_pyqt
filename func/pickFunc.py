@@ -51,7 +51,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
         #存储已发送命令 用于验证发送成功
         self.orderDict={}
-        self.WAITFLAG = False
+        # self.WAITFLAG = False
         import os
         self.pp_webView.setUrl(
             QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/pick_point_2.html")))

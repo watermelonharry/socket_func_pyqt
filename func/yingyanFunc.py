@@ -65,6 +65,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
             self.web_longi_label.setText(argList[2])
             self.web_lati_label.setText(argList[3])
             self.web_altitu_label.setText(argList[4])
+            self.web_speed_label.setText(argList[5])
         else:
             pass
 
