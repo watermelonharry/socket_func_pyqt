@@ -152,6 +152,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
     toSocketfuncSignal = pyqtSignal(str)
     fromSocketfuncSignal = pyqtSignal(str)
 
+    # 调用该信号会进行发送操作
+    sendOrderSignal = pyqtSignal(str)
+
     def __init__(self, parent=None):
         """
         Constructor
@@ -177,10 +180,13 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.updateMainSignal.connect(self.say_hi)
         self.fromSocketfuncSignal.connect(self.sockToYingyan)
         #try to make sub dialog constant
-        self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal, toPickSignal= self.toPickPointSignal)
+        self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal, toPickSignal= self.toPickPointSignal, sendOrderSignal= self.sendOrderSignal)
 
-        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal)
-        self.fromPickPointSignal.connect(self.processPickData)
+        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal, sendOrderSignal= self.sendOrderSignal)
+        #todo:发送到socket的信号统一为sendOrderSignal
+        #self.fromPickPointSignal.connect(self.processPickData)
+
+        self.sendOrderSignal.connect(self.SendOrder)
 
     def __str__(self):
         return('sockFunc-para:')
@@ -201,6 +207,15 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
     def processPickData(self,  str_data):
         """处理来自pickPoint窗口的格式化数据（转发至socket.send）"""
+        self.sock.send_data(str_data)
+        self.say_hi(str_data)
+
+    def SendOrder(self,str_data):
+        """
+        发送至socket 的 client
+        :param str_data:
+        :return:
+        """
         self.sock.send_data(str_data)
         self.say_hi(str_data)
 

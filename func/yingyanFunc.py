@@ -21,7 +21,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
     """
     Class documentation goes here.
     """
-    def __init__(self, parent=None, updateMainSignal = None, recDataSignal = None, toPickSignal = None):
+    def __init__(self, parent=None, updateMainSignal = None, recDataSignal = None, toPickSignal = None, sendOrderSignal = None):
         """
         Constructor
         
@@ -38,6 +38,9 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         self.toYingyanFuncSignal.connect(self.ExtractCommandData)
         #发送至pickFunc
         self.toPickPointSignal= toPickSignal
+        #发送socket命令
+        self.sendOrderSignal = sendOrderSignal
+
         #故障信息存储文件
         import os
         PATH = '/'.join(os.getcwd().split('\\'))
@@ -131,6 +134,9 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     argList = None
         else:
             argList = None
+
+    def SendOrder(self,strArg):
+        self.sendOrderSignal.emit(strArg)
 
 
     def SendToPickFunc(self,strArg):

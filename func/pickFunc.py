@@ -28,7 +28,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     """
 
     js_signal = pyqtSignal(str)
-    def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None):
+    def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None, sendOrderSignal = None):
         """
         Constructor
         
@@ -48,10 +48,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         #更新显示
         self.updateMainSignal = updateMainSignal
         self.toPickPointSignal.connect(self.ReiceveStrData)
+        #发送socket命令
+        self.sendOrderSignal = sendOrderSignal
 
         #存储已发送命令 用于验证发送成功
         self.orderDict={}
-        # self.WAITFLAG = False
         import os
         self.pp_webView.setUrl(
             QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/pick_point_2.html")))
@@ -127,7 +128,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             self.ShowInTab('<error: wrong step>')
 
     def SendOrder(self,strArg):
-        self.fromPickPointSignal.emit(strArg)
+        self.sendOrderSignal.emit(strArg)
 
 
     @pyqtSignature("")
