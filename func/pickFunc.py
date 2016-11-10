@@ -53,9 +53,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
         #存储已发送命令 用于验证发送成功
         self.orderDict={}
-        import os
-        self.pp_webView.setUrl(
-            QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/pick_point_2.html")))
+        # import os
+        # self.pp_webView.setUrl(
+        #     QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/pick_point_2.html")))
 
         self.pp_webView.page().mainFrame().addToJavaScriptWindowObject("js_buffer", self)
 
@@ -109,15 +109,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 #TODO：生成、发送命令
 
                 orderId = self.uniqueId()
-                order = orderId + '=D=' + str(len(self.pathPoints)) + '='
-                order += '='.join([str(p[0]) + '|' + str(p[1]) for p in self.pathPoints]) + '='
-                order += self.xorFormat(order)
-
-                print(order)
+                orderContent = 'D=' + str(len(self.pathPoints)) + '='
+                orderContent += '='.join([str(p[0]) + '|' + str(p[1]) for p in self.pathPoints])
 
                 #加入字典
-                self.orderDict[orderId] = order
-                self.SendOrder(order)
+                self.orderDict[orderId] = orderContent
+                self.SendOrder(id = orderId, content= orderContent)
                 #改变状态
                 self.STEP = STEP_SEND_WAIT
                 self.ShowInTab('<sending path data:orderId-'+ str(orderId)+'>')
@@ -127,8 +124,17 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         else:
             self.ShowInTab('<error: wrong step>')
 
-    def SendOrder(self,strArg):
-        self.sendOrderSignal.emit(strArg)
+    def SendOrder(self,id=None, content=None):
+        """
+        发送数据至socket client
+        :param id: 命令的唯一标志
+        :param content: 命令的内容
+        :return:
+        """
+        orderStr = '='.join([str(id), str(content)]) + '='
+        orderStr += self.xorFormat(orderStr)
+        print(orderStr)
+        self.sendOrderSignal.emit(orderStr)
 
 
     @pyqtSignature("")
@@ -344,7 +350,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         except Exception as e:
             print('error in ReiceveStrData.innerData:',e.message)
 
-        # 外部操作
+        # 外部数据收发操作
         if self.STEP is STEP_SEND_WAIT:
 
             if self.xorFormat(strArg[:-1]) is strArg[-1]:

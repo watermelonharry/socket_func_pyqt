@@ -48,7 +48,6 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         try:
             with open(self.errorFile, 'a') as errorFile:
                 errorFile.write('<Error File created at ' + time.ctime()+'>\n')
-                errorFile.write('<Error File created at ' + time.ctime() + '>')
         except Exception as e:
             print ('error in creating errorFile:' ,e.message, 'please reopen the program')
 
@@ -128,15 +127,27 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
 
                 if data[1] == 'E':      #命令4，飞行器发送，故障信息上传
                     #todo: 故障信息转存到文件
-                    self.SaveErrorToFile(data[2:6])
+                    if self.SaveErrorToFile(data[:]) is True:
+                        self.SendOrder(id=data[0],content='DY')
+                    else:
+                        self.SendOrder(id=data[0],content='DN')
                     return
                 else:
                     argList = None
         else:
             argList = None
 
-    def SendOrder(self,strArg):
-        self.sendOrderSignal.emit(strArg)
+    def SendOrder(self,id=None, content=None):
+        """
+        发送数据至socket client
+        :param id: 命令的唯一标志
+        :param content: 命令的内容
+        :return:
+        """
+        orderStr = '='.join([str(id), str(content)]) + '='
+        orderStr += self.xorFormat(orderStr)
+        print(orderStr)
+        self.sendOrderSignal.emit(orderStr)
 
 
     def SendToPickFunc(self,strArg):
@@ -154,10 +165,14 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         本地提供：本地时间
         :return:
         """
-        writeList = errorList + [time.ctime()]
+        writeList = errorList[2:6] + [time.ctime()]
         try:
             with open(self.errorFile,'a') as errorFile:
                 errorFile.write(','.join(writeList) + '\n')
+                return True
         except Exception as e:
             print('error in yingyan-SaveErrorToFile:', e.message)
+            return False
 
+    def xorFormat(self, str_arg):
+        return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))
