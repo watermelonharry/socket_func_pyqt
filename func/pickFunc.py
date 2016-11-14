@@ -28,7 +28,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     """
 
     js_signal = pyqtSignal(str)
-    def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None):
+    def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None, sendOrderSignal = None):
         """
         Constructor
         
@@ -48,13 +48,14 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         #更新显示
         self.updateMainSignal = updateMainSignal
         self.toPickPointSignal.connect(self.ReiceveStrData)
+        #发送socket命令
+        self.sendOrderSignal = sendOrderSignal
 
         #存储已发送命令 用于验证发送成功
         self.orderDict={}
-        # self.WAITFLAG = False
-        import os
-        self.pp_webView.setUrl(
-            QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/pick_point_2.html")))
+        # import os
+        # self.pp_webView.setUrl(
+        #     QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/pick_point_2.html")))
 
         self.pp_webView.page().mainFrame().addToJavaScriptWindowObject("js_buffer", self)
 
@@ -62,6 +63,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
         # 存储当前位置
         self.currentLoc = None
+        self.curBdLoc = None
 
 
 
@@ -108,15 +110,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 #TODO：生成、发送命令
 
                 orderId = self.uniqueId()
-                order = orderId + '=D=' + str(len(self.pathPoints)) + '='
-                order += '='.join([str(p[0]) + '|' + str(p[1]) for p in self.pathPoints]) + '='
-                order += self.xorFormat(order)
-
-                print(order)
+                orderContent = 'D=' + str(len(self.pathPoints)) + '='
+                orderContent += '='.join([str(p[0]) + '|' + str(p[1]) for p in self.CalculatePoints(self.pathPoints)])
 
                 #加入字典
-                self.orderDict[orderId] = order
-                self.SendOrder(order)
+                self.orderDict[orderId] = orderContent
+                self.SendOrder(id = orderId, content= orderContent)
                 #改变状态
                 self.STEP = STEP_SEND_WAIT
                 self.ShowInTab('<sending path data:orderId-'+ str(orderId)+'>')
@@ -126,8 +125,38 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         else:
             self.ShowInTab('<error: wrong step>')
 
-    def SendOrder(self,strArg):
-        self.fromPickPointSignal.emit(strArg)
+    def CalculatePoints(self, pointsList):
+        """
+        输入路径点，输出差值
+        :param pointsList:
+        :return:
+        """
+        resultList = []
+        if self.curBdLoc is not None:
+            formerPoint = self.curBdLoc
+            for singlePoint in pointsList:
+                cLongi = float(singlePoint[0]) - float(formerPoint[0])
+                clati = float(singlePoint[1]) - float(formerPoint[1])
+                formerPoint = singlePoint
+                resultList.append((str(cLongi), str(clati)))
+        if len(resultList) > 0 :
+            return resultList
+        else:
+            print('error in pickFunc-CalculatePoint: not enough points')
+            return None
+
+
+    def SendOrder(self,id=None, content=None):
+        """
+        发送数据至socket client
+        :param id: 命令的唯一标志
+        :param content: 命令的内容
+        :return:
+        """
+        orderStr = '='.join([str(id), str(content)]) + '='
+        orderStr += self.xorFormat(orderStr)
+        print(orderStr)
+        self.sendOrderSignal.emit(orderStr)
 
 
     @pyqtSignature("")
@@ -283,12 +312,13 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         if self.currentLoc is not None:
             try:
-                bdPoint = self.GtoB(self.currentLoc[0], self.currentLoc[1])
+                self.curBdLoc = self.GtoB(self.currentLoc[0], self.currentLoc[1])
             except Exception as e:
                 print('error in pickFunc.curLoc_btn:',e.message)
+                self.curBdLoc = None
 
 
-            if bdPoint is not None:
+            if self.curBdLoc is not None:
                 jscript = """
 
                 map.removeOverlay(curLocMarkers[0]);
@@ -301,7 +331,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 curLocMarkers.push(curmarker);
                 curmarker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 
-                """ %','.join(bdPoint)
+                """ %','.join(self.curBdLoc)
                 self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
         else:
             QtGui.QMessageBox.about(self, u'错误提示', u'未收到当前坐标信息。')
@@ -333,6 +363,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
     #test: receive message from yingyanFunc
     def ReiceveStrData(self,strArg):
+        """
+        槽函数，处理接收数据
+        :param strArg:
+        :return:
+        """
         strArg = str(strArg)
         # 内部数据收发处理
         try:
@@ -343,7 +378,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         except Exception as e:
             print('error in ReiceveStrData.innerData:',e.message)
 
-        # 外部操作
+        # 外部数据收发操作
         if self.STEP is STEP_SEND_WAIT:
 
             if self.xorFormat(strArg[:-1]) is strArg[-1]:

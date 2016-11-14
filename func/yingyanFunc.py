@@ -21,7 +21,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
     """
     Class documentation goes here.
     """
-    def __init__(self, parent=None, updateMainSignal = None, recDataSignal = None, toPickSignal = None):
+    def __init__(self, parent=None, updateMainSignal = None, recDataSignal = None, toPickSignal = None, sendOrderSignal = None):
         """
         Constructor
         
@@ -38,6 +38,18 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         self.toYingyanFuncSignal.connect(self.ExtractCommandData)
         #发送至pickFunc
         self.toPickPointSignal= toPickSignal
+        #发送socket命令
+        self.sendOrderSignal = sendOrderSignal
+
+        #故障信息存储文件
+        import os
+        PATH = '/'.join(os.getcwd().split('\\'))
+        self.errorFile = PATH + '/ErrorInfo/BugInfo-'+'-'.join(time.ctime().split(' ')).replace(':','-',10) +'.dat'
+        try:
+            with open(self.errorFile, 'a') as errorFile:
+                errorFile.write('<Error File created at ' + time.ctime()+'>\n')
+        except Exception as e:
+            print ('error in creating errorFile:' ,e.message, 'please reopen the program')
 
         #upload data to BAIDU
         self.uploader = GpsUploader(updateMainSignal=updateMainSignal,toPickPointSignal= toPickSignal)
@@ -96,23 +108,46 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
             else:
                 if data[1] == 'P':      #command 2
                     #todo: param check
-                    pass
+                    return
                 else:
                     argList = None
 
                 if data[1] == 'S':      #command 3
                     #todo: param set
-                    pass
+                    return
                 else:
                     argList = None
 
                 if data[1][0] == 'D':      #command 4
                     #todo: set points
                     self.SendToPickFunc(strArg)
+                    return
+                else:
+                    argList = None
+
+                if data[1] == 'E':      #命令4，飞行器发送，故障信息上传
+                    #todo: 故障信息转存到文件
+                    if self.SaveErrorToFile(data[:]) is True:
+                        self.SendOrder(id=data[0],content='DY')
+                    else:
+                        self.SendOrder(id=data[0],content='DN')
+                    return
                 else:
                     argList = None
         else:
             argList = None
+
+    def SendOrder(self,id=None, content=None):
+        """
+        发送数据至socket client
+        :param id: 命令的唯一标志
+        :param content: 命令的内容
+        :return:
+        """
+        orderStr = '='.join([str(id), str(content)]) + '='
+        orderStr += self.xorFormat(orderStr)
+        print(orderStr)
+        self.sendOrderSignal.emit(orderStr)
 
 
     def SendToPickFunc(self,strArg):
@@ -121,5 +156,23 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         """
         #test
         self.updateMainSignal.emit('yinyan-to pickpiont:' + str(strArg)[:-1])
-
         self.toPickPointSignal.emit(strArg)
+
+    def SaveErrorToFile(self,errorList):
+        """
+        保存故障信息到本地
+        输入参数列表：[故障序号，故障类型，经度，纬度]
+        本地提供：本地时间
+        :return:
+        """
+        writeList = errorList[2:6] + [time.ctime()]
+        try:
+            with open(self.errorFile,'a') as errorFile:
+                errorFile.write(','.join(writeList) + '\n')
+                return True
+        except Exception as e:
+            print('error in yingyan-SaveErrorToFile:', e.message)
+            return False
+
+    def xorFormat(self, str_arg):
+        return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))

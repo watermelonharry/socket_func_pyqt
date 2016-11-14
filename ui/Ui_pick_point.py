@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\DemoSocket\socket_func_pyqt\ui\pick_point.ui'
+# Form implementation generated from reading ui file 'C:\Users\Harry\Documents\PyQtProjects\socket_func_pyqt\ui\pick_point.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -39,7 +39,7 @@ class Ui_PickPoint(object):
         self.pp_webView.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.pp_webView.setMouseTracking(True)
         self.pp_webView.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
-        self.pp_webView.setUrl(QtCore.QUrl(_fromUtf8("file:///C:/Users/Harry/Documents/PyQtProjects/DemoSocket/socket_func_pyqt/websrc/pick_point_2.html")))
+        self.pp_webView.setUrl(QtCore.QUrl(_fromUtf8("file:///C:/Users/Harry/Documents/PyQtProjects/socket_func_pyqt/websrc/pick_point_2.html")))
         self.pp_webView.setObjectName(_fromUtf8("pp_webView"))
         self.pp_testbrowser = QtGui.QTextBrowser(PickPoint)
         self.pp_testbrowser.setGeometry(QtCore.QRect(480, 510, 401, 121))

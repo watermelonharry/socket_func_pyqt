@@ -152,6 +152,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
     toSocketfuncSignal = pyqtSignal(str)
     fromSocketfuncSignal = pyqtSignal(str)
 
+    # 调用该信号会进行发送操作
+    sendOrderSignal = pyqtSignal(str)
+
     def __init__(self, parent=None):
         """
         Constructor
@@ -177,10 +180,13 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.updateMainSignal.connect(self.say_hi)
         self.fromSocketfuncSignal.connect(self.sockToYingyan)
         #try to make sub dialog constant
-        self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal, toPickSignal= self.toPickPointSignal)
+        self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal, toPickSignal= self.toPickPointSignal, sendOrderSignal= self.sendOrderSignal)
 
-        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal)
-        self.fromPickPointSignal.connect(self.processPickData)
+        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal, sendOrderSignal= self.sendOrderSignal)
+        #todo:发送到socket的信号统一为sendOrderSignal
+        #self.fromPickPointSignal.connect(self.processPickData)
+
+        self.sendOrderSignal.connect(self.SendOrder)
 
     def __str__(self):
         return('sockFunc-para:')
@@ -201,6 +207,15 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
     def processPickData(self,  str_data):
         """处理来自pickPoint窗口的格式化数据（转发至socket.send）"""
+        self.sock.send_data(str_data)
+        self.say_hi(str_data)
+
+    def SendOrder(self,str_data):
+        """
+        发送至socket 的 client
+        :param str_data:
+        :return:
+        """
         self.sock.send_data(str_data)
         self.say_hi(str_data)
 
@@ -318,7 +333,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.sock.close()
 
     def xorFormat(self, str_arg):
-        return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))    \
+        return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))
 
     @pyqtSignature("")
     def on_sock_test_btn_clicked(self):
@@ -332,7 +347,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
 
 
-        #测试点上传：
+        ##测试点上传：
         import random
         d = random.randint(-100,100)
         e = random.randint(-100, 100)
@@ -340,8 +355,16 @@ class SocketFunc(QDialog, Ui_SocketUi):
         longi = 120.1314001 + d/10000.0
         lati= 30.2729001 + e/10000.0
 
+        longi = 120.12017068
+        lati = 30.26618533
+
+
         teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0='
         teststr += self.xorFormat(teststr)
         self.sockToYingyan(teststr)
         print('send to yingyan:'+teststr)
 
+        # ## 故障信息测试
+        # errorTestStr = '19191919=E=X=Y=longi=lati='
+        # errorTestStr += self.xorFormat(errorTestStr)
+        # self.sockToYingyan(errorTestStr)
