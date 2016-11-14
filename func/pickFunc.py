@@ -63,6 +63,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
         # 存储当前位置
         self.currentLoc = None
+        self.curBdLoc = None
 
 
 
@@ -110,7 +111,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                 orderId = self.uniqueId()
                 orderContent = 'D=' + str(len(self.pathPoints)) + '='
-                orderContent += '='.join([str(p[0]) + '|' + str(p[1]) for p in self.pathPoints])
+                orderContent += '='.join([str(p[0]) + '|' + str(p[1]) for p in self.CalculatePoints(self.pathPoints)])
 
                 #加入字典
                 self.orderDict[orderId] = orderContent
@@ -123,6 +124,27 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 self.ShowInTab('<error: not enough points>')
         else:
             self.ShowInTab('<error: wrong step>')
+
+    def CalculatePoints(self, pointsList):
+        """
+        输入路径点，输出差值
+        :param pointsList:
+        :return:
+        """
+        resultList = []
+        if self.curBdLoc is not None:
+            formerPoint = self.curBdLoc
+            for singlePoint in pointsList:
+                cLongi = float(singlePoint[0]) - float(formerPoint[0])
+                clati = float(singlePoint[1]) - float(formerPoint[1])
+                formerPoint = singlePoint
+                resultList.append((str(cLongi), str(clati)))
+        if len(resultList) > 0 :
+            return resultList
+        else:
+            print('error in pickFunc-CalculatePoint: not enough points')
+            return None
+
 
     def SendOrder(self,id=None, content=None):
         """
@@ -290,12 +312,13 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         if self.currentLoc is not None:
             try:
-                bdPoint = self.GtoB(self.currentLoc[0], self.currentLoc[1])
+                self.curBdLoc = self.GtoB(self.currentLoc[0], self.currentLoc[1])
             except Exception as e:
                 print('error in pickFunc.curLoc_btn:',e.message)
+                self.curBdLoc = None
 
 
-            if bdPoint is not None:
+            if self.curBdLoc is not None:
                 jscript = """
 
                 map.removeOverlay(curLocMarkers[0]);
@@ -308,7 +331,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 curLocMarkers.push(curmarker);
                 curmarker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 
-                """ %','.join(bdPoint)
+                """ %','.join(self.curBdLoc)
                 self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
         else:
             QtGui.QMessageBox.about(self, u'错误提示', u'未收到当前坐标信息。')
@@ -340,6 +363,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
     #test: receive message from yingyanFunc
     def ReiceveStrData(self,strArg):
+        """
+        槽函数，处理接收数据
+        :param strArg:
+        :return:
+        """
         strArg = str(strArg)
         # 内部数据收发处理
         try:
