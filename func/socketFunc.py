@@ -347,20 +347,24 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
 
 
-        #测试点上传：
-        # import random
-        # d = random.randint(-100,100)
-        # e = random.randint(-100, 100)
-        #
-        # longi = 120.1314001 + d/10000.0
-        # lati= 30.2729001 + e/10000.0
-        #
-        # teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0='
-        # teststr += self.xorFormat(teststr)
-        # self.sockToYingyan(teststr)
-        # print('send to yingyan:'+teststr)
+        ##测试点上传：
+        import random
+        d = random.randint(-100,100)
+        e = random.randint(-100, 100)
 
-        ## 故障信息测试
-        errorTestStr = '19191919=E=X=Y=longi=lati='
-        errorTestStr += self.xorFormat(errorTestStr)
-        self.sockToYingyan(errorTestStr)
+        longi = 120.1314001 + d/10000.0
+        lati= 30.2729001 + e/10000.0
+
+        longi = 120.12017068
+        lati = 30.26618533
+
+
+        teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0='
+        teststr += self.xorFormat(teststr)
+        self.sockToYingyan(teststr)
+        print('send to yingyan:'+teststr)
+
+        # ## 故障信息测试
+        # errorTestStr = '19191919=E=X=Y=longi=lati='
+        # errorTestStr += self.xorFormat(errorTestStr)
+        # self.sockToYingyan(errorTestStr)
