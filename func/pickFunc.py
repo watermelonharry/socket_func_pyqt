@@ -325,7 +325,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 curLocMarkers.pop();
 
                 var curPoint = new BMap.Point(%s);
-                map.centerAndZoom(curPoint, 15);
+                map.centerAndZoom(curPoint, 19);
                 curmarker = new BMap.Marker(curPoint);  // 创建标注
                 map.addOverlay(curmarker);               // 将标注添加到地图中
                 curLocMarkers.push(curmarker);
@@ -385,34 +385,39 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 data = strArg.split('=')
                 orderId = data[0]
 
-                if data[1]=='DY':
-                    try:
-                        # 从命令集合中删除
-                        self.orderDict.pop(orderId)
-                        self.ShowInTab('<send success: orderId-' + str(orderId) + '>')
-                        QtGui.QMessageBox.about(self, u'发送成功', u'路径设置成功')
-                    except Exception as e:
-                        print('e10001')
+                #确认接收的命令在字典中
+                if orderId in self.orderDict:
+                    if data[1]=='DY':
+                        try:
+                            # 从命令集合中删除
+                            self.orderDict.pop(orderId)
+                            self.ShowInTab('<send success: orderId-' + str(orderId) + '>')
+                            QtGui.QMessageBox.about(self, u'发送成功', u'路径设置成功')
+                        except Exception as e:
+                            print('e10001')
 
-                    #清空历史数据
-                    self.STEP = STEP_START
-                    self.points = []
-                    self.lines = []
-                    self.pathPoints = []
-                    # #test
-                    self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
+                        #清空历史数据
+                        self.STEP = STEP_START
+                        self.points = []
+                        self.lines = []
+                        self.pathPoints = []
+                        # #test
+                        self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
 
-                    #清除地图数据
-                    self.ClearMapCovers()
+                        #清除地图数据
+                        self.ClearMapCovers()
 
-                elif data[1] == 'DN':
-                    #todo:设置失败
-                    self.SendOrder(self.orderDict[orderId])
+                    elif data[1] == 'DN':
+                        #todo:设置失败
+                        self.SendOrder(orderId, self.orderDict[orderId])
 
-                elif data[1] == 'DE':
-                    #todo:参数错误
-                    self.ShowInTab('<error: points info error, please reset points>')
-                    QtGui.QMessageBox.about(self, u'设置失败', u'路径设置失败，请检查参数。')
+                    elif data[1] == 'DE':
+                        #todo:参数错误
+                        self.ShowInTab('<error: points info error, please reset points>')
+                        QtGui.QMessageBox.about(self, u'设置失败', u'路径设置失败，请检查参数。')
+                else:
+                    k, v = self.orderDict.items()
+                    self.SendOrder(k,v)
 
             else:
                 #todo：返回命令校验未通过

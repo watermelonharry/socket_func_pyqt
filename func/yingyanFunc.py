@@ -87,7 +87,10 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         self.uploader.start()
 
     def ExtractCommandData(self, strArg):
-        strArg = str(strArg)
+        strArg = str(strArg)       #去掉尾部的\r\n
+        while '\r' in strArg: strArg.replace('\r','')
+        while '\n' in strArg:strArg.replace('\n','')
+
         data = strArg.split('=')
         argList = [data[0],data[1]]
         # 校验通过
