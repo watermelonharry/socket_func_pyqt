@@ -44,7 +44,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Agency FB</family>
+     <family>Microsoft YaHei UI</family>
     </font>
    </property>
    <property name="url">
@@ -62,6 +62,11 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>刷新</string>
    </property>
@@ -75,6 +80,11 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>emit</string>
    </property>
@@ -87,6 +97,11 @@
      <width>281</width>
      <height>141</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>true</bool>
@@ -102,6 +117,11 @@
       <width>100</width>
       <height>12</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
     </property>
     <property name="text">
      <string>None</string>
@@ -119,6 +139,11 @@
       <height>12</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
     <property name="text">
      <string>TIME:</string>
     </property>
@@ -131,6 +156,11 @@
       <width>171</width>
       <height>30</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
     </property>
     <property name="text">
      <string>received data</string>
@@ -145,6 +175,11 @@
       <height>12</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
     <property name="text">
      <string>LONGI:</string>
     </property>
@@ -157,6 +192,11 @@
       <width>54</width>
       <height>12</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
     </property>
     <property name="text">
      <string>LATI:</string>
@@ -171,6 +211,11 @@
       <height>12</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
     <property name="text">
      <string>ALTIT:</string>
     </property>
@@ -183,6 +228,11 @@
       <width>100</width>
       <height>12</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
     </property>
     <property name="text">
      <string>None</string>
@@ -200,6 +250,11 @@
       <height>12</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
     <property name="text">
      <string>None</string>
     </property>
@@ -215,6 +270,11 @@
       <width>100</width>
       <height>12</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
     </property>
     <property name="text">
      <string>None</string>
@@ -232,6 +292,11 @@
       <height>12</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
     <property name="text">
      <string>SPEED:</string>
     </property>
@@ -244,6 +309,11 @@
       <width>100</width>
       <height>12</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
     </property>
     <property name="text">
      <string>None</string>
@@ -261,6 +331,11 @@
       <height>12</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
     <property name="text">
      <string>m</string>
     </property>
@@ -273,6 +348,11 @@
       <width>54</width>
       <height>12</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
     </property>
     <property name="text">
      <string>m/s</string>

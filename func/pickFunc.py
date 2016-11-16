@@ -22,6 +22,25 @@ STEP_GET_POINT =2
 STEP_SEND_WAIT = 3
 STEP_SEND_FAIL = 4
 
+
+
+class PlaneStatus():
+    """
+    飞行器状态
+    """
+    def __init__(self):
+        self.WAIT = 1               #等待
+        self.POINT_SET = 2          #设置路径完成
+        self.TAKE_OFF = 3           #起飞
+        self.START_MISSION = 4      #执行任务
+        self.ABORT_MISSION = 5      #终止任务
+        self.LAND = 6               #降落
+        self.FINISH_MISSION = 7     #任务完成
+        self.RETURN_TO_BASE = 8     #返航
+
+planeStatus = PlaneStatus()
+
+
 class PickPointfunc(QDialog, Ui_PickPoint):
     """
     Class documentation goes here.
@@ -88,6 +107,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             self.points.append(tuple(float(x) for x in str_arg.split('|')))
         else:
             self.ShowInTab('<error:waiting for former progress to be finished>')
+            QtGui.QMessageBox.about(self, u'错误', u'正在发送命令')
     
     # @pyqtSlot(str)
     # #input str_arg: point number
@@ -122,6 +142,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
             else:
                 self.ShowInTab('<error: not enough points>')
+                QtGui.QMessageBox.about(self, u'计算失败', u'路径点不足')
         else:
             self.ShowInTab('<error: wrong step>')
 
@@ -135,14 +156,15 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         if self.curBdLoc is not None:
             formerPoint = self.curBdLoc
             for singlePoint in pointsList:
-                cLongi = float(singlePoint[0]) - float(formerPoint[0])
-                clati = float(singlePoint[1]) - float(formerPoint[1])
+                cLongi = 1000000.0 * (float(singlePoint[0]) - float(formerPoint[0]))
+                clati = 1000000.0 * (float(singlePoint[1]) - float(formerPoint[1]))
                 formerPoint = singlePoint
                 resultList.append((str(cLongi), str(clati)))
         if len(resultList) > 0 :
             return resultList
         else:
             print('error in pickFunc-CalculatePoint: not enough points')
+            QtGui.QMessageBox.about(self, u'错误', u'计算失败，路径点不足')
             return None
 
 
@@ -381,6 +403,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # 外部数据收发操作
         if self.STEP is STEP_SEND_WAIT:
 
+            #校验通过
             if self.xorFormat(strArg[:-1]) is strArg[-1]:
                 data = strArg.split('=')
                 orderId = data[0]
@@ -409,6 +432,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                     elif data[1] == 'DN':
                         #todo:设置失败
+                        QtGui.QMessageBox.about(self, u'发送失败', u'路径设置失败，重新发送。')
                         self.SendOrder(orderId, self.orderDict[orderId])
 
                     elif data[1] == 'DE':
@@ -474,3 +498,52 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         except Exception as e:
             print('error in GtoB:', e.message)
             return None
+
+
+    """
+    飞行器控制按钮
+    """
+
+    @pyqtSignature("")
+    def on_pick_takeoff_btn_clicked(self):
+        """
+        起飞按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab(u'起飞 button clicked')
+
+    @pyqtSignature("")
+    def on_pick_startMission_btn_clicked(self):
+        """
+        执行任务按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab('startMission button clicked')
+
+
+    @pyqtSignature("")
+    def on_pick_abortMission_btn_clicked(self):
+        """
+        终止任务按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab('abortMission button clicked')
+
+
+    @pyqtSignature("")
+    def on_pick_land_btn_clicked(self):
+        """
+        降落按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab('land button clicked')
+
+
+    @pyqtSignature("")
+    def on_pick_return_btn_clicked(self):
+        """
+        返航按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab('returnToBase button clicked')
+

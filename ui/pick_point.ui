@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
-    <height>644</height>
+    <width>944</width>
+    <height>672</height>
    </rect>
   </property>
   <property name="cursor">
@@ -27,8 +27,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1200</width>
-     <height>900</height>
+     <width>1031</width>
+     <height>741</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -36,6 +36,11 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="cursor">
     <cursorShape>ArrowCursor</cursorShape>
@@ -61,6 +66,11 @@
      <height>121</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
   </widget>
   <widget class="QPushButton" name="pick_send_btn">
    <property name="geometry">
@@ -71,8 +81,13 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
-    <string>确定</string>
+    <string>发送轨迹</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pick_clear_btn">
@@ -84,11 +99,19 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
-    <string>清除</string>
+    <string>重置</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pick_refresh_btn">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>390</x>
@@ -96,6 +119,11 @@
      <width>75</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="text">
     <string>刷新</string>
@@ -110,6 +138,11 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>轨迹模式</string>
    </property>
@@ -122,6 +155,11 @@
      <width>75</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="contextMenuPolicy">
     <enum>Qt::CustomContextMenu</enum>
@@ -139,10 +177,140 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>当前位置</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pick_takeoff_btn">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>510</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>起飞</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pick_startMission_btn">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>540</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>执行任务</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pick_abortMission_btn">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>570</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>终止任务</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pick_land_btn">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>600</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>降落</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pick_return_btn">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>630</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>返航</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>490</y>
+     <width>271</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="title">
+    <string>Control</string>
+   </property>
+  </widget>
+  <zorder>pp_webView</zorder>
+  <zorder>groupBox</zorder>
+  <zorder>pp_testbrowser</zorder>
+  <zorder>pick_send_btn</zorder>
+  <zorder>pick_clear_btn</zorder>
+  <zorder>pick_refresh_btn</zorder>
+  <zorder>pick_path_btn</zorder>
+  <zorder>pick_obstacle_btn</zorder>
+  <zorder>pick_curLoc_btn</zorder>
+  <zorder>pick_takeoff_btn</zorder>
+  <zorder>pick_startMission_btn</zorder>
+  <zorder>pick_abortMission_btn</zorder>
+  <zorder>pick_land_btn</zorder>
+  <zorder>pick_return_btn</zorder>
  </widget>
  <customwidgets>
   <customwidget>
