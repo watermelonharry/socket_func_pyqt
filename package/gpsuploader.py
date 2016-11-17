@@ -84,8 +84,6 @@ class GpsUploader(QThread):
                     if self.set_point(long= point[0], lat=point[1]):
                         if self.upload_one_point():
                             up_count += 1
-                            #更新取点窗口的当前坐标
-                            self.toPickPointSignal.emit('IN=YY=LOC=' + str(point[0]) + '='+str(point[1]))
                         else:
                             fail_count += 1
                             # fail_list.append(point)

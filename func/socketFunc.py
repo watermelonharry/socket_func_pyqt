@@ -131,6 +131,7 @@ class sserver(QThread):
 
     ##send data to client, mainly triggered by SEND_BUTTON in main window
     def send_data(self, str_arg):
+        str_arg = str(str_arg)
         if self.client is not None:
             self.client.send(str_arg)
             self.update_main('enter-sserver-func-SENDDATA-sucess:' + str_arg)
@@ -205,10 +206,10 @@ class SocketFunc(QDialog, Ui_SocketUi):
         with QMutexLocker(self.mutex):
             self.log.write(str(words))
 
-    def processPickData(self,  str_data):
-        """处理来自pickPoint窗口的格式化数据（转发至socket.send）"""
-        self.sock.send_data(str_data)
-        self.say_hi(str_data)
+    # def processPickData(self,  str_data):
+    #     """处理来自pickPoint窗口的格式化数据（转发至socket.send）"""
+    #     self.sock.send_data(str_data)
+    #     self.say_hi(str_data)
 
     def SendOrder(self,str_data):
         """
@@ -217,7 +218,6 @@ class SocketFunc(QDialog, Ui_SocketUi):
         :return:
         """
         self.sock.send_data(str_data)
-        self.say_hi(str_data)
 
     def uniqueId(self):
         import datetime
@@ -359,7 +359,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         lati = 30.26618533
 
 
-        teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0='
+        teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0=1='
         teststr += self.xorFormat(teststr)
         self.sockToYingyan(teststr)
         print('send to yingyan:'+teststr)

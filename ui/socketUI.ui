@@ -25,6 +25,11 @@
      <height>261</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
   </widget>
   <widget class="QPushButton" name="sock_getip_btn">
    <property name="geometry">
@@ -34,6 +39,11 @@
      <width>75</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="text">
     <string>获取ip</string>
@@ -48,6 +58,11 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>开启服务</string>
    </property>
@@ -60,6 +75,11 @@
      <width>91</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="text">
     <string>设定ip 端口:</string>
@@ -76,6 +96,11 @@
      <width>89</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="inputMethodHints">
     <set>Qt::ImhNone</set>
@@ -99,6 +124,11 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="inputMethodHints">
     <set>Qt::ImhNone</set>
    </property>
@@ -115,6 +145,11 @@
      <height>12</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>输入</string>
    </property>
@@ -128,6 +163,11 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>发送</string>
    </property>
@@ -140,6 +180,11 @@
      <width>75</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="text">
     <string>清除记录</string>
@@ -157,6 +202,11 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>轨迹监控</string>
    </property>
@@ -173,6 +223,11 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>关闭服务</string>
    </property>
@@ -186,6 +241,11 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
    <property name="text">
     <string>退出</string>
    </property>
@@ -198,6 +258,11 @@
      <width>191</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="text">
     <string>localhost:9876</string>
@@ -215,6 +280,11 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
   </widget>
   <widget class="QPushButton" name="sock_pickPoint_btn">
    <property name="enabled">
@@ -227,6 +297,11 @@
      <width>75</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="text">
     <string>地图选点</string>
@@ -243,6 +318,11 @@
      <width>71</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
    </property>
    <property name="text">
     <string>测试</string>

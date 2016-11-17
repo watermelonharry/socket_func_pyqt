@@ -10,17 +10,57 @@ from Voronoi import dijkstra
 from package.rectangular import Rectangular
 import copy
 
-from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot
+from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot, QEventLoop
 from PyQt4.QtGui import QDialog,  QMessageBox
 from PyQt4 import QtCore
 _fromUtf8 = QtCore.QString.fromUtf8
 
 from ui.Ui_pick_point import Ui_PickPoint
+from popWindow import NoticeWindow
 
 STEP_START = 1
 STEP_GET_POINT =2
 STEP_SEND_WAIT = 3
 STEP_SEND_FAIL = 4
+
+STATUS_DICT = {1:u'等待状态',
+               2:u'路径设置完成',
+               3:u'起飞',
+               4:u'执行任务',
+               5:u'终止任务',
+               6:u'降落',
+               7:u'任务完成',
+               8:u'返航'
+               }
+
+class PlaneStatus():
+    """
+    飞行器状态
+    """
+    def __init__(self):
+        self.WAIT = 1               #等待
+        self.POINT_SET = 2          #设置路径完成
+        self.TAKE_OFF = 3           #起飞
+        self.START_MISSION = 4      #执行任务
+        self.ABORT_MISSION = 5      #终止任务
+        self.LAND = 6               #降落
+        self.FINISH_MISSION = 7     #任务完成
+        self.RETURN_TO_BASE = 8     #返航
+
+class PlaneControl():
+    """
+    飞行器控制命令
+    """
+    def __init__(self):
+        self.TAKE_OFF = 1               #起飞
+        self.START_MISSION = 2          #开始任务
+        self.ABORT_MISSION = 3          #终止任务
+        self.LAND = 4                   #降落
+        self.RETURN_TO_BASE = 5         #返航
+
+planeStatus = PlaneStatus()
+planeControl = PlaneControl()
+
 
 class PickPointfunc(QDialog, Ui_PickPoint):
     """
@@ -50,6 +90,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.toPickPointSignal.connect(self.ReiceveStrData)
         #发送socket命令
         self.sendOrderSignal = sendOrderSignal
+        self.pickNoticeWindow = NoticeWindow()
 
         #存储已发送命令 用于验证发送成功
         self.orderDict={}
@@ -88,6 +129,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             self.points.append(tuple(float(x) for x in str_arg.split('|')))
         else:
             self.ShowInTab('<error:waiting for former progress to be finished>')
+            QtGui.QMessageBox.about(self, u'错误', u'正在发送命令')
     
     # @pyqtSlot(str)
     # #input str_arg: point number
@@ -122,6 +164,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
             else:
                 self.ShowInTab('<error: not enough points>')
+                QtGui.QMessageBox.about(self, u'计算失败', u'路径点不足')
         else:
             self.ShowInTab('<error: wrong step>')
 
@@ -135,14 +178,15 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         if self.curBdLoc is not None:
             formerPoint = self.curBdLoc
             for singlePoint in pointsList:
-                cLongi = float(singlePoint[0]) - float(formerPoint[0])
-                clati = float(singlePoint[1]) - float(formerPoint[1])
+                cLongi = 1000000.0 * (float(singlePoint[0]) - float(formerPoint[0]))
+                clati = 1000000.0 * (float(singlePoint[1]) - float(formerPoint[1]))
                 formerPoint = singlePoint
                 resultList.append((str(cLongi), str(clati)))
         if len(resultList) > 0 :
             return resultList
         else:
             print('error in pickFunc-CalculatePoint: not enough points')
+            QtGui.QMessageBox.about(self, u'错误', u'计算失败，路径点不足')
             return None
 
 
@@ -173,6 +217,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.lines = []
         self.orderDict = {}
         self.STEP = STEP_START
+        self.PLANE_STATUS = None
 
         jscript = """
         	    map.clearOverlays();
@@ -325,7 +370,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 curLocMarkers.pop();
 
                 var curPoint = new BMap.Point(%s);
-                map.centerAndZoom(curPoint, 15);
+                map.centerAndZoom(curPoint, 19);
                 curmarker = new BMap.Marker(curPoint);  // 创建标注
                 map.addOverlay(curmarker);               // 将标注添加到地图中
                 curLocMarkers.push(curmarker);
@@ -375,44 +420,53 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             if innerData[0] == 'IN':
                 if innerData[1] == 'YY' and innerData[2] == 'LOC':
                     self.currentLoc = (innerData[3],innerData[4])
+                    self.PLANE_STATUS = int(innerData[5])
+                    self.pick_status_label.setText(STATUS_DICT[self.PLANE_STATUS])
         except Exception as e:
             print('error in ReiceveStrData.innerData:',e.message)
 
         # 外部数据收发操作
         if self.STEP is STEP_SEND_WAIT:
 
+            #校验通过
             if self.xorFormat(strArg[:-1]) is strArg[-1]:
                 data = strArg.split('=')
                 orderId = data[0]
 
-                if data[1]=='DY':
-                    try:
-                        # 从命令集合中删除
-                        self.orderDict.pop(orderId)
-                        self.ShowInTab('<send success: orderId-' + str(orderId) + '>')
-                        QtGui.QMessageBox.about(self, u'发送成功', u'路径设置成功')
-                    except Exception as e:
-                        print('e10001')
+                #确认接收的命令在字典中
+                if orderId in self.orderDict:
+                    if data[1]=='DY':
+                        try:
+                            # 从命令集合中删除
+                            self.orderDict.pop(orderId)
+                            self.ShowInTab('<send success: orderId-' + str(orderId) + '>')
+                            QtGui.QMessageBox.about(self, u'发送成功', u'路径设置成功')
+                        except Exception as e:
+                            print('e10001')
 
-                    #清空历史数据
-                    self.STEP = STEP_START
-                    self.points = []
-                    self.lines = []
-                    self.pathPoints = []
-                    # #test
-                    self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
+                        #清空历史数据
+                        self.STEP = STEP_START
+                        self.points = []
+                        self.lines = []
+                        self.pathPoints = []
+                        # #test
+                        self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
 
-                    #清除地图数据
-                    self.ClearMapCovers()
+                        #清除地图数据
+                        self.ClearMapCovers()
 
-                elif data[1] == 'DN':
-                    #todo:设置失败
-                    self.SendOrder(self.orderDict[orderId])
+                    elif data[1] == 'DN':
+                        #todo:设置失败
+                        QtGui.QMessageBox.about(self, u'发送失败', u'路径设置失败，重新发送。')
+                        self.SendOrder(orderId, self.orderDict[orderId])
 
-                elif data[1] == 'DE':
-                    #todo:参数错误
-                    self.ShowInTab('<error: points info error, please reset points>')
-                    QtGui.QMessageBox.about(self, u'设置失败', u'路径设置失败，请检查参数。')
+                    elif data[1] == 'DE':
+                        #todo:参数错误
+                        self.ShowInTab('<error: points info error, please reset points>')
+                        QtGui.QMessageBox.about(self, u'设置失败', u'路径设置失败，请检查参数。')
+                else:
+                    k, v = self.orderDict.items()
+                    self.SendOrder(k,v)
 
             else:
                 #todo：返回命令校验未通过
@@ -469,3 +523,59 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         except Exception as e:
             print('error in GtoB:', e.message)
             return None
+
+
+    """
+    飞行器控制按钮
+    """
+
+    @pyqtSignature("")
+    def on_pick_takeoff_btn_clicked(self):
+        """
+        起飞按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab(u'起飞 button clicked')
+        # self.pickNoticeWindow.show(1)
+        self.pickNoticeWindow.Confirm(1)
+        print(self.pickNoticeWindow.status)
+
+    @pyqtSignature("")
+    def on_pick_startMission_btn_clicked(self):
+        """
+        执行任务按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab('startMission button clicked')
+        self.pickNoticeWindow.show(2)
+
+
+    @pyqtSignature("")
+    def on_pick_abortMission_btn_clicked(self):
+        """
+        终止任务按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab('abortMission button clicked')
+        self.pickNoticeWindow.show(3)
+
+
+    @pyqtSignature("")
+    def on_pick_land_btn_clicked(self):
+        """
+        降落按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab('land button clicked')
+        self.pickNoticeWindow.show(4)
+
+
+    @pyqtSignature("")
+    def on_pick_return_btn_clicked(self):
+        """
+        返航按钮
+        """
+        # TODO: not implemented yet
+        self.ShowInTab('returnToBase button clicked')
+        self.pickNoticeWindow.show(5)
+
