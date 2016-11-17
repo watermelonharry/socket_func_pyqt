@@ -15,7 +15,15 @@ from package.gpsuploader import GpsUploader
 from ui.Ui_yingyan_web import Ui_yingyan_web
 import time
 import os
-
+STATUS_DICT = {1:u'等待状态',
+               2:u'路径设置完成',
+               3:u'起飞',
+               4:u'执行任务',
+               5:u'终止任务',
+               6:u'降落',
+               7:u'任务完成',
+               8:u'返航'
+               }
 
 class YingyanFunc(QDialog, Ui_yingyan_web):
     """
@@ -67,17 +75,13 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         #the str_arg includes all data, will be processed first
         #(longitude, latitude, time) will be pass to gps_loader and upload to BAIDU
         #other info will be pass to local textbrowser
-
-
         self.web_time_label.setText(str(time.asctime()).split(' ')[3])
-
-        self.web_recdata_label.setText(str_arg)
-
         if argList is not None:
             self.web_longi_label.setText(argList[2])
             self.web_lati_label.setText(argList[3])
             self.web_altitu_label.setText(argList[4])
             self.web_speed_label.setText(argList[5])
+            self.web_recdata_label.setText(STATUS_DICT[int(argList[6])])
         else:
             pass
 
@@ -101,10 +105,13 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     argList.append(data[3])     #latitude
                     argList.append(data[4])     #height
                     argList.append(data[5])     #speed
+                    argList.append(data[6])     #plane status
 
                     self.update_status(strArg,argList)
-                    #todo: 上传至鹰眼
+                    #上传至鹰眼
                     self.uploadGpsData((float(data[2]), float(data[3])))
+                    #更新取点窗口的当前坐标数据，飞行器的状态数据
+                    self.SendToPickFunc('IN=YY=LOC='+ str(data[2]) + '=' + str(data[3])+ '=' + str(data[6]))
                 else:
                     #todo: wrong heartbeat info
                     argList = None
@@ -158,7 +165,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         发送至pickFunc
         """
         #test
-        self.updateMainSignal.emit('yinyan-to pickpiont:' + str(strArg)[:-1])
+        self.updateMainSignal.emit('yinyan-to pickpiont:' + str(strArg))
         self.toPickPointSignal.emit(strArg)
 
     def SaveErrorToFile(self,errorList):

@@ -125,6 +125,14 @@ class Ui_PickPoint(object):
         self.groupBox.setFont(font)
         self.groupBox.setAutoFillBackground(True)
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
+        self.pick_status_label = QtGui.QLabel(self.groupBox)
+        self.pick_status_label.setGeometry(QtCore.QRect(140, 140, 72, 15))
+        self.pick_status_label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.pick_status_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.pick_status_label.setObjectName(_fromUtf8("pick_status_label"))
+        self.label_2 = QtGui.QLabel(self.groupBox)
+        self.label_2.setGeometry(QtCore.QRect(140, 120, 91, 16))
+        self.label_2.setObjectName(_fromUtf8("label_2"))
         self.pp_webView.raise_()
         self.groupBox.raise_()
         self.pp_testbrowser.raise_()
@@ -158,6 +166,8 @@ class Ui_PickPoint(object):
         self.pick_land_btn.setText(_translate("PickPoint", "降落", None))
         self.pick_return_btn.setText(_translate("PickPoint", "返航", None))
         self.groupBox.setTitle(_translate("PickPoint", "Control", None))
+        self.pick_status_label.setText(_translate("PickPoint", "无", None))
+        self.label_2.setText(_translate("PickPoint", "飞行器状态：", None))
 
 from PyQt4 import QtWebKit
 

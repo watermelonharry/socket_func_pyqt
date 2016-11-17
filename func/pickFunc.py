@@ -22,7 +22,15 @@ STEP_GET_POINT =2
 STEP_SEND_WAIT = 3
 STEP_SEND_FAIL = 4
 
-
+STATUS_DICT = {1:u'等待状态',
+               2:u'路径设置完成',
+               3:u'起飞',
+               4:u'执行任务',
+               5:u'终止任务',
+               6:u'降落',
+               7:u'任务完成',
+               8:u'返航'
+               }
 
 class PlaneStatus():
     """
@@ -38,7 +46,19 @@ class PlaneStatus():
         self.FINISH_MISSION = 7     #任务完成
         self.RETURN_TO_BASE = 8     #返航
 
+class PlaneControl():
+    """
+    飞行器控制命令
+    """
+    def __init__(self):
+        self.TAKE_OFF = 1               #起飞
+        self.START_MISSION = 2          #开始任务
+        self.ABORT_MISSION = 3          #终止任务
+        self.LAND = 4                   #降落
+        self.RETURN_TO_BASE = 5         #返航
+
 planeStatus = PlaneStatus()
+planeControl = PlaneControl()
 
 
 class PickPointfunc(QDialog, Ui_PickPoint):
@@ -195,6 +215,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.lines = []
         self.orderDict = {}
         self.STEP = STEP_START
+        self.PLANE_STATUS = None
 
         jscript = """
         	    map.clearOverlays();
@@ -397,6 +418,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             if innerData[0] == 'IN':
                 if innerData[1] == 'YY' and innerData[2] == 'LOC':
                     self.currentLoc = (innerData[3],innerData[4])
+                    self.PLANE_STATUS = int(innerData[5])
+                    self.pick_status_label.setText(STATUS_DICT[self.PLANE_STATUS])
         except Exception as e:
             print('error in ReiceveStrData.innerData:',e.message)
 

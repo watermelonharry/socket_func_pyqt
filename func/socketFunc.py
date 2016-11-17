@@ -359,7 +359,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         lati = 30.26618533
 
 
-        teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0='
+        teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0=1='
         teststr += self.xorFormat(teststr)
         self.sockToYingyan(teststr)
         print('send to yingyan:'+teststr)
