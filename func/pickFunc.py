@@ -10,12 +10,13 @@ from Voronoi import dijkstra
 from package.rectangular import Rectangular
 import copy
 
-from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot
+from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot, QEventLoop
 from PyQt4.QtGui import QDialog,  QMessageBox
 from PyQt4 import QtCore
 _fromUtf8 = QtCore.QString.fromUtf8
 
 from ui.Ui_pick_point import Ui_PickPoint
+from popWindow import NoticeWindow
 
 STEP_START = 1
 STEP_GET_POINT =2
@@ -89,6 +90,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.toPickPointSignal.connect(self.ReiceveStrData)
         #发送socket命令
         self.sendOrderSignal = sendOrderSignal
+        self.pickNoticeWindow = NoticeWindow()
 
         #存储已发送命令 用于验证发送成功
         self.orderDict={}
@@ -534,6 +536,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         # TODO: not implemented yet
         self.ShowInTab(u'起飞 button clicked')
+        # self.pickNoticeWindow.show(1)
+        self.pickNoticeWindow.Confirm(1)
+        print(self.pickNoticeWindow.status)
 
     @pyqtSignature("")
     def on_pick_startMission_btn_clicked(self):
@@ -542,6 +547,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         # TODO: not implemented yet
         self.ShowInTab('startMission button clicked')
+        self.pickNoticeWindow.show(2)
 
 
     @pyqtSignature("")
@@ -551,6 +557,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         # TODO: not implemented yet
         self.ShowInTab('abortMission button clicked')
+        self.pickNoticeWindow.show(3)
 
 
     @pyqtSignature("")
@@ -560,6 +567,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         # TODO: not implemented yet
         self.ShowInTab('land button clicked')
+        self.pickNoticeWindow.show(4)
 
 
     @pyqtSignature("")
@@ -569,4 +577,5 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         # TODO: not implemented yet
         self.ShowInTab('returnToBase button clicked')
+        self.pickNoticeWindow.show(5)
 

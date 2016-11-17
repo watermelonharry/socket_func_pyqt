@@ -61,9 +61,9 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
 
         #upload data to BAIDU
         self.uploader = GpsUploader(updateMainSignal=updateMainSignal,toPickPointSignal= toPickSignal)
-        import os
-        self.webView.setUrl(QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/yinyandemo/index.html")))
-    
+        # import os
+        # self.webView.setUrl(QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/yinyandemo/index.html")))
+        #
     @pyqtSignature("")
     def on_web_emit_btn_clicked(self):
         """
@@ -129,14 +129,14 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     argList = None
 
                 if data[1][0] == 'D':      #command 4
-                    #todo: set points
+                    #set points
                     self.SendToPickFunc(strArg)
                     return
                 else:
                     argList = None
 
                 if data[1] == 'E':      #命令4，飞行器发送，故障信息上传
-                    #todo: 故障信息转存到文件
+                    #故障信息转存到文件
                     if self.SaveErrorToFile(data[:]) is True:
                         self.SendOrder(id=data[0],content='DY')
                     else:
@@ -144,6 +144,12 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     return
                 else:
                     argList = None
+
+                if data[1] == 'C':      #命令5：飞行器控制命令回复
+                    self.SendToPickFunc(strArg)
+                    return
+                else:
+                    pass
         else:
             argList = None
 
