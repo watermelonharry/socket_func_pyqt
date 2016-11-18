@@ -126,7 +126,7 @@ class Ui_PickPoint(object):
         self.groupBox.setAutoFillBackground(True)
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
         self.pick_status_label = QtGui.QLabel(self.groupBox)
-        self.pick_status_label.setGeometry(QtCore.QRect(140, 140, 72, 15))
+        self.pick_status_label.setGeometry(QtCore.QRect(140, 140, 121, 16))
         self.pick_status_label.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pick_status_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.pick_status_label.setObjectName(_fromUtf8("pick_status_label"))
