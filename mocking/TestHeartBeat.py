@@ -41,13 +41,24 @@ def sendHeartBeat():
         startStatus = 1
         count = 0
 
-        while c == 'y':
-            order = '0=L=%s=%s=20.12=1.0=%s=' %(str(startLongi + count*0.00001),str(startLati + count*0.00001),str((startStatus+count)%9))
-            order += xorFormat(order)
-            s.send(order)
-            print (order)
-            count += 1
-            c = raw_input('send order? y/n')
+        while c != 'n':
+            if c == 'y':
+                order = '0=L=%s=%s=20.12=1.0=%s=' %(str(startLongi + count*0.00001),str(startLati + count*0.00001),str((startStatus+count)%9))
+                order += xorFormat(order)
+                s.send(order)
+                print (order)
+                count += 1
+            else:
+                try:
+                    c = c.split(' ')
+                    order = '0=L=%s=%s=20.12=1.0=%s=' % (str(c[0]), str(c[1]), str(1))
+                    order += xorFormat(order)
+                    s.send(order)
+                    print (order)
+                except Exception as e:
+                    print(e.message)
+            c = raw_input('send order? y/n or input longitude and latitude')
+
         s.close()
         print('end connection')
 

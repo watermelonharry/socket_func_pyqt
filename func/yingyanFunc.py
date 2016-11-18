@@ -15,15 +15,8 @@ from package.gpsuploader import GpsUploader
 from ui.Ui_yingyan_web import Ui_yingyan_web
 import time
 import os
-STATUS_DICT = {1:u'等待状态',
-               2:u'路径设置完成',
-               3:u'起飞',
-               4:u'执行任务',
-               5:u'终止任务',
-               6:u'降落',
-               7:u'任务完成',
-               8:u'返航'
-               }
+
+from package.planeStatus import STATUS_DICT,PlaneStatus,PlaneControl
 
 class YingyanFunc(QDialog, Ui_yingyan_web):
     """
