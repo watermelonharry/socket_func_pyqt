@@ -103,7 +103,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 self.ShowInTab('<error:waiting for former progress to be finished>')
                 self.Confirm(21)
         else:
-            self.Confirm(11)
+            self.Confirm(10)
     
     # @pyqtSlot(str)
     # #input str_arg: point number
@@ -489,6 +489,32 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         if data[2] == '5' and data[3] == 'N':
                             self.Confirm(5002)
                             self.SendOrder(orderId, self.orderDict[orderId])
+                    #参数查询命令回复
+                    if data[1] == 'P':
+                        #设置参数显示
+                        self.pp_param_height.setText(data[2])
+                        self.pp_param_speed.setText(data[3])
+
+                    #参数设置命令回复
+                    if data[1] == 'S':
+                        if data[2] == 'Y':
+                            self.Confirm(1001)
+                            self.RemoveOrder(orderId)
+                            self.ORDER_STEP = STEP_START
+                        if data[2] == 'N':
+                            if self.Confirm(6002) is True:
+                                #再次发送
+                                self.SendOrder(orderId, self. orderDict[orderId])
+                            else:
+                                #不重新发送
+                                pass
+                        if data[2] == 'E':
+                            if self.Confirm(6003) is True:
+                                #重新设置
+                                pass
+                            else:
+                                #不重新设置
+                                pass
                 else:
                     k, v = self.orderDict.items()
                     self.SendOrder(k,v)
@@ -595,7 +621,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.ShowInTab(u'起飞 button clicked')
         # self.pickNoticeWindow.show(1)
         if self.Confirm(1) is True:
-            if self.PLANE_STATUS is planeStatus.WAIT:
+            if self.PLANE_STATUS is planeStatus.POINT_SET:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'C=1'
@@ -616,7 +642,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # TODO: not implemented yet
         self.ShowInTab('startMission button clicked')
         if self.Confirm(2) is True:
-            if self.PLANE_STATUS is planeStatus.POINT_SET:
+            if self.PLANE_STATUS is planeStatus.TAKE_OFF:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'C=2'
@@ -676,7 +702,6 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         返航按钮
         """
-        # TODO: not implemented yet
         self.ShowInTab('returnToBase button clicked')
         if self.Confirm(5) is True:
             if self.PLANE_STATUS is planeStatus.FINISH_MISSION or self.PLANE_STATUS is planeStatus.ABORT_MISSION:
@@ -691,3 +716,47 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             else:
                 self.Confirm(5101)
 
+
+    """
+    飞行器参数查询和设置
+    """
+    @pyqtSignature("")
+    def on_pick_param_check_btn_clicked(self):
+        """
+        参数查询按钮
+        :return:
+        """
+        self.ShowInTab(u'参数查询按钮 clicked')
+        self.SendOrder(self.uniqueId(), content='P')
+
+    @pyqtSignature("")
+    def on_pick_param_set_btn_clicked(self):
+        """
+        参数设置按钮
+        只能在飞行器等待状态下设置
+        :return:
+        """
+        if self.PLANE_STATUS is planeStatus.WAIT:
+            if self.Confirm() is True:
+                #todo: 获取高度和速度，校验参数，发送命令
+                height = str(self.pp_param_height.text())
+                speed = str(self.pp_param_speed.text())
+                try:
+                    height = float(height)
+                    speed = float(speed)
+
+                    #发送命令
+                    if self.ORDER_STEP is STEP_START:
+                        orderId = self.uniqueId()
+                        orderContent = 'S='+str(height)+'='+str(speed)
+
+                        self.SendOrder(orderId, orderContent)
+                        self.RecordOrder(orderId, orderContent)
+                        self.ORDER_STEP = STEP_SEND_WAIT
+                except Exception as e:
+                    self.Confirm(207)
+                    self.ShowInTab('error in param_set:',e.message)
+                pass
+        else:
+            ## 提示飞行器处于等待状态
+            self.Confirm(205)
