@@ -12,6 +12,13 @@ STATUS_DICT = {
     8:u'返航'
                }
 
+DEBUG_STATUS_DICT = {
+    1001:u'GPRS连接成功',
+    2001:u'获得飞行器控制权',
+    3000:u'开始执行任务',
+    300:[u'正在飞往第',u'个点']
+}
+
 class PlaneStatus():
     """
     飞行器状态

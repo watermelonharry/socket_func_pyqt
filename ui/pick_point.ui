@@ -390,46 +390,24 @@
      <string>参数设置</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="pp_param_height">
+   <widget class="QLineEdit" name="pp_param_height">
     <property name="geometry">
      <rect>
-      <x>318</x>
+      <x>320</x>
       <y>50</y>
-      <width>61</width>
+      <width>50</width>
       <height>23</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Microsoft YaHei UI</family>
-     </font>
-    </property>
-    <property name="acceptDrops">
-     <bool>true</bool>
-    </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="pp_param_speed">
+   <widget class="QLineEdit" name="pp_param_speed">
     <property name="geometry">
      <rect>
-      <x>318</x>
+      <x>320</x>
       <y>80</y>
-      <width>61</width>
+      <width>50</width>
       <height>23</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Microsoft YaHei UI</family>
-     </font>
-    </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAsNeeded</enum>
     </property>
    </widget>
   </widget>

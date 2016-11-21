@@ -328,6 +328,24 @@
     <string>测试</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="sock_debug_btn">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>150</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>调试信息</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>

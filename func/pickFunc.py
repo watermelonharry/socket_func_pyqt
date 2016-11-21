@@ -35,7 +35,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     """
 
     js_signal = pyqtSignal(str)
-    def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None, sendOrderSignal = None):
+    def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None, sendOrderSignal = None, toDebugWindowSingal = None):
         """
         Constructor
         
@@ -58,6 +58,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         #发送socket命令
         self.sendOrderSignal = sendOrderSignal
         self.pickNoticeWindow = NoticeWindow()
+        #发送到debug窗口
+        self.toDebugWindowSingal = toDebugWindowSingal
 
         #存储已发送命令 用于验证发送成功
         self.orderDict={}
@@ -409,9 +411,10 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     self.currentLoc = (innerData[3],innerData[4])
                     self.PLANE_STATUS = int(innerData[5])
                     self.pick_status_label.setText(STATUS_DICT[self.PLANE_STATUS])
+                if innerData[2] == 'T':
+                    self.SendToDebugWindow(innerData[3])
         except Exception as e:
             print('error in ReiceveStrData.innerData:',e.message)
-
 
         # 外部数据收发操作
         if self.ORDER_STEP is STEP_SEND_WAIT:
@@ -423,7 +426,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 #todo：加入其他命令
                 #确认接收的命令在字典中
                 if orderId in self.orderDict:
-                    #设置路径命令回复
+                    #3.2 设置路径命令回复
                     if data[1]=='D':
                         if data[2] == 'Y':
                             if self.RemoveOrder(orderId) is True:
@@ -447,7 +450,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                             #todo:参数错误
                             self.ShowInTab('<error: points info error, please reset points>')
                             self.Confirm(204)
-                    #控制命令回复
+                    #5 控制命令回复
                     if data[1] == 'C':
                         #起飞
                         if data[2] == '1' and data[3] == 'Y':
@@ -489,13 +492,13 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         if data[2] == '5' and data[3] == 'N':
                             self.Confirm(5002)
                             self.SendOrder(orderId, self.orderDict[orderId])
-                    #参数查询命令回复
+                    #2 参数查询命令回复
                     if data[1] == 'P':
                         #设置参数显示
                         self.pp_param_height.setText(data[2])
                         self.pp_param_speed.setText(data[3])
 
-                    #参数设置命令回复
+                    #3.1 参数设置命令回复
                     if data[1] == 'S':
                         if data[2] == 'Y':
                             self.Confirm(1001)
@@ -515,6 +518,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                             else:
                                 #不重新设置
                                 pass
+
+                    # #6 飞行器调试信息
+                    # if data[1] =='T':
+                    #     self.SendToDebugWindow(data[2])
+
                 else:
                     k, v = self.orderDict.items()
                     self.SendOrder(k,v)
@@ -600,6 +608,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         except Exception as e:
             print('e10001:',e.message)
             return False
+
+    def SendToDebugWindow(self,strArg):
+        self.toDebugWindowSingal.emit(strArg)
 
     """
     飞行器控制按钮

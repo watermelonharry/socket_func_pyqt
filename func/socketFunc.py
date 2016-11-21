@@ -12,6 +12,7 @@ from ui.Ui_socketUI import Ui_SocketUi
 ##yingyan_web UI
 from yingyanFunc import YingyanFunc
 from pickFunc import PickPointfunc
+from debugWindow import DebugWindow
 
 ## log write module
 from package import log
@@ -153,7 +154,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
     toSocketfuncSignal = pyqtSignal(str)
     fromSocketfuncSignal = pyqtSignal(str)
 
-    # 调用该信号会进行发送操作
+    toDebugWindowSignal = pyqtSignal(str)
+
+    # 调用该信号会进行发送socket信息操作
     sendOrderSignal = pyqtSignal(str)
 
     def __init__(self, parent=None):
@@ -183,11 +186,14 @@ class SocketFunc(QDialog, Ui_SocketUi):
         #try to make sub dialog constant
         self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal, toPickSignal= self.toPickPointSignal, sendOrderSignal= self.sendOrderSignal)
 
-        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal, sendOrderSignal= self.sendOrderSignal)
+        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal, sendOrderSignal= self.sendOrderSignal, toDebugWindowSingal = self.toDebugWindowSignal)
         #todo:发送到socket的信号统一为sendOrderSignal
         #self.fromPickPointSignal.connect(self.processPickData)
 
         self.sendOrderSignal.connect(self.SendOrder)
+
+        #调试窗口
+        self.debugWindow = DebugWindow(self.toDebugWindowSignal)
 
     def __str__(self):
         return('sockFunc-para:')
@@ -332,6 +338,14 @@ class SocketFunc(QDialog, Ui_SocketUi):
         #self.sock.stop_tcp_server()
         self.sock.close()
 
+    @pyqtSignature("")
+    def on_sock_debug_btn_clicked(self):
+        """
+        调试信息窗口
+        :return:
+        """
+        self.debugWindow.show()
+
     def xorFormat(self, str_arg):
         return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))
 
@@ -347,24 +361,31 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
 
 
-        ##测试点上传：
-        import random
-        d = random.randint(-100,100)
-        e = random.randint(-100, 100)
+        # ##测试点上传：
+        # import random
+        # d = random.randint(-100,100)
+        # e = random.randint(-100, 100)
+        #
+        # longi = 120.1314001 + d/10000.0
+        # lati= 30.2729001 + e/10000.0
+        #
+        # longi = 120.12017068
+        # lati = 30.26618533
+        #
+        #
+        # teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0=1='
+        # teststr += self.xorFormat(teststr)
+        # self.sockToYingyan(teststr)
+        # print('send to yingyan:'+teststr)
+        #
+        # # ## 故障信息测试
+        # # errorTestStr = '19191919=E=X=Y=longi=lati='
+        # # errorTestStr += self.xorFormat(errorTestStr)
+        # # self.sockToYingyan(errorTestStr)
 
-        longi = 120.1314001 + d/10000.0
-        lati= 30.2729001 + e/10000.0
-
-        longi = 120.12017068
-        lati = 30.26618533
-
-
-        teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0=1='
-        teststr += self.xorFormat(teststr)
-        self.sockToYingyan(teststr)
-        print('send to yingyan:'+teststr)
-
-        # ## 故障信息测试
-        # errorTestStr = '19191919=E=X=Y=longi=lati='
-        # errorTestStr += self.xorFormat(errorTestStr)
-        # self.sockToYingyan(errorTestStr)
+        ##调试窗口
+        self.toDebugWindowSignal.emit('1001')
+        self.toDebugWindowSignal.emit('2001')
+        self.toDebugWindowSignal.emit('3000')
+        self.toDebugWindowSignal.emit('3001')
+        self.toDebugWindowSignal.emit('3003')

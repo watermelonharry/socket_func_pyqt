@@ -4,6 +4,16 @@ import socket
 import time
 
 
+def uniqueId():
+    """
+    生成基于当前unix时间戳的唯一ID
+    :return: str(unique id)
+    """
+    import datetime
+    import time
+    uniID = str(time.mktime(time.localtime()))[:-2] + str(datetime.datetime.now().microsecond / 1000)
+    return str(uniID)
+
 def xorFormat(str_arg):
     """
     计算给定str的字节异或值
@@ -32,10 +42,9 @@ def startConnect(host = None, port = None):
             print(e.message)
             return None
 
-def sendHeartBeat():
-    s = startConnect()
+def sendHeartBeat(s):
     if s is not None:
-        c = raw_input('send order? y/n')
+        c = raw_input('send heart beat order? y/n ')
         startLongi = 120.13143165691
         startLati = 30.272977524721
         startStatus = 1
@@ -57,10 +66,49 @@ def sendHeartBeat():
                     print (order)
                 except Exception as e:
                     print(e.message)
-            c = raw_input('send order? y/n or input longitude and latitude')
+            c = raw_input('send heartbeat order? y/n or input longitude and latitude\n')
 
-        s.close()
-        print('end connection')
+        print('end heartBeat')
+
+def SendDebugInfo(s):
+    if s is not None:
+        startDebug = 1
+        c = raw_input('send debug order? y/n ')
+        while c != 'n':
+            if c=='y':
+                if startDebug < 3:
+                    order = uniqueId() + '=T=' + str(startDebug) + '001='
+                    order += xorFormat(order)
+                    s.send(order)
+                    print(order)
+                else:
+                    num = '000' + str(startDebug-3)
+                    num = '3' + num[-3:] + '='
+                    print(num)
+                    order = uniqueId() + '=T=' + num
+                    order += xorFormat(order)
+                    s.send(order)
+                    print(order)
+            c = raw_input('send debug order? y/n ')
+            startDebug = startDebug + 1 if startDebug < 17 else 1
+        print('end debug info')
 
 if __name__ == '__main__':
-    sendHeartBeat()
+    s = startConnect()
+    choose = raw_input('select test order:\n'
+                       '1: heartBeat\n'
+                       '2: debug info\n'
+                       '0: end test\n')
+
+    while choose != '0':
+        if choose == '1':
+            sendHeartBeat(s)
+        if choose == '2':
+            SendDebugInfo(s)
+
+        choose = raw_input('select test order:\n'
+                           '1: heartBeat\n'
+                           '2: debug info\n'
+                           '0: end test\n')
+    s.close()
+    print('<end connection>')

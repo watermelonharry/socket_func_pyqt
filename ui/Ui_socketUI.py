@@ -133,6 +133,12 @@ class Ui_SocketUi(object):
         font.setFamily(_fromUtf8("Microsoft YaHei UI"))
         self.sock_test_btn.setFont(font)
         self.sock_test_btn.setObjectName(_fromUtf8("sock_test_btn"))
+        self.sock_debug_btn = QtGui.QPushButton(SocketUi)
+        self.sock_debug_btn.setGeometry(QtCore.QRect(30, 150, 75, 23))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Microsoft YaHei UI"))
+        self.sock_debug_btn.setFont(font)
+        self.sock_debug_btn.setObjectName(_fromUtf8("sock_debug_btn"))
 
         self.retranslateUi(SocketUi)
         QtCore.QObject.connect(self.sock_quit_btn, QtCore.SIGNAL(_fromUtf8("clicked()")), SocketUi.close)
@@ -154,6 +160,7 @@ class Ui_SocketUi(object):
         self.sock_ip.setText(_translate("SocketUi", "localhost:9876", None))
         self.sock_pickPoint_btn.setText(_translate("SocketUi", "地图选点", None))
         self.sock_test_btn.setText(_translate("SocketUi", "测试", None))
+        self.sock_debug_btn.setText(_translate("SocketUi", "调试信息", None))
 
 
 if __name__ == "__main__":

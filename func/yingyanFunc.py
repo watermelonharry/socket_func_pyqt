@@ -109,19 +109,19 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     #todo: wrong heartbeat info
                     argList = None
             else:
-                if data[1] == 'P':      #command 2
-                    #todo: param check
+                if data[1] == 'P':      #命令2：飞行器参数查询
+                    self.SendToPickFunc(strArg)
                     return
                 else:
                     argList = None
 
-                if data[1] == 'S':      #command 3
-                    #todo: param set
+                if data[1] == 'S':      #命令3.1：飞行器参数设置
+                    self.SendToPickFunc(strArg)
                     return
                 else:
                     argList = None
 
-                if data[1][0] == 'D':      #command 4
+                if data[1][0] == 'D':      #命令3.2：导航路径设置
                     #set points
                     self.SendToPickFunc(strArg)
                     return
@@ -140,6 +140,12 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
 
                 if data[1] == 'C':      #命令5：飞行器控制命令回复
                     self.SendToPickFunc(strArg)
+                    return
+                else:
+                    pass
+
+                if data[1] == 'T':      #命令6：飞行器调试信息
+                    self.SendToPickFunc('IN=YY=T=' + str(data[2]))
                     return
                 else:
                     pass
