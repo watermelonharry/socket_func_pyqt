@@ -89,7 +89,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     @pyqtSlot(str) 
     def ShowInTab(self, str_arg):
         self.pp_testbrowser.append(str_arg)
-    
+
+    @pyqtSlot(str)
+    def ConfirmByJs(self, strArg):
+        self.Confirm(13)
+
     @pyqtSlot(str)
     #input str_arg: longi-lati
     def add_one_point_js(self, str_arg):
@@ -104,8 +108,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             else:
                 self.ShowInTab('<error:waiting for former progress to be finished>')
                 self.Confirm(21)
-        else:
+        elif self.PLANE_STATUS is not None:
             self.Confirm(10)
+        else:
+            self.Confirm(12)
+
     
     # @pyqtSlot(str)
     # #input str_arg: point number
@@ -141,10 +148,26 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 else:
                     self.ShowInTab('<error: not enough points>')
                     self.Confirm(24)
-            else:
+            elif self.ORDER_STEP is STEP_SEND_WAIT:
                 self.ShowInTab('<error: wrong step>')
-                self.Confirm(23)
-        self.Confirm(11)
+                self.Confirm(21)
+            elif self.ORDER_STEP is STEP_START:
+                self.ShowInTab(u'<error: 步骤错误>')
+                self.Confirm(11)
+        else:
+            self.Confirm(10)
+
+    @pyqtSignature("")
+    def on_pick_resend_btn_clicked(self):
+        """
+        重新发送
+        :return:
+        """
+        if self.Confirm(25) is True:
+            for k,v in self.orderDict.items():
+                self.SendOrder(id=k, content=v)
+        else:
+            pass
 
     def CalculatePoints(self, pointsList):
         """
@@ -196,7 +219,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             self.lines = []
             self.orderDict = {}
             self.ORDER_STEP = STEP_START
-            self.PLANE_STATUS = None
+            self.PLANE_STATUS = planeStatus.WAIT
 
             jscript = """
                     map.clearOverlays();
@@ -205,6 +228,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     p_count = 1;
                     var lineMarkers = []; //路径集合
                     var linePoints = []; //路径点集合
+                    SET_FLAG = 1;
                     """
             # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
             self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
@@ -253,6 +277,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                                 map.addOverlay(polyline);   //增加折线
                             }
+                            SET_FLAG = 0;
 
                             """ % lineData
                     self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
@@ -323,6 +348,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                                 map.addOverlay(polyline);   //增加折线
                             }
+                            SET_FLAG = 0;
 
                             """ % lineData
                 self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)

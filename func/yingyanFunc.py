@@ -85,72 +85,78 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
 
     def ExtractCommandData(self, strArg):
         strArg = str(strArg)       #去掉尾部的\r\n
-        while '\r' in strArg: strArg.replace('\r','')
-        while '\n' in strArg:strArg.replace('\n','')
+        while '\r' in strArg: strArg = strArg.replace('\r','')
+        while '\n' in strArg: strArg = strArg.replace('\n','')
 
-        data = strArg.split('=')
-        argList = [data[0],data[1]]
-        # 校验通过
-        if str(reduce(lambda x,y: chr(ord(x)^ord(y)), list('='.join(data[:-1]) + '='))) == data[-1]:
-            if data[0] == '0':
-                if data[1] == 'L':      # command 1
-                    argList.append(data[2])     #longitude
-                    argList.append(data[3])     #latitude
-                    argList.append(data[4])     #height
-                    argList.append(data[5])     #speed
-                    argList.append(data[6])     #plane status
+        try:
+            data = strArg.split('=')
+            argList = [data[0],data[1]]
 
-                    self.update_status(strArg,argList)
-                    #上传至鹰眼
-                    self.uploadGpsData((float(data[2]), float(data[3])))
-                    #更新取点窗口的当前坐标数据，飞行器的状态数据
-                    self.SendToPickFunc('IN=YY=LOC='+ str(data[2]) + '=' + str(data[3])+ '=' + str(data[6]))
-                else:
-                    #todo: wrong heartbeat info
-                    argList = None
-            else:
-                if data[1] == 'P':      #命令2：飞行器参数查询
-                    self.SendToPickFunc(strArg)
-                    return
-                else:
-                    argList = None
 
-                if data[1] == 'S':      #命令3.1：飞行器参数设置
-                    self.SendToPickFunc(strArg)
-                    return
-                else:
-                    argList = None
+            # 校验通过
+            if str(reduce(lambda x,y: chr(ord(x)^ord(y)), list(strArg[:-1])) == strArg[-1]):
+                if data[0] == 'H':
+                    if data[1] == 'L':      # command 1
+                        #todo:修改data2和data3的计算方式
+                        argList.append(data[2])     #longitude
+                        argList.append(data[3])     #latitude
+                        argList.append(data[4])     #height
+                        argList.append(data[5])     #speed
+                        argList.append(data[6])     #plane status
 
-                if data[1][0] == 'D':      #命令3.2：导航路径设置
-                    #set points
-                    self.SendToPickFunc(strArg)
-                    return
-                else:
-                    argList = None
-
-                if data[1] == 'E':      #命令4，飞行器发送，故障信息上传
-                    #故障信息转存到文件
-                    if self.SaveErrorToFile(data[:]) is True:
-                        self.SendOrder(id=data[0],content='DY')
+                        self.update_status(strArg,argList)
+                        #上传至鹰眼
+                        self.uploadGpsData((float(data[2]), float(data[3])))
+                        #更新取点窗口的当前坐标数据，飞行器的状态数据
+                        self.SendToPickFunc('IN=YY=LOC='+ str(data[2]) + '=' + str(data[3])+ '=' + str(data[6]))
                     else:
-                        self.SendOrder(id=data[0],content='DN')
-                    return
+                        #todo: wrong heartbeat info
+                        argList = None
                 else:
-                    argList = None
+                    if data[1] == 'P':      #命令2：飞行器参数查询
+                        self.SendToPickFunc(strArg)
+                        return
+                    else:
+                        argList = None
 
-                if data[1] == 'C':      #命令5：飞行器控制命令回复
-                    self.SendToPickFunc(strArg)
-                    return
-                else:
-                    pass
+                    if data[1] == 'S':      #命令3.1：飞行器参数设置
+                        self.SendToPickFunc(strArg)
+                        return
+                    else:
+                        argList = None
 
-                if data[1] == 'T':      #命令6：飞行器调试信息
-                    self.SendToPickFunc('IN=YY=T=' + str(data[2]))
-                    return
-                else:
-                    pass
-        else:
-            argList = None
+                    if data[1][0] == 'D':      #命令3.2：导航路径设置
+                        #set points
+                        self.SendToPickFunc(strArg)
+                        return
+                    else:
+                        argList = None
+
+                    if data[1] == 'E':      #命令4，飞行器发送，故障信息上传
+                        #故障信息转存到文件
+                        if self.SaveErrorToFile(data[:]) is True:
+                            self.SendOrder(id=data[0],content='DY')
+                        else:
+                            self.SendOrder(id=data[0],content='DN')
+                        return
+                    else:
+                        argList = None
+
+                    if data[1] == 'C':      #命令5：飞行器控制命令回复
+                        self.SendToPickFunc(strArg)
+                        return
+                    else:
+                        pass
+
+                    if data[1] == 'T':      #命令6：飞行器调试信息
+                        self.SendToPickFunc('IN=YY=T=' + str(data[2]))
+                        return
+                    else:
+                        pass
+            else:
+                argList = None
+        except Exception as e:
+            print('error in yingyanFunc-ExtractCommandData',e.message)
 
     def SendOrder(self,id=None, content=None):
         """

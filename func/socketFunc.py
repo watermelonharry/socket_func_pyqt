@@ -13,6 +13,7 @@ from ui.Ui_socketUI import Ui_SocketUi
 from yingyanFunc import YingyanFunc
 from pickFunc import PickPointfunc
 from debugWindow import DebugWindow
+from popWindow import NoticeWindow
 
 ## log write module
 from package import log
@@ -65,13 +66,19 @@ class sserver(QThread):
 
     ##what the THREAD mainly do
     def run(self):
+        print('serverRun')
+        self.update_main('success in sock-run')
+
         self.RUN_FLAG = True
         self.create_server()
 
         while self.RUN_FLAG:
             if self.process_data() is False:
                 self.listen()
-        self.update_main('end-sserver-thread')
+
+        print('serverEnd')
+        self.update_main('success in end-sserver-thread')
+
 
     ##triggered from dialog button, set the RUN_FLAG to stop thread, and eliminate the socket/client
     def close(self):
@@ -83,8 +90,16 @@ class sserver(QThread):
             self.sserver.close()
         self.client = None
         self.sserver = None
+        self.clientConnect()
         self.update_main('enter-sserver-func-CLOSE-')
 
+    def clientConnect(self):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((self.host, self.port))
+            s.close()
+        except Exception as e:
+            print('error in server-close-clientConnect:',e.message)
 
     ##process recv data here
     def process_data(self):
@@ -170,6 +185,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.setupUi(self)
 
         self.sock = sserver(upMainSig=self.updateMainSignal,recSignal=self.fromSocketfuncSignal)
+        self.SERVER_RUN = False
         self.host = 'localhost'
         self.port = 9876
         self.mode = 'TCP'
@@ -177,6 +193,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.mutex = QMutex()
         self.log = log.logfile('log')
         self.orderDict = {}
+        self.noticeWindow = NoticeWindow()
         if self.log is not None:
             with QMutexLocker(self.mutex):
                 self.log.write('enter-socketFuc-class-INIT-'+  str(self))
@@ -233,7 +250,16 @@ class SocketFunc(QDialog, Ui_SocketUi):
     
     def xorFormat(self, str_arg):
         return str(reduce(lambda x,y: chr(ord(x)^ord(y)), list(str_arg)))
-        
+
+    def Confirm(self,intArg):
+        """
+        确认窗口
+        :param intArg:
+        :return:确定返回True， 取消返回False
+        """
+        self.noticeWindow.Confirm(intArg)
+        return self.noticeWindow.status
+
     @pyqtSignature("")
     def on_sock_clear_btn_clicked(self):
         """
@@ -254,19 +280,6 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.port = int(str_in[1])
         self.sock.setpara(host = self.host,  port = self.port)
         self.say_hi('set host/port to ' + ':'.join(str_in))
-
-    @pyqtSignature("")
-    def on_sock_start_btn_clicked(self):
-        """
-        Slot documentation goes here.
-        """
-        # TODO: not implemented yet
-        self.say_hi('start button clicked, start tcpserver with:')
-        self.sock.setpara()
-        self.say_hi(str(self.sock))
-        self.sock.start()
-
-
 
 
     @pyqtSignature("")
@@ -329,14 +342,35 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.say_hi('pickpoint window create')
 
     @pyqtSignature("")
+    def on_sock_start_btn_clicked(self):
+        """
+        Slot documentation goes here.
+        """
+        if self.SERVER_RUN is False:
+            self.say_hi('start button clicked, start tcpserver with:')
+            # self.sock.setpara()
+            self.say_hi(str(self.sock))
+            try:
+                self.sock.start()
+                self.SERVER_RUN = True
+            except Exception as e:
+                self.say_hi('error in socket-start:', e.message)
+        else:
+            self.Confirm(32)
+
+    @pyqtSignature("")
     def on_sock_close_btn_clicked(self):
         """
         Slot documentation goes here.
         """
-        # TODO: not implemented yet
-        self.say_hi('close button clicked')
-        #self.sock.stop_tcp_server()
-        self.sock.close()
+        if self.SERVER_RUN is True:
+            self.say_hi('close button clicked')
+            #self.sock.stop_tcp_server()
+            self.sock.close()
+            self.sock = sserver(host = self.host,port = self.port, mode='TCP', upMainSig=self.updateMainSignal, recSignal=self.fromSocketfuncSignal)
+            self.SERVER_RUN = False
+        else:
+            self.Confirm(31)
 
     @pyqtSignature("")
     def on_sock_debug_btn_clicked(self):

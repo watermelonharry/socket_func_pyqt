@@ -23,11 +23,14 @@ def xorFormat(str_arg):
     return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))
 
 def startConnect(host = None, port = None):
+    strArg = raw_input('default or ip:port?\n')
+    if len(strArg) > 5:
+        host,port = strArg.split(':')
     if host is None and port is None:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(('localhost', 9876))
-            print('connected')
+            print('connected-localhost:9876')
             return s
         except Exception as e:
             print(e.message)
@@ -35,8 +38,8 @@ def startConnect(host = None, port = None):
     else:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((host, port))
-            print('connected')
+            s.connect((host, int(port)))
+            print('connected-%s:%s') %(host, str(port))
             return s
         except Exception as e:
             print(e.message)
@@ -52,7 +55,7 @@ def sendHeartBeat(s):
 
         while c != 'n':
             if c == 'y':
-                order = '0=L=%s=%s=20.12=1.0=%s=' %(str(startLongi + count*0.00001),str(startLati + count*0.00001),str((startStatus+count)%9))
+                order = 'H=L=%s=%s=20.12=1.0=%s=' %(str(startLongi + count*0.00001),str(startLati + count*0.00001),str((startStatus+count)%9))
                 order += xorFormat(order)
                 s.send(order)
                 print (order)
@@ -92,6 +95,7 @@ def SendDebugInfo(s):
             c = raw_input('send debug order? y/n ')
             startDebug = startDebug + 1 if startDebug < 17 else 1
         print('end debug info')
+    print('no connect')
 
 if __name__ == '__main__':
     s = startConnect()
