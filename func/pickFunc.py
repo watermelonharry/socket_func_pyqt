@@ -171,6 +171,16 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         else:
             pass
 
+    @pyqtSignature("")
+    def on_pick_reset_order_btn(self):
+        """
+        清除上一条命令
+        :return:
+        """
+        if self.Confirm(27) is True:
+            self.ORDER_STEP = STEP_START
+            self.orderDict = {}
+
     def CalculatePoints(self, pointsList):
         """
         输入路径点，输出差值
