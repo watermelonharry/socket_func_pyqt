@@ -135,9 +135,9 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     if data[1] == 'E':      #命令4，飞行器发送，故障信息上传
                         #故障信息转存到文件
                         if self.SaveErrorToFile(data[:]) is True:
-                            self.SendOrder(id=data[0],content='DY')
+                            self.SendOrder(id=data[0],content='E=Y')
                         else:
-                            self.SendOrder(id=data[0],content='DN')
+                            self.SendOrder(id=data[0],content='E=N')
                         return
                     else:
                         argList = None
@@ -186,7 +186,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
         本地提供：本地时间
         :return:
         """
-        writeList = errorList[2:6] + [time.ctime()]
+        writeList = errorList[2:6] + [time.ctime(),]
         try:
             with open(self.errorFile,'a') as errorFile:
                 errorFile.write(','.join(writeList) + '\n')

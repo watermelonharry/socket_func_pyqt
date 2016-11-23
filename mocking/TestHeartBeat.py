@@ -97,22 +97,45 @@ def SendDebugInfo(s):
         print('end debug info')
     print('no connect')
 
+def SendErrorInfo(s):
+    if s is not None:
+        startDebug = 1
+        c = raw_input('send error info? y/n ')
+        while c != 'n':
+            if c == 'y':
+
+                order = uniqueId() + '=E=' + str(startDebug) + '=type=120.123456=30.654321='
+                order += xorFormat(order)
+                s.send(order)
+                print(order)
+                startDebug = startDebug + 1 if startDebug < 10 else 1
+                c = raw_input('send error info? y/n ')
+        print('end error info')
+    print('no connect')
+
 if __name__ == '__main__':
     s = startConnect()
-    choose = raw_input('select test order:\n'
-                       '1: heartBeat\n'
-                       '2: debug info\n'
-                       '0: end test\n')
-
-    while choose != '0':
-        if choose == '1':
-            sendHeartBeat(s)
-        if choose == '2':
-            SendDebugInfo(s)
-
+    if s is not None:
         choose = raw_input('select test order:\n'
                            '1: heartBeat\n'
                            '2: debug info\n'
-                           '0: end test\n')
-    s.close()
-    print('<end connection>')
+                           '3: error info\n'
+                           'n: end test\n')
+
+        while choose != 'n':
+            if choose == '1':
+                sendHeartBeat(s)
+            if choose == '2':
+                SendDebugInfo(s)
+            if choose == '3':
+                SendErrorInfo(s)
+
+            choose = raw_input('select test order:\n'
+                               '1: heartBeat\n'
+                               '2: debug info\n'
+                               '3: error info\n'
+                               'n: end test\n')
+        s.close()
+        print('<end connection>')
+    else:
+        print('failedc to connect, please retry.\n')
