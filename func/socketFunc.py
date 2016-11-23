@@ -3,6 +3,8 @@
 """
 Module implementing SocketUi.
 """
+import os
+CONFIG_PATH = '/'.join(os.getcwd().split('\\')) + '/websrc/socket_config.dat'
 
 from PyQt4.QtCore import pyqtSignature, QMutex, QMutexLocker, QThread,  pyqtSignal,  SIGNAL
 from PyQt4.QtGui import QDialog
@@ -72,7 +74,7 @@ class sserver(QThread):
         self.RUN_FLAG = True
         self.create_server()
 
-        while self.RUN_FLAG:
+        while self.RUN_FLAG and self.sserver is not None:
             if self.process_data() is False:
                 self.listen()
 
@@ -84,10 +86,16 @@ class sserver(QThread):
     def close(self):
         self.RUN_FLAG = False
         if self.client is not None:
-            self.client.send('<SERVER CLOSED NOW>')
-            self.client.close()
+            try:
+                self.client.send('<SERVER CLOSED NOW>')
+                self.client.close()
+            except Exception as e:
+                pass
         if self.sserver is not None:
-            self.sserver.close()
+            try:
+                self.sserver.close()
+            except Exception as e:
+                pass
         self.client = None
         self.sserver = None
         self.clientConnect()
@@ -99,10 +107,14 @@ class sserver(QThread):
             s.connect((self.host, self.port))
             s.close()
         except Exception as e:
-            print('error in server-close-clientConnect:',e.message)
+            s.close()
+            pass
+            # print('error in server-close-clientConnect:',e.message)
 
     ##process recv data here
     def process_data(self):
+        if self.client is None:
+            return False
         try:
             data = self.client.recv(2048)
             #implement received data PROCESSING here
@@ -128,7 +140,7 @@ class sserver(QThread):
             self.sserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             server_address = (self.host, self.port)
             self.sserver.bind(server_address)
-            self.sserver.listen(1)
+            self.sserver.listen(2)
             self.update_main('enter-sserver-func-CREATESERVER-' + str(self))
         except Exception as e:
             self.update_main('enter-sserver-func-CREATESERVER-error-' + str(e))
@@ -210,9 +222,56 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
         #调试窗口
         self.debugWindow = DebugWindow(self.toDebugWindowSignal)
+        self.ReadConfigFromFile()
 
     def __str__(self):
         return('sockFunc-para:')
+
+    def ReadConfigFromFile(self):
+        """
+        从文件读取上次host:port设置
+        :return:
+        """
+        configList = None
+        try:
+            with open(CONFIG_PATH, 'r') as config:
+                configList = config.readlines()
+        except Exception as e:
+            print('error in socketFunc-ReadConfig:',e.message)
+
+        if configList is not None:
+            try:
+                addrs = configList[0].replace('\n','')
+                ip,port = addrs.split(':')
+                self.port = int(port)
+                self.host = ip
+                self.sock_ip_text.setText(addrs)
+            except Exception as e:
+                self.port = 9876
+                self.host = 'localhost'
+                self.sock_ip_text.setText('localhost:9876')
+
+    def SaveConfigToFile(self):
+        """
+        将上次设置保存到文件
+        :return:
+        """
+        saveConfig = str(self.host) +':'+str(self.port)+ '\n'
+        try:
+            configList = None
+            with open(CONFIG_PATH,'r') as config:
+                configList = config.readlines()
+                if len(configList) > 0:
+                    configList[0] = saveConfig
+                else:
+                    configList.append(saveConfig)
+            with open(CONFIG_PATH,'w') as config:
+                if configList is not None:
+                    config.writelines(configList)
+        except Exception as e:
+            print('error in socketFunc-saveConfig:', e.message)
+
+
 
     def sockToYingyan(self,message):
         """将sock接收的数据转发到yinyan窗口"""
@@ -279,7 +338,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.host = str_in[0]
         self.port = int(str_in[1])
         self.sock.setpara(host = self.host,  port = self.port)
-        self.say_hi('set host:port to' + ':'.join(str_in))
+        self.say_hi('set host:port to ' + ':'.join(str_in))
 
 
     @pyqtSignature("")
@@ -353,6 +412,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
             try:
                 self.sock.start()
                 self.SERVER_RUN = True
+                self.SaveConfigToFile()
             except Exception as e:
                 self.say_hi('error in socket-start:', e.message)
         else:
