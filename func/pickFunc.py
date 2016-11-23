@@ -134,7 +134,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     #TODO：生成、发送命令
 
                     orderId = self.uniqueId()
-                    orderContent = 'D=' + str(len(self.pathPoints)) + '='
+                    orderContent = 'Z=D=' + str(len(self.pathPoints)) + '='
                     orderContent += '='.join([str(p[0]) + '|' + str(p[1]) for p in self.CalculatePoints(self.pathPoints)])
 
                     #加入字典
@@ -163,8 +163,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         :return:
         """
         if self.Confirm(25) is True:
-            for k,v in self.orderDict.items():
-                self.SendOrder(id=k, content=v)
+            if len(self.orderDict) > 0:
+                for k,v in self.orderDict.items():
+                    self.SendOrder(id=k, content=v)
+            else:
+                self.Confirm(26)
         else:
             pass
 
@@ -447,6 +450,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             #校验通过
             if self.xorFormat(strArg[:-1]) == strArg[-1]:
                 data = strArg.split('=')
+                data = data[:1] + data[2:]
                 orderId = data[0]
                 #todo：加入其他命令
                 #确认接收的命令在字典中
@@ -468,8 +472,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                                 #清除地图数据
                                 # self.ClearMapCovers()
                         if data[2] == 'N':
-                            self.Confirm(203)
-                            self.SendOrder(orderId, self.orderDict[orderId])
+                            if self.Confirm(203) is True:
+                                self.SendOrder(orderId, self.orderDict[orderId])
+                            else:
+                                ##不重新发送
+                                pass
 
                         if data[2] == 'E':
                             #todo:参数错误
@@ -483,50 +490,59 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                             self.RemoveOrder(orderId)
                             self.ORDER_STEP = STEP_START
                         if data[2] == '1' and data[3] == 'N':
-                            self.Confirm(1002)
-                            self.SendOrder(orderId, self.orderDict[orderId])
+                            if self.Confirm(1002) is True:
+                                self.SendOrder(orderId, self.orderDict[orderId])
+                            else:
+                                pass
                         #执行任务
                         if data[2] == '2' and data[3] == 'Y':
                             self.Confirm(2001)
                             self.RemoveOrder(orderId)
                             self.ORDER_STEP = STEP_START
                         if data[2] == '2' and data[3] == 'N':
-                            self.Confirm(2002)
-                            self.SendOrder(orderId, self.orderDict[orderId])
+                            if self.Confirm(2002) is True:
+                                self.SendOrder(orderId, self.orderDict[orderId])
                         #终止任务
                         if data[2] == '3' and data[3] == 'Y':
                             self.Confirm(3001)
                             self.RemoveOrder(orderId)
                             self.ORDER_STEP = STEP_START
                         if data[2] == '3' and data[3] == 'N':
-                            self.Confirm(3002)
-                            self.SendOrder(orderId, self.orderDict[orderId])
+                            if self.Confirm(3002) is True:
+                                self.SendOrder(orderId, self.orderDict[orderId])
                         #降落
                         if data[2] == '4' and data[3] == 'Y':
                             self.Confirm(4001)
                             self.RemoveOrder(orderId)
                             self.ORDER_STEP = STEP_START
                         if data[2] == '4' and data[3] == 'N':
-                            self.Confirm(4002)
-                            self.SendOrder(orderId, self.orderDict[orderId])
+                            if self.Confirm(4002) is True:
+                                self.SendOrder(orderId, self.orderDict[orderId])
                         #返航
                         if data[2] == '5' and data[3] == 'Y':
                             self.Confirm(5001)
                             self.RemoveOrder(orderId)
                             self.ORDER_STEP = STEP_START
                         if data[2] == '5' and data[3] == 'N':
-                            self.Confirm(5002)
-                            self.SendOrder(orderId, self.orderDict[orderId])
+                            if self.Confirm(5002) is True:
+                                self.SendOrder(orderId, self.orderDict[orderId])
                     #2 参数查询命令回复
                     if data[1] == 'P':
-                        #设置参数显示
-                        self.pp_param_height.setText(data[2])
-                        self.pp_param_speed.setText(data[3])
+                        if data[2] =='N':
+                            if self.Confirm(6004) is True:
+                                self.SendOrder(orderId, self.orderDict[orderId])
+                        else:
+                            #设置参数显示
+                            self.pp_param_height.setText(data[2])
+                            self.pp_param_speed.setText(data[3])
+                            self.RemoveOrder(orderId)
+                            self.ORDER_STEP = STEP_START
+                            self.Confirm(6005)
 
                     #3.1 参数设置命令回复
                     if data[1] == 'S':
                         if data[2] == 'Y':
-                            self.Confirm(1001)
+                            self.Confirm(6001)
                             self.RemoveOrder(orderId)
                             self.ORDER_STEP = STEP_START
                         if data[2] == 'N':
@@ -660,7 +676,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             if self.PLANE_STATUS is planeStatus.POINT_SET:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
-                    orderContent = 'C=1'
+                    orderContent = 'Z=C=1'
                     self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
@@ -681,7 +697,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             if self.PLANE_STATUS is planeStatus.TAKE_OFF:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
-                    orderContent = 'C=2'
+                    orderContent = 'Z=C=2'
                     self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
@@ -702,7 +718,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             if self.PLANE_STATUS is planeStatus.START_MISSION:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
-                    orderContent = 'C=3'
+                    orderContent = 'Z=C=3'
                     self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
@@ -723,7 +739,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             if self.PLANE_STATUS is planeStatus.FINISH_MISSION or self.PLANE_STATUS is planeStatus.ABORT_MISSION:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
-                    orderContent = 'C=4'
+                    orderContent = 'Z=C=4'
                     self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
@@ -743,7 +759,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             if self.PLANE_STATUS is planeStatus.FINISH_MISSION or self.PLANE_STATUS is planeStatus.ABORT_MISSION:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
-                    orderContent = 'C=5'
+                    orderContent = 'Z=C=5'
                     self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
@@ -763,7 +779,13 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         :return:
         """
         self.ShowInTab(u'参数查询按钮 clicked')
-        self.SendOrder(self.uniqueId(), content='P')
+        if self.ORDER_STEP == STEP_START:
+            orderId = self.uniqueId()
+            self.SendOrder(self.uniqueId(), content='Z=P')
+            self.ORDER_STEP = STEP_SEND_WAIT
+            self.RecordOrder(orderId,'Z=P')
+        else:
+            self.Confirm(21)
 
     @pyqtSignature("")
     def on_pick_param_set_btn_clicked(self):
@@ -773,7 +795,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         :return:
         """
         if self.PLANE_STATUS is planeStatus.WAIT:
-            if self.Confirm() is True:
+            if self.Confirm(206) is True:
                 #todo: 获取高度和速度，校验参数，发送命令
                 height = str(self.pp_param_height.text())
                 speed = str(self.pp_param_speed.text())
@@ -784,15 +806,16 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     #发送命令
                     if self.ORDER_STEP is STEP_START:
                         orderId = self.uniqueId()
-                        orderContent = 'S='+str(height)+'='+str(speed)
+                        orderContent = 'Z=S='+str(height)+'='+str(speed)
 
                         self.SendOrder(orderId, orderContent)
                         self.RecordOrder(orderId, orderContent)
                         self.ORDER_STEP = STEP_SEND_WAIT
+                    else:
+                        self.Confirm(21)
                 except Exception as e:
                     self.Confirm(207)
                     self.ShowInTab('error in param_set:',e.message)
-                pass
         else:
             ## 提示飞行器处于等待状态
             self.Confirm(205)

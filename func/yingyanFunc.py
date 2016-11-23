@@ -90,18 +90,20 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
 
         try:
             data = strArg.split('=')
+            data = data[:1]+data[2:]
             argList = [data[0],data[1]]
 
 
             # 校验通过
             if str(reduce(lambda x,y: chr(ord(x)^ord(y)), list(strArg[:-1])) == strArg[-1]):
+
                 if data[0] == 'H':
                     if data[1] == 'L':      # command 1
                         #todo:修改data2和data3的计算方式
                         argList.append(data[2])     #longitude
                         argList.append(data[3])     #latitude
-                        argList.append(data[4])     #height
-                        argList.append(data[5])     #speed
+                        argList.append(str(abs(float(data[4]))))     #height
+                        argList.append(str(abs(float(data[5]))))     #speed
                         argList.append(data[6])     #plane status
 
                         self.update_status(strArg,argList)
@@ -135,9 +137,9 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     if data[1] == 'E':      #命令4，飞行器发送，故障信息上传
                         #故障信息转存到文件
                         if self.SaveErrorToFile(data[:]) is True:
-                            self.SendOrder(id=data[0],content='E=Y')
+                            self.SendOrder(id=data[0],content='Z=E=Y')
                         else:
-                            self.SendOrder(id=data[0],content='E=N')
+                            self.SendOrder(id=data[0],content='Z=E=N')
                         return
                     else:
                         argList = None

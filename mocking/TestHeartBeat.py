@@ -55,7 +55,7 @@ def sendHeartBeat(s):
 
         while c != 'n':
             if c == 'y':
-                order = 'H=L=%s=%s=20.12=1.0=%s=' %(str(startLongi + count*0.00001),str(startLati + count*0.00001),str((startStatus+count)%9))
+                order = 'H=U=L=%s=%s=20.12=1.0=%s=' %(str(startLongi + count*0.00001),str(startLati + count*0.00001),str((startStatus+count)%9))
                 order += xorFormat(order)
                 s.send(order)
                 print (order)
@@ -63,7 +63,7 @@ def sendHeartBeat(s):
             else:
                 try:
                     c = c.split(' ')
-                    order = '0=L=%s=%s=20.12=1.0=%s=' % (str(c[0]), str(c[1]), str(1))
+                    order = 'H=U=L=%s=%s=20.12=1.0=%s=' % (str(c[0]), str(c[1]), str(1))
                     order += xorFormat(order)
                     s.send(order)
                     print (order)
@@ -80,7 +80,7 @@ def SendDebugInfo(s):
         while c != 'n':
             if c=='y':
                 if startDebug < 3:
-                    order = uniqueId() + '=T=' + str(startDebug) + '001='
+                    order = uniqueId() + '=U=T=' + str(startDebug) + '001='
                     order += xorFormat(order)
                     s.send(order)
                     print(order)
@@ -88,7 +88,7 @@ def SendDebugInfo(s):
                     num = '000' + str(startDebug-3)
                     num = '3' + num[-3:] + '='
                     print(num)
-                    order = uniqueId() + '=T=' + num
+                    order = uniqueId() + '=U=T=' + num
                     order += xorFormat(order)
                     s.send(order)
                     print(order)
@@ -104,7 +104,7 @@ def SendErrorInfo(s):
         while c != 'n':
             if c == 'y':
 
-                order = uniqueId() + '=E=' + str(startDebug) + '=type=120.123456=30.654321='
+                order = uniqueId() + '=U=E=' + str(startDebug) + '=type=120.123456=30.654321='
                 order += xorFormat(order)
                 s.send(order)
                 print(order)

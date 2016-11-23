@@ -275,11 +275,11 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         # TODO: not implemented yet
         self.say_hi('get ip button clicked')
-        str_in = [str(i) for i in self.sock_ip.text().split(':')]
+        str_in = [str(i) for i in self.sock_ip_text.text().split(':')]
         self.host = str_in[0]
         self.port = int(str_in[1])
         self.sock.setpara(host = self.host,  port = self.port)
-        self.say_hi('set host/port to ' + ':'.join(str_in))
+        self.say_hi('set host:port to' + ':'.join(str_in))
 
 
     @pyqtSignature("")
