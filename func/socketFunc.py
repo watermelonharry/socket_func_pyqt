@@ -193,7 +193,6 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.mutex = QMutex()
         self.log = log.logfile('log')
         self.orderDict = {}
-        self.noticeWindow = NoticeWindow()
         if self.log is not None:
             with QMutexLocker(self.mutex):
                 self.log.write('enter-socketFuc-class-INIT-'+  str(self))
@@ -257,8 +256,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
         :param intArg:
         :return:确定返回True， 取消返回False
         """
-        self.noticeWindow.Confirm(intArg)
-        return self.noticeWindow.status
+        noticeWindow = NoticeWindow()
+        noticeWindow.Confirm(intArg)
+        return noticeWindow.status
 
     @pyqtSignature("")
     def on_sock_clear_btn_clicked(self):
@@ -417,9 +417,10 @@ class SocketFunc(QDialog, Ui_SocketUi):
         # # errorTestStr += self.xorFormat(errorTestStr)
         # # self.sockToYingyan(errorTestStr)
 
-        ##调试窗口
-        self.toDebugWindowSignal.emit('1001')
-        self.toDebugWindowSignal.emit('2001')
-        self.toDebugWindowSignal.emit('3000')
-        self.toDebugWindowSignal.emit('3001')
-        self.toDebugWindowSignal.emit('3003')
+        # ##调试窗口
+        # self.toDebugWindowSignal.emit('1001')
+        # self.toDebugWindowSignal.emit('2001')
+        # self.toDebugWindowSignal.emit('3000')
+        # self.toDebugWindowSignal.emit('3001')
+        # self.toDebugWindowSignal.emit('3003')
+

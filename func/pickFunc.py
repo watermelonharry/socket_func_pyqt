@@ -57,7 +57,6 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.toPickPointSignal.connect(self.ReiceveStrData)
         #发送socket命令
         self.sendOrderSignal = sendOrderSignal
-        self.pickNoticeWindow = NoticeWindow()
         #发送到debug窗口
         self.toDebugWindowSingal = toDebugWindowSingal
 
@@ -647,8 +646,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         :param intArg:
         :return:确定返回True， 取消返回False
         """
-        self.pickNoticeWindow.Confirm(intArg)
-        return self.pickNoticeWindow.status
+        chooseWindow = NoticeWindow()
+        chooseWindow.Confirm(intArg)
+        return chooseWindow.status
 
     @pyqtSignature("")
     def on_pick_takeoff_btn_clicked(self):
@@ -656,7 +656,6 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         起飞按钮
         """
         self.ShowInTab(u'起飞 button clicked')
-        # self.pickNoticeWindow.show(1)
         if self.Confirm(1) is True:
             if self.PLANE_STATUS is planeStatus.POINT_SET:
                 if self.ORDER_STEP == STEP_START:

@@ -5,6 +5,7 @@ from PyQt4.QtGui import QDialog,  QMessageBox
 from PyQt4.QtCore import pyqtSignature,  pyqtSignal,  pyqtSlot, QEventLoop
 
 noticeDict= {
+    0:u'无提示信息',
     1:u'确定起飞？',
     2:u'确定执行任务？',
     3:u'确定终止任务？',
@@ -61,22 +62,23 @@ noticeDict= {
 }
 
 class NoticeWindow(QDialog, Ui_notice_window):
-    def __init__(self):
+    def __init__(self,intArg = 0):
         QDialog.__init__(self)
         self.setupUi(self)
+        self.notice_content.setText(noticeDict[intArg])
         self.status = False
 
-    def show(self, intArg):
+    def show(self, intArg = 0):
         self.notice_content.setText(noticeDict[intArg])
         QDialog.show(self)
 
-    def exec_(self, intArg):
+    def exec_(self, intArg = 0):
         self.notice_content.setText(noticeDict[intArg])
         self.status = False
         QDialog.exec_(self)
 
 
-    def Confirm(self, intArg):
+    def Confirm(self, intArg = 0):
         self.exec_(intArg)
 
     @pyqtSignature("")
