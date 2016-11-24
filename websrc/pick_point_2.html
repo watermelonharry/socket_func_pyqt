@@ -27,10 +27,12 @@
 	var curLocMarkers = [];
 	var SET_FLAG = 1;
 
+	var pathMarkers = []; //飞行路径覆盖物集合
 
 
-	var lineMarkers = []; //路径集合
-	var linePoints = []; //路径点集合
+
+	var lineMarkers = []; //计算的路径集合
+	var linePoints = []; //计算的路径点集合
 
 	map.centerAndZoom(new BMap.Point(120.13143165691, 30.272977524721), 15);
 

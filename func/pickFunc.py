@@ -34,6 +34,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     Class documentation goes here.
     """
 
+
     js_signal = pyqtSignal(str)
     def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None, sendOrderSignal = None, toDebugWindowSingal = None):
         """
@@ -172,7 +173,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             pass
 
     @pyqtSignature("")
-    def on_pick_reset_order_btn(self):
+    def on_pick_reset_order_btn_clicked(self):
         """
         清除上一条命令
         :return:
@@ -704,7 +705,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # TODO: not implemented yet
         self.ShowInTab('startMission button clicked')
         if self.Confirm(2) is True:
-            if self.PLANE_STATUS is planeStatus.TAKE_OFF:
+            if self.PLANE_STATUS is planeStatus.TAKE_OFF or self.PLANE_STATUS is planeStatus.ABORT_MISSION:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=2'
@@ -746,7 +747,10 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # TODO: not implemented yet
         self.ShowInTab('land button clicked')
         if self.Confirm(4) is True:
-            if self.PLANE_STATUS is planeStatus.FINISH_MISSION or self.PLANE_STATUS is planeStatus.ABORT_MISSION:
+            if self.PLANE_STATUS is planeStatus.WAIT or self.PLANE_STATUS is planeStatus.START_MISSION:
+                self.Confirm(4101)
+            else:
+
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=4'
@@ -755,8 +759,6 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     self.ORDER_STEP = STEP_SEND_WAIT
                 else:
                     self.Confirm(21)
-            else:
-                self.Confirm(4101)
 
 
     @pyqtSignature("")
@@ -766,7 +768,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         self.ShowInTab('returnToBase button clicked')
         if self.Confirm(5) is True:
-            if self.PLANE_STATUS is planeStatus.FINISH_MISSION or self.PLANE_STATUS is planeStatus.ABORT_MISSION:
+            if self.PLANE_STATUS is planeStatus.FINISH_MISSION or self.PLANE_STATUS is planeStatus.ABORT_MISSION or self.PLANE_STATUS is planeStatus.LAND:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=5'
