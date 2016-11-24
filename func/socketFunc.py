@@ -3,6 +3,8 @@
 """
 Module implementing SocketUi.
 """
+import os
+CONFIG_PATH = '/'.join(os.getcwd().split('\\')) + '/websrc/socket_config.dat'
 
 from PyQt4.QtCore import pyqtSignature, QMutex, QMutexLocker, QThread,  pyqtSignal,  SIGNAL
 from PyQt4.QtGui import QDialog
@@ -12,6 +14,8 @@ from ui.Ui_socketUI import Ui_SocketUi
 ##yingyan_web UI
 from yingyanFunc import YingyanFunc
 from pickFunc import PickPointfunc
+from debugWindow import DebugWindow
+from popWindow import NoticeWindow
 
 ## log write module
 from package import log
@@ -64,29 +68,53 @@ class sserver(QThread):
 
     ##what the THREAD mainly do
     def run(self):
+        print('serverRun')
+        self.update_main('success in sock-run')
+
         self.RUN_FLAG = True
         self.create_server()
 
-        while self.RUN_FLAG:
+        while self.RUN_FLAG and self.sserver is not None:
             if self.process_data() is False:
                 self.listen()
-        self.update_main('end-sserver-thread')
+
+        print('serverEnd')
+        self.update_main('success in end-sserver-thread')
+
 
     ##triggered from dialog button, set the RUN_FLAG to stop thread, and eliminate the socket/client
     def close(self):
         self.RUN_FLAG = False
         if self.client is not None:
-            self.client.send('<SERVER CLOSED NOW>')
-            self.client.close()
+            try:
+                self.client.send('<SERVER CLOSED NOW>')
+                self.client.close()
+            except Exception as e:
+                pass
         if self.sserver is not None:
-            self.sserver.close()
+            try:
+                self.sserver.close()
+            except Exception as e:
+                pass
         self.client = None
         self.sserver = None
+        self.clientConnect()
         self.update_main('enter-sserver-func-CLOSE-')
 
+    def clientConnect(self):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((self.host, self.port))
+            s.close()
+        except Exception as e:
+            s.close()
+            pass
+            # print('error in server-close-clientConnect:',e.message)
 
     ##process recv data here
     def process_data(self):
+        if self.client is None:
+            return False
         try:
             data = self.client.recv(2048)
             #implement received data PROCESSING here
@@ -112,7 +140,7 @@ class sserver(QThread):
             self.sserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             server_address = (self.host, self.port)
             self.sserver.bind(server_address)
-            self.sserver.listen(1)
+            self.sserver.listen(2)
             self.update_main('enter-sserver-func-CREATESERVER-' + str(self))
         except Exception as e:
             self.update_main('enter-sserver-func-CREATESERVER-error-' + str(e))
@@ -153,7 +181,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
     toSocketfuncSignal = pyqtSignal(str)
     fromSocketfuncSignal = pyqtSignal(str)
 
-    # 调用该信号会进行发送操作
+    toDebugWindowSignal = pyqtSignal(str)
+
+    # 调用该信号会进行发送socket信息操作
     sendOrderSignal = pyqtSignal(str)
 
     def __init__(self, parent=None):
@@ -167,6 +197,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.setupUi(self)
 
         self.sock = sserver(upMainSig=self.updateMainSignal,recSignal=self.fromSocketfuncSignal)
+        self.SERVER_RUN = False
         self.host = 'localhost'
         self.port = 9876
         self.mode = 'TCP'
@@ -183,14 +214,64 @@ class SocketFunc(QDialog, Ui_SocketUi):
         #try to make sub dialog constant
         self.YingyanDailog = YingyanFunc(updateMainSignal=self.updateMainSignal, recDataSignal=self.toYingyanFuncSignal, toPickSignal= self.toPickPointSignal, sendOrderSignal= self.sendOrderSignal)
 
-        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal, sendOrderSignal= self.sendOrderSignal)
+        self.PickPointDialog = PickPointfunc(upsignal=self.fromPickPointSignal, downsignal=self.toPickPointSignal, updateMainSignal = self.updateMainSignal, sendOrderSignal= self.sendOrderSignal, toDebugWindowSingal = self.toDebugWindowSignal)
         #todo:发送到socket的信号统一为sendOrderSignal
         #self.fromPickPointSignal.connect(self.processPickData)
 
         self.sendOrderSignal.connect(self.SendOrder)
 
+        #调试窗口
+        self.debugWindow = DebugWindow(self.toDebugWindowSignal)
+        self.ReadConfigFromFile()
+
     def __str__(self):
         return('sockFunc-para:')
+
+    def ReadConfigFromFile(self):
+        """
+        从文件读取上次host:port设置
+        :return:
+        """
+        configList = None
+        try:
+            with open(CONFIG_PATH, 'r') as config:
+                configList = config.readlines()
+        except Exception as e:
+            print('error in socketFunc-ReadConfig:',e.message)
+
+        if configList is not None:
+            try:
+                addrs = configList[0].replace('\n','')
+                ip,port = addrs.split(':')
+                self.port = int(port)
+                self.host = ip
+                self.sock_ip_text.setText(addrs)
+            except Exception as e:
+                self.port = 9876
+                self.host = 'localhost'
+                self.sock_ip_text.setText('localhost:9876')
+
+    def SaveConfigToFile(self):
+        """
+        将上次设置保存到文件
+        :return:
+        """
+        saveConfig = str(self.host) +':'+str(self.port)+ '\n'
+        try:
+            configList = None
+            with open(CONFIG_PATH,'r') as config:
+                configList = config.readlines()
+                if len(configList) > 0:
+                    configList[0] = saveConfig
+                else:
+                    configList.append(saveConfig)
+            with open(CONFIG_PATH,'w') as config:
+                if configList is not None:
+                    config.writelines(configList)
+        except Exception as e:
+            print('error in socketFunc-saveConfig:', e.message)
+
+
 
     def sockToYingyan(self,message):
         """将sock接收的数据转发到yinyan窗口"""
@@ -227,7 +308,17 @@ class SocketFunc(QDialog, Ui_SocketUi):
     
     def xorFormat(self, str_arg):
         return str(reduce(lambda x,y: chr(ord(x)^ord(y)), list(str_arg)))
-        
+
+    def Confirm(self,intArg):
+        """
+        确认窗口
+        :param intArg:
+        :return:确定返回True， 取消返回False
+        """
+        noticeWindow = NoticeWindow()
+        noticeWindow.Confirm(intArg)
+        return noticeWindow.status
+
     @pyqtSignature("")
     def on_sock_clear_btn_clicked(self):
         """
@@ -243,24 +334,11 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         # TODO: not implemented yet
         self.say_hi('get ip button clicked')
-        str_in = [str(i) for i in self.sock_ip.text().split(':')]
+        str_in = [str(i) for i in self.sock_ip_text.text().split(':')]
         self.host = str_in[0]
         self.port = int(str_in[1])
         self.sock.setpara(host = self.host,  port = self.port)
-        self.say_hi('set host/port to ' + ':'.join(str_in))
-
-    @pyqtSignature("")
-    def on_sock_start_btn_clicked(self):
-        """
-        Slot documentation goes here.
-        """
-        # TODO: not implemented yet
-        self.say_hi('start button clicked, start tcpserver with:')
-        self.sock.setpara()
-        self.say_hi(str(self.sock))
-        self.sock.start()
-
-
+        self.say_hi('set host:port to ' + ':'.join(str_in))
 
 
     @pyqtSignature("")
@@ -323,14 +401,44 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.say_hi('pickpoint window create')
 
     @pyqtSignature("")
+    def on_sock_start_btn_clicked(self):
+        """
+        Slot documentation goes here.
+        """
+        if self.SERVER_RUN is False:
+            self.say_hi('start button clicked, start tcpserver with:')
+            # self.sock.setpara()
+            self.say_hi(str(self.sock))
+            try:
+                self.sock.start()
+                self.SERVER_RUN = True
+                self.SaveConfigToFile()
+            except Exception as e:
+                self.say_hi('error in socket-start:', e.message)
+        else:
+            self.Confirm(32)
+
+    @pyqtSignature("")
     def on_sock_close_btn_clicked(self):
         """
         Slot documentation goes here.
         """
-        # TODO: not implemented yet
-        self.say_hi('close button clicked')
-        #self.sock.stop_tcp_server()
-        self.sock.close()
+        if self.SERVER_RUN is True:
+            self.say_hi('close button clicked')
+            #self.sock.stop_tcp_server()
+            self.sock.close()
+            self.sock = sserver(host = self.host,port = self.port, mode='TCP', upMainSig=self.updateMainSignal, recSignal=self.fromSocketfuncSignal)
+            self.SERVER_RUN = False
+        else:
+            self.Confirm(31)
+
+    @pyqtSignature("")
+    def on_sock_debug_btn_clicked(self):
+        """
+        调试信息窗口
+        :return:
+        """
+        self.debugWindow.show()
 
     def xorFormat(self, str_arg):
         return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))
@@ -347,24 +455,32 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
 
 
-        ##测试点上传：
-        import random
-        d = random.randint(-100,100)
-        e = random.randint(-100, 100)
+        # ##测试点上传：
+        # import random
+        # d = random.randint(-100,100)
+        # e = random.randint(-100, 100)
+        #
+        # longi = 120.1314001 + d/10000.0
+        # lati= 30.2729001 + e/10000.0
+        #
+        # longi = 120.12017068
+        # lati = 30.26618533
+        #
+        #
+        # teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0=1='
+        # teststr += self.xorFormat(teststr)
+        # self.sockToYingyan(teststr)
+        # print('send to yingyan:'+teststr)
+        #
+        # # ## 故障信息测试
+        # # errorTestStr = '19191919=E=X=Y=longi=lati='
+        # # errorTestStr += self.xorFormat(errorTestStr)
+        # # self.sockToYingyan(errorTestStr)
 
-        longi = 120.1314001 + d/10000.0
-        lati= 30.2729001 + e/10000.0
+        # ##调试窗口
+        # self.toDebugWindowSignal.emit('1001')
+        # self.toDebugWindowSignal.emit('2001')
+        # self.toDebugWindowSignal.emit('3000')
+        # self.toDebugWindowSignal.emit('3001')
+        # self.toDebugWindowSignal.emit('3003')
 
-        longi = 120.12017068
-        lati = 30.26618533
-
-
-        teststr = '0=L='+ str(longi) + '=' + str(lati) + '=20.12=1.0=1='
-        teststr += self.xorFormat(teststr)
-        self.sockToYingyan(teststr)
-        print('send to yingyan:'+teststr)
-
-        # ## 故障信息测试
-        # errorTestStr = '19191919=E=X=Y=longi=lati='
-        # errorTestStr += self.xorFormat(errorTestStr)
-        # self.sockToYingyan(errorTestStr)

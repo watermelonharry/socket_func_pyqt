@@ -25,11 +25,14 @@
 	var points = [];
 	var markers = [];
 	var curLocMarkers = [];
+	var SET_FLAG = 1;
+
+	var pathMarkers = []; //飞行路径覆盖物集合
 
 
 
-	var lineMarkers = []; //路径集合
-	var linePoints = []; //路径点集合
+	var lineMarkers = []; //计算的路径集合
+	var linePoints = []; //计算的路径点集合
 
 	map.centerAndZoom(new BMap.Point(120.13143165691, 30.272977524721), 15);
 
@@ -48,29 +51,34 @@
 	var p_count = 1;
 	
 	function pick_one_path(e){
-		//alert(e.point.lng + ", " + e.point.lat);
-		var new_p = new BMap.Point(e.point.lng, e.point.lat);
-		points.push(new_p);
+		if(SET_FLAG == 1){
+			//alert(e.point.lng + ", " + e.point.lat);
+			var new_p = new BMap.Point(e.point.lng, e.point.lat);
+			points.push(new_p);
 
-		var marker = new BMap.Marker(new_p);
-		map.addOverlay(marker)
-		markers.push(marker);
+			var marker = new BMap.Marker(new_p);
+			map.addOverlay(marker)
+			markers.push(marker);
 
-		//添加标签
-		if(p_count == 1){
-			var label = new BMap.Label("S",{offset:new BMap.Size(5,0)});
+			//添加标签
+			if(p_count == 1){
+				var label = new BMap.Label("S",{offset:new BMap.Size(5,0)});
+			}
+			else if(p_count == 2){
+				var label = new BMap.Label("E",{offset:new BMap.Size(5,0)});
+			}
+			else{var label = new BMap.Label(p_count-2,{offset:new BMap.Size(5,0)});}
+
+			p_count++;
+			marker.setLabel(label);
+
+			// document.getElementById("show_data").innerHTML= show_all(points);//(e.point.lng + ", " + e.point.lat);
+
+			js_buffer.add_one_point_js(String(e.point.lng) + "|"+ String(e.point.lat));
 		}
-		else if(p_count == 2){
-			var label = new BMap.Label("E",{offset:new BMap.Size(5,0)});
+		else{
+			js_buffer.ConfirmByJs("1");
 		}
-		else{var label = new BMap.Label(p_count-2,{offset:new BMap.Size(5,0)});}
-
-		p_count++;
-		marker.setLabel(label);
-
-		// document.getElementById("show_data").innerHTML= show_all(points);//(e.point.lng + ", " + e.point.lat);
-
-		js_buffer.add_one_point_js(String(e.point.lng) + "|"+ String(e.point.lat))
 	}
 
 	function remove_last_p(e){

@@ -19,9 +19,9 @@
   <widget class="QTextBrowser" name="sock_show_tb">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>140</y>
-     <width>451</width>
+     <x>120</x>
+     <y>150</y>
+     <width>571</width>
      <height>261</height>
     </rect>
    </property>
@@ -82,7 +82,7 @@
     </font>
    </property>
    <property name="text">
-    <string>设定ip 端口:</string>
+    <string>设定IP:端口:</string>
    </property>
   </widget>
   <widget class="QRadioButton" name="sock_tcp_rbtn">
@@ -139,10 +139,10 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>100</y>
+     <x>130</x>
+     <y>90</y>
      <width>54</width>
-     <height>12</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="font">
@@ -157,8 +157,8 @@
   <widget class="QPushButton" name="sock_send_btn">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>95</y>
+     <x>30</x>
+     <y>90</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -250,7 +250,7 @@
     <string>退出</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="sock_ip">
+  <widget class="QLineEdit" name="sock_ip_text">
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -274,9 +274,9 @@
   <widget class="QLineEdit" name="sock_input_3">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>90</y>
-     <width>371</width>
+     <x>170</x>
+     <y>87</y>
+     <width>521</width>
      <height>31</height>
     </rect>
    </property>
@@ -313,10 +313,10 @@
   <widget class="QPushButton" name="sock_test_btn">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>180</y>
-     <width>71</width>
-     <height>28</height>
+     <x>30</x>
+     <y>390</y>
+     <width>75</width>
+     <height>23</height>
     </rect>
    </property>
    <property name="font">
@@ -326,6 +326,24 @@
    </property>
    <property name="text">
     <string>测试</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sock_debug_btn">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>150</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>调试信息</string>
    </property>
   </widget>
  </widget>

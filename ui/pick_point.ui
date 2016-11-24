@@ -60,8 +60,8 @@
   <widget class="QTextBrowser" name="pp_testbrowser">
    <property name="geometry">
     <rect>
-     <x>480</x>
-     <y>510</y>
+     <x>510</x>
+     <y>520</y>
      <width>401</width>
      <height>121</height>
     </rect>
@@ -75,7 +75,7 @@
   <widget class="QPushButton" name="pick_send_btn">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>270</x>
      <y>510</y>
      <width>75</width>
      <height>23</height>
@@ -90,49 +90,10 @@
     <string>发送轨迹</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pick_clear_btn">
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>540</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Microsoft YaHei UI</family>
-    </font>
-   </property>
-   <property name="text">
-    <string>重置</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pick_refresh_btn">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>570</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Microsoft YaHei UI</family>
-    </font>
-   </property>
-   <property name="text">
-    <string>刷新</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pick_path_btn">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>180</x>
      <y>540</y>
      <width>75</width>
      <height>23</height>
@@ -150,7 +111,7 @@
   <widget class="QPushButton" name="pick_obstacle_btn">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>180</x>
      <y>570</y>
      <width>75</width>
      <height>23</height>
@@ -171,7 +132,7 @@
   <widget class="QPushButton" name="pick_curLoc_btn">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>180</x>
      <y>510</y>
      <width>75</width>
      <height>23</height>
@@ -189,7 +150,7 @@
   <widget class="QPushButton" name="pick_takeoff_btn">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>90</x>
      <y>510</y>
      <width>75</width>
      <height>23</height>
@@ -207,7 +168,7 @@
   <widget class="QPushButton" name="pick_startMission_btn">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>90</x>
      <y>540</y>
      <width>75</width>
      <height>23</height>
@@ -225,7 +186,7 @@
   <widget class="QPushButton" name="pick_abortMission_btn">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>90</x>
      <y>570</y>
      <width>75</width>
      <height>23</height>
@@ -243,7 +204,7 @@
   <widget class="QPushButton" name="pick_land_btn">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>90</x>
      <y>600</y>
      <width>75</width>
      <height>23</height>
@@ -261,7 +222,7 @@
   <widget class="QPushButton" name="pick_return_btn">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>90</x>
      <y>630</y>
      <width>75</width>
      <height>23</height>
@@ -279,9 +240,9 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>200</x>
+     <x>70</x>
      <y>490</y>
-     <width>271</width>
+     <width>401</width>
      <height>171</height>
     </rect>
    </property>
@@ -299,10 +260,10 @@
    <widget class="QLabel" name="pick_status_label">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>260</x>
       <y>140</y>
-      <width>72</width>
-      <height>15</height>
+      <width>121</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="layoutDirection">
@@ -318,8 +279,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>120</y>
+      <x>130</x>
+      <y>140</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -328,13 +289,168 @@
      <string>飞行器状态：</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pick_param_check_btn">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>20</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>参数查询</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>54</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>高度:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>83</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>速度:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pick_param_set_btn">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>110</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>参数设置</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="pp_param_height">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>50</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="pp_param_speed">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>80</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pick_refresh_btn">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>110</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>刷新</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pick_clear_btn">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>110</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>清除设置</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pick_resend_btn">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>50</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>重新发送</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pick_reset_order_btn">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>80</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>清除命令</string>
+    </property>
+   </widget>
   </widget>
   <zorder>pp_webView</zorder>
   <zorder>groupBox</zorder>
   <zorder>pp_testbrowser</zorder>
   <zorder>pick_send_btn</zorder>
-  <zorder>pick_clear_btn</zorder>
-  <zorder>pick_refresh_btn</zorder>
   <zorder>pick_path_btn</zorder>
   <zorder>pick_obstacle_btn</zorder>
   <zorder>pick_curLoc_btn</zorder>
