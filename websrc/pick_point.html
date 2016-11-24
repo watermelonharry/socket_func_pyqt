@@ -3,21 +3,148 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<style type="text/css">
-		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";font-family:"微软雅黑";}
+		#allmap{width:100%;height:100%;} 
+		p{margin-left:5px; font-size:14px;}
 	</style>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=znRegmlIFbPc0LHl1IUUnQju"></script>
-	<title>单击获取点击的经纬度</title>
+	<title>click the map</title>
 </head>
 <body>
 	<div id="allmap"></div>
+<!-- 	<div id="show_data">
+	<p>clicked to show longitude and latitude</p>
+	</div> -->
 </body>
 </html>
 <script type="text/javascript">
 	// 百度地图API功能
-	var map = new BMap.Map("allmap");            
-	map.centerAndZoom("重庆",12);           
-	//单击获取点击的经纬度
-	map.addEventListener("click",function(e){
-		alert(e.point.lng + "," + e.point.lat);
-	});
+	var map = new BMap.Map("allmap");
+	map.setMapStyle({style:'midnight'});
+	map.enableScrollWheelZoom(); 
+	var points = [];
+	var markers = [];
+	var curLocMarkers = [];
+	var SET_FLAG = 1;
+
+	var pathMarkers = []; //飞行路径覆盖物集合
+
+
+
+	var lineMarkers = []; //计算的路径集合
+	var linePoints = []; //计算的路径点集合
+
+	map.centerAndZoom(new BMap.Point(120.13143165691, 30.272977524721), 15);
+
+
+	var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+	var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+	var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL}); //右上角，仅包含平移和缩放按钮
+	/*缩放控件type有四种类型:
+	BMAP_NAVIGATION_CONTROL_SMALL：仅包含平移和缩放按钮；BMAP_NAVIGATION_CONTROL_PAN:仅包含平移按钮；BMAP_NAVIGATION_CONTROL_ZOOM：仅包含缩放按钮*/
+	
+	//添加控件和比例尺
+	map.addControl(top_left_control);        
+	map.addControl(top_left_navigation);     
+	map.addControl(top_right_navigation);
+
+	var p_count = 1;
+	
+	function pick_one_path(e){
+		if(SET_FLAG == 1){
+			//alert(e.point.lng + ", " + e.point.lat);
+			var new_p = new BMap.Point(e.point.lng, e.point.lat);
+			points.push(new_p);
+
+			var marker = new BMap.Marker(new_p);
+			map.addOverlay(marker)
+			markers.push(marker);
+
+			//添加标签
+			if(p_count == 1){
+				var label = new BMap.Label("S",{offset:new BMap.Size(5,0)});
+			}
+			else if(p_count == 2){
+				var label = new BMap.Label("E",{offset:new BMap.Size(5,0)});
+			}
+			else{var label = new BMap.Label(p_count-2,{offset:new BMap.Size(5,0)});}
+
+			p_count++;
+			marker.setLabel(label);
+
+			// document.getElementById("show_data").innerHTML= show_all(points);//(e.point.lng + ", " + e.point.lat);
+
+			js_buffer.add_one_point_js(String(e.point.lng) + "|"+ String(e.point.lat));
+		}
+		else{
+			js_buffer.ConfirmByJs("1");
+		}
+	}
+
+	function remove_last_p(e){
+
+
+		js_buffer.delete_one_point_js(String(p_count - 1));
+		p_count --;
+		var delete_marker = markers.pop(p_count - 1);
+		map.removeOverlay(delete_marker);
+
+		alert(p_count + "," + length(markers));
+	}
+
+	function pick_one_obstacle(e){
+		var myIcon = new BMap.Icon("components\\markers.png", new BMap.Size(23, 25), {
+            // 指定定位位置
+            anchor: new BMap.Size(10, 25),
+            // 当需要从一幅较大的图片中截取某部分作为标注图标时，需要指定大图的偏移位置   
+            imageOffset: new BMap.Size(0, 0 - 10 * 25) // 设置图片偏移  
+        });
+		var new_p = new BMap.Point(e.point.lng, e.point.lat);
+		points.push(new_p);
+
+		var marker = new BMap.Marker(new_p,{icon: myIcon});
+		map.addOverlay(marker)
+		markers.push(marker);
+
+		//添加标签
+		if(p_count == 1){
+			var label = new BMap.Label("S",{offset:new BMap.Size(5,0)});
+		}
+		else if(p_count == 2){
+			var label = new BMap.Label("E",{offset:new BMap.Size(5,0)});
+		}
+		else{var label = new BMap.Label(p_count-2,{offset:new BMap.Size(5,0)});}
+
+		p_count++;
+		marker.setLabel(label);
+
+		js_buffer.add_one_point_js(String(e.point.lng) + "-"+ String(e.point.lat));
+	}
+
+	function testFunc(e){
+
+        var lineMarkers = [];
+        var lineData = "120.123191857|30.273633|171.169447106|-19.3816913406=120.123191857|30.273633|120.099686479|30.2964978935=120.126175011|30.279434|120.166030313|30.2537592433=120.126175011|30.279434|120.099686479|30.2964978935=120.099686479|30.2964978935|-309.946743008|376.827428592=120.132271405|30.28617|120.166030313|30.2537592433=120.132271405|30.28617|-196.34073351|334.120926945=120.166030313|30.2537592433|173.530946759|-13.1805238718";
+        var lineList = lineData.split("=");
+        //document.write(lineData + "<br />");
+        //document.write(lineList[0] + "<br />");
+
+        for (var i = 0; i<lineList.length ; i++){
+			var lines = lineList[i].split("|");
+			var polyline = new BMap.Polyline([
+		    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
+		    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
+	], {strokeColor:"yellow", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+
+	        map.addOverlay(polyline);   //增加折线
+		}
+	}
+
+
+	map.addEventListener("click", pick_one_path);
+	//ymap.addEventListener("rightclick", pick_one_obstacle);
+	//map.addEventListener("rightclick", testFunc);
+
+
+
 </script>

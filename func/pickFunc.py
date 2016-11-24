@@ -36,6 +36,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
 
     js_signal = pyqtSignal(str)
+    showPathSignal = pyqtSignal(str)
+    deletePathSignal = pyqtSignal(str)
     def __init__(self, parent=None,  upsignal = None,  downsignal = None, updateMainSignal = None, sendOrderSignal = None, toDebugWindowSingal = None):
         """
         Constructor
@@ -55,7 +57,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.fromPickPointSignal = upsignal
         #更新显示
         self.updateMainSignal = updateMainSignal
-        self.toPickPointSignal.connect(self.ReiceveStrData)
+        self.toPickPointSignal.connect(self.ReceiveStrData)
         #发送socket命令
         self.sendOrderSignal = sendOrderSignal
         #发送到debug窗口
@@ -77,8 +79,62 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # 存储当前位置
         self.currentLoc = None
         self.curBdLoc = None
+        self.oldBdLoc = None
+        self.AUTO_LOAD_PATH = False
+        self.deletePathSignal.connect(self.ClearAutoLoadPath)
+        self.showPathSignal.connect(self.AutoLoadPath)
 
+    def ClearAutoLoadPath(self,strArg):
+        """
+        清除自动更新的描绘路径
+        :return:
+        """
+        jscript = """
+        for (var i = 0; i<pathMarkers.length ; i++){
+            deletePoly = pathMarkers[i]
+            map.removeOverlay(deletePoly);   //删除折线
+        }
+        pathMarkers = []
+        """
+        self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
 
+    def AutoLoadPath(self,strArgA):
+        """
+        用于自动更新当前位置/描绘路径
+        :param strArgA:当前点的百度坐标经度
+        :param strArgB:当前点的百度坐标纬度
+        :return:
+        """
+        if self.AUTO_LOAD_PATH is True:
+            if self.curBdLoc is not None and self.oldBdLoc is not None:
+                jscript = """
+
+                map.removeOverlay(curLocMarkers[0]);
+                curLocMarkers.pop();
+
+                var curPoint = new BMap.Point(%s);
+                curmarker = new BMap.Marker(curPoint);  // 创建标注
+                map.addOverlay(curmarker);               // 将标注添加到地图中
+                curLocMarkers.push(curmarker);
+                curmarker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+                var lineStr = "%s";
+                var lineList = lineStr.split("|");
+                var polyline = new BMap.Polyline([
+                                new BMap.Point(parseFloat(lineList[0]), parseFloat(lineList[1])),
+                                new BMap.Point(parseFloat(lineList[2]), parseFloat(lineList[3])),
+                        ], {strokeColor:"green", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+
+                map.addOverlay(polyline);   //增加折线
+                pathMarkers.push(polyLine);
+
+                """ %(','.join(self.curBdLoc),'|'.join(self.oldBdLoc + self.curBdLoc))
+                self.oldBdLoc = self.curBdLoc
+                self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+            else:
+                self.oldBdLoc = self.curBdLoc
+        else:
+            self.oldBdLoc = self.curBdLoc
 
     @pyqtSignature("")
     def on_pp_testbrowser_textChanged(self):
@@ -192,8 +248,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         if self.curBdLoc is not None:
             formerPoint = self.curBdLoc
             for singlePoint in pointsList:
-                cLongi = 1000000.0 * (float(singlePoint[0]) - float(formerPoint[0]))
-                clati = 1000000.0 * (float(singlePoint[1]) - float(formerPoint[1]))
+                cLongi = int(1000000000.0 * (float(singlePoint[0]) - float(formerPoint[0])))
+                clati = int(1000000000.0 * (float(singlePoint[1]) - float(formerPoint[1])))
                 formerPoint = singlePoint
                 resultList.append((str(cLongi), str(clati)))
         if len(resultList) > 0 :
@@ -383,12 +439,6 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         :return:
         """
         if self.currentLoc is not None:
-            try:
-                self.curBdLoc = self.GtoB(self.currentLoc[0], self.currentLoc[1])
-            except Exception as e:
-                print('error in pickFunc.curLoc_btn:',e.message)
-                self.curBdLoc = None
-
 
             if self.curBdLoc is not None:
                 jscript = """
@@ -435,7 +485,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
 
     #test: receive message from yingyanFunc
-    def ReiceveStrData(self,strArg):
+    def ReceiveStrData(self, strArg):
         """
         槽函数，处理接收数据
         :param strArg:
@@ -448,8 +498,14 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             if innerData[0] == 'IN':
                 if innerData[1] == 'YY' and innerData[2] == 'LOC':
                     self.currentLoc = (innerData[3],innerData[4])
+                    try:
+                        self.curBdLoc = self.GtoB(self.currentLoc[0], self.currentLoc[1])
+                    except Exception as e:
+                        print('error in pickFunc.curLoc_btn:', e.message)
+                        self.curBdLoc = None
                     self.PLANE_STATUS = int(innerData[5])
                     self.pick_status_label.setText(STATUS_DICT[self.PLANE_STATUS])
+                    self.showPathSignal.emit('t')       #实时显示
                 if innerData[2] == 'T':
                     self.SendToDebugWindow(innerData[3])
         except Exception as e:
@@ -665,6 +721,23 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.toDebugWindowSingal.emit(strArg)
 
     """
+    实时显示按钮
+    """
+    @pyqtSignature("")
+    def on_pick_show_curPath_btn_clicked(self):
+        if self.AUTO_LOAD_PATH is False:
+            if self.Confirm(6) is True:
+                self.AUTO_LOAD_PATH = True
+                self.pick_show_curPath_btn.setText(u"关闭跟踪")
+        else:
+            if self.Confirm(7) is True:
+                self.AUTO_LOAD_PATH = False
+                self.pick_show_curPath_btn.setText(u"开启跟踪")
+                # self.deletePathSignal.emit('t')
+                self.ClearAutoLoadPath('t')
+
+
+    """
     飞行器控制按钮
     """
     def Confirm(self,intArg):
@@ -768,7 +841,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         self.ShowInTab('returnToBase button clicked')
         if self.Confirm(5) is True:
-            if self.PLANE_STATUS is planeStatus.FINISH_MISSION or self.PLANE_STATUS is planeStatus.ABORT_MISSION or self.PLANE_STATUS is planeStatus.LAND:
+            if self.PLANE_STATUS is planeStatus.FINISH_MISSION or self.PLANE_STATUS is planeStatus.ABORT_MISSION or self.PLANE_STATUS is planeStatus.TAKE_OFF:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=5'
