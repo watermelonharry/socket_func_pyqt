@@ -42,6 +42,9 @@ class Ui_yingyan_web(object):
         font.setFamily(_fromUtf8("Microsoft YaHei UI"))
         self.webView.setFont(font)
         self.webView.setUrl(QtCore.QUrl(_fromUtf8("file:///C:/Users/Harry/Documents/PyQtProjects/socket_func_pyqt/websrc/yinyandemo/index.html")))
+        import os
+        self.webView.setUrl(
+            QtCore.QUrl(_fromUtf8("file:///" + '/'.join(os.getcwd().split('\\')) + "/websrc/yinyandemo/index.html")))
         self.webView.setObjectName(_fromUtf8("webView"))
         self.web_fresh_btn = QtGui.QPushButton(yingyan_web)
         self.web_fresh_btn.setGeometry(QtCore.QRect(50, 695, 75, 23))
