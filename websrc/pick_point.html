@@ -19,7 +19,7 @@
 </html>
 <script type="text/javascript">
 	// 百度地图API功能
-	var map = new BMap.Map("allmap");
+	var map = new BMap.Map("allmap",{minZoom:1,maxZoom:30});
 	map.setMapStyle({style:'midnight'});
 	map.enableScrollWheelZoom(); 
 	var points = [];
@@ -46,7 +46,9 @@
 	//添加控件和比例尺
 	map.addControl(top_left_control);        
 	map.addControl(top_left_navigation);     
-	map.addControl(top_right_navigation);
+	//map.addControl(top_right_navigation);
+	var mapType1 = new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP],offset: new BMap.Size(150,5)});
+	map.addControl(mapType1);
 
 	var p_count = 1;
 	

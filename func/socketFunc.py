@@ -113,7 +113,7 @@ class sserver(QThread):
 
     ##process recv data here
     def process_data(self):
-        if self.client is None:
+        if self.client is False:
             return False
         try:
             data = self.client.recv(2048)
@@ -412,9 +412,11 @@ class SocketFunc(QDialog, Ui_SocketUi):
             try:
                 self.sock.start()
                 self.SERVER_RUN = True
-                self.SaveConfigToFile()
             except Exception as e:
                 self.say_hi('error in socket-start:', e.message)
+                self.SERVER_RUN = False
+            finally:
+                self.SaveConfigToFile()
         else:
             self.Confirm(32)
 
