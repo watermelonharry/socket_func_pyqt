@@ -37,7 +37,7 @@
 	map.centerAndZoom(new BMap.Point(120.13143165691, 30.272977524721), 15);
 
 
-	var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
 	var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
 	var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL}); //右上角，仅包含平移和缩放按钮
 	/*缩放控件type有四种类型:
@@ -46,7 +46,9 @@
 	//添加控件和比例尺
 	map.addControl(top_left_control);        
 	map.addControl(top_left_navigation);     
-	map.addControl(top_right_navigation);
+	//map.addControl(top_right_navigation);
+	var mapType1 = new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP],offset: new BMap.Size(150,5)});
+	map.addControl(mapType1);
 
 	var p_count = 1;
 	
@@ -143,7 +145,7 @@
 
 	map.addEventListener("click", pick_one_path);
 	//ymap.addEventListener("rightclick", pick_one_obstacle);
-	map.addEventListener("rightclick", testFunc);
+	//map.addEventListener("rightclick", testFunc);
 
 
 
