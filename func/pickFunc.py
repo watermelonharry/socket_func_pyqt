@@ -514,8 +514,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # 外部数据收发操作
         if self.ORDER_STEP is STEP_SEND_WAIT:
 
-            #校验通过
-            if self.xorFormat(strArg[:-1]) == strArg[-1]:
+            #校验通过,在yingyan中已有校验，无需重复
+            if True or self.xorFormat(strArg[:-1]) == strArg[-1]:
                 data = strArg.split('=')
                 data = data[:1] + data[2:]
                 orderId = data[0]
@@ -631,8 +631,15 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     # if data[1] =='T':
                     #     self.SendToDebugWindow(data[2])
 
-                else:
+                elif orderId != 'IN' and len(self.orderDict) != 0:
+
+                    print(self.orderDict)
+                    print(strArg)
+                    print(orderId)
                     k, v = self.orderDict.items()
+                    #for debug
+                    print(k,v)
+
                     self.SendOrder(k,v)
 
             else:
