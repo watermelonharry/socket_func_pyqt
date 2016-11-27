@@ -43,7 +43,7 @@ class sserver(QThread):
         self.recDataSignal = recSignal
 
         with QMutexLocker(self.mutex):
-            self.updateMain.emit('enter-sserver-class- '+ str(self))
+            self.updateMain.emit('new socket server- '+ str(self))
 
     def __str__(self):
         return('sserver-host:'+ str(self.host)+':'+str(self.port)+'; mode-'+ self.mode)
@@ -91,6 +91,8 @@ class sserver(QThread):
                 self.client.close()
             except Exception as e:
                 pass
+        else:
+            self.clientConnect()
         if self.sserver is not None:
             try:
                 self.sserver.close()
@@ -98,7 +100,7 @@ class sserver(QThread):
                 pass
         self.client = None
         self.sserver = None
-        self.clientConnect()
+        #self.clientConnect()
         self.update_main('enter-sserver-func-CLOSE-')
 
     def clientConnect(self):
@@ -113,16 +115,21 @@ class sserver(QThread):
 
     ##process recv data here
     def process_data(self):
-        if self.client is False:
+        if self.client is False or self.client is None:
             return False
         try:
             data = self.client.recv(2048)
-            #implement received data PROCESSING here
-            self.recDataSignal.emit(data)
-
-            self.update_main('enter-sserver-func-PROCDATA-recv:'+str(data))
+            if len(data) == 0:
+                self.update_main('enter-sserver-func-PROCDATA-CLOSE BY CLIENT-0')
+                self.client.close()
+                self.client = None
+                return False
+            else:
+                #implement received data PROCESSING here
+                self.recDataSignal.emit(data)
+                self.update_main('enter-sserver-func-PROCDATA-recv:'+str(data))
             #self.client.send('GET')
-            return True
+                return True
         except Exception as e:
             ##closed by remote client
             self.update_main('enter-sserver-func-PROCDATA-CLOSE BY CLIENT')
@@ -140,7 +147,7 @@ class sserver(QThread):
             self.sserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             server_address = (self.host, self.port)
             self.sserver.bind(server_address)
-            self.sserver.listen(2)
+            self.sserver.listen(1)
             self.update_main('enter-sserver-func-CREATESERVER-' + str(self))
         except Exception as e:
             self.update_main('enter-sserver-func-CREATESERVER-error-' + str(e))
@@ -154,7 +161,7 @@ class sserver(QThread):
         if self.RUN_FLAG and self.sserver is not None:
             (client,  address) = self.sserver.accept()
             self.client = client
-            self.send_data('-connected-')
+            # self.send_data('-connected-')
             self.update_main('enter-sserver-func-CREATESERVER-connected-client:'+ str(address))
 
     ##send data to client, mainly triggered by SEND_BUTTON in main window

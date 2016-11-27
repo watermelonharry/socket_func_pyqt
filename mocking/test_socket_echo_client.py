@@ -27,12 +27,12 @@ def echo_client(host, port):
             # print "Sending %s" % message
             # sock.sendall(message)
             # # Look for the response
-            message = raw_input('\ncontinue? [Y / N]')
+            message = raw_input('\ncontinue receive data? [Y / N]')
             if message == 'N' or message == 'n':
                 break
             
             data = sock.recv(1024)
-            sock.sendall(data.split('=')[0] + '=SDY')
+            sock.sendall('reply:'+data)
             print("Received: %s" ) % data
         except socket.errno, e:
             print "Socket error: %s" %str(e)
@@ -41,17 +41,25 @@ def echo_client(host, port):
         # finally:
         #     print "Closing connection to the server"
         #     # sock.close()
+    print('end connection\n')
     sock.close()
     
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Socket Server Example')
-    parser.add_argument('-port', action="store", dest="port", type=int, required=True)
-    parser.add_argument('-host', action="store", dest="host", type=str, required=True)
-    given_args = parser.parse_args()
-    if given_args.port != None and given_args.host != None:
-        port = given_args.port
-        host = given_args.host
-    else:
-        host = 'localhost'
-        port = 9876
-    echo_client(host, port)
+    # parser = argparse.ArgumentParser(description='Socket Server Example')
+    # parser.add_argument('-port', action="store", dest="port", type=int, required=True)
+    # parser.add_argument('-host', action="store", dest="host", type=str, required=True)
+    # given_args = parser.parse_args()
+    # if given_args.port != None and given_args.host != None:
+    #     port = given_args.port
+    #     host = given_args.host
+    # else:
+    #     host = 'localhost'
+    #     port = 9876
+    # echo_client(host, port)
+    stdIn = raw_input('connect to default(localhost:9876) or ip:port\n')
+    if stdIn is not None:
+        try:
+            ip, port = stdIn.split(':')
+            echo_client(ip,int(port))
+        except Exception as e:
+            print('error input:'+e.message)

@@ -267,11 +267,18 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         :param content: 命令的内容
         :return:
         """
+        reId = int(id)
         orderStr = '='.join([str(id), str(content)]) + '='
-        orderStr += self.xorFormat(orderStr)
+        tail = self.xorFormat(orderStr)
+        while tail == '\0' or tail == '=' or tail == ' ':
+            reId +=1
+            orderStr = '='.join([str(reId),str(content)])
+            tail = self.xorFormat(orderStr)
+        orderStr += tail
+
         print(orderStr)
         self.sendOrderSignal.emit(orderStr)
-
+        return str(reId),str(content)
 
     @pyqtSignature("")
     def on_pick_clear_btn_clicked(self):
@@ -640,7 +647,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     #for debug
                     print(k,v)
 
-                    self.SendOrder(k,v)
+                    #self.SendOrder(k,v)
 
             else:
                 #todo：返回命令校验未通过
@@ -768,7 +775,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=1'
-                    self.SendOrder(orderId, orderContent)
+                    orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
                 else:
