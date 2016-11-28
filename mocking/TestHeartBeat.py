@@ -104,7 +104,7 @@ def SendErrorInfo(s):
         while c != 'n':
             if c == 'y':
 
-                order = uniqueId() + '=U=E=' + str(startDebug) + '=type=120.123456=30.654321='
+                order = uniqueId() + '=U=E=' + str(startDebug) + '=type=120.13143165691=30.272977524721='
                 order += xorFormat(order)
                 s.send(order)
                 print(order)

@@ -138,6 +138,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                         #故障信息转存到文件
                         if self.SaveErrorToFile(data[:]) is True:
                             self.SendOrder(id=data[0],content='Z=E=Y')
+                            self.SendToPickFunc('IN=YY=E='+'='.join(data[2:6]))
                         else:
                             self.SendOrder(id=data[0],content='Z=E=N')
                         return

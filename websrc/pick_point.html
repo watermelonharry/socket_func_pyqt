@@ -28,6 +28,7 @@
 	var SET_FLAG = 1;
 
 	var pathMarkers = []; //飞行路径覆盖物集合
+	var errorMarkers = []; //故障点覆盖物集合
 
 
 
@@ -51,6 +52,13 @@
 	map.addControl(mapType1);
 
 	var p_count = 1;
+
+	var errorIcon = new BMap.Icon("components/markers.png", new BMap.Size(23, 25), {
+            // 指定定位位置
+            offset: new BMap.Size(10, 25),
+            // 当需要从一幅较大的图片中截取某部分作为标注图标时，需要指定大图的偏移位置   
+            imageOffset: new BMap.Size(1, -250) // 设置图片偏移  
+        });
 	
 	function pick_one_path(e){
 		if(SET_FLAG == 1){
@@ -80,6 +88,15 @@
 		}
 		else{
 			js_buffer.ConfirmByJs("1");
+		}
+	}
+
+	function pick_one_path_2(e){
+		if(SET_FLAG == 1){
+			var errorPoint = new BMap.Point(e.point.lng, e.point.lat);
+            var errorMarker = new BMap.Marker(errorPoint,{icon: errorIcon});
+            map.addOverlay(errorMarker)
+            errorMarkers.push(errorMarker);
 		}
 	}
 
@@ -143,9 +160,9 @@
 	}
 
 
-	map.addEventListener("click", pick_one_path);
+	map.addEventListener("click", pick_one_path_2);
 	//ymap.addEventListener("rightclick", pick_one_obstacle);
-	//map.addEventListener("rightclick", testFunc);
+	map.addEventListener("rightclick", testFunc);
 
 
 
