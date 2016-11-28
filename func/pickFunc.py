@@ -18,6 +18,7 @@ _fromUtf8 = QtCore.QString.fromUtf8
 from ui.Ui_pick_point import Ui_PickPoint
 from popWindow import NoticeWindow
 from package.planeStatus import STATUS_DICT,PlaneStatus,PlaneControl
+import time
 
 STEP_START = 1
 STEP_GET_POINT =2
@@ -209,7 +210,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 self.Confirm(21)
             elif self.ORDER_STEP is STEP_START:
                 self.ShowInTab(u'<error: 步骤错误>')
-                self.Confirm(11)
+                self.Confirm(14)
         else:
             self.Confirm(10)
 
@@ -490,6 +491,22 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript("""document.write("hello")""")
         self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
 
+    def update_status(self, str_arg, argList):
+        """
+        更新飞行器状态
+        :param str_arg: 命令
+        :param argList: 参数列表
+        :return:
+        """
+        self.pick_status_label.setText(str(time.asctime()).split(' ')[3])
+        if argList is not None:
+            self.pick_longitude_label.setText(argList[0])
+            self.pick_latitude_label.setText(argList[1])
+            self.pick_height_label.setText(argList[2])
+            self.pick_speed_label.setText(argList[3])
+            self.pick_status_label.setText(STATUS_DICT[int(argList[4])])
+        else:
+            pass
 
     #test: receive message from yingyanFunc
     def ReceiveStrData(self, strArg):
@@ -503,6 +520,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         try:
             innerData = strArg.split('=')
             if innerData[0] == 'IN':
+                ##更新心跳信息
                 if innerData[1] == 'YY' and innerData[2] == 'LOC':
                     self.currentLoc = (innerData[3],innerData[4])
                     try:
@@ -510,9 +528,10 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     except Exception as e:
                         print('error in pickFunc.curLoc_btn:', e.message)
                         self.curBdLoc = None
-                    self.PLANE_STATUS = int(innerData[5])
-                    self.pick_status_label.setText(STATUS_DICT[self.PLANE_STATUS])
-                    self.showPathSignal.emit('t')       #实时显示
+                    self.PLANE_STATUS = int(innerData[7])
+                    self.update_status('Refresh',innerData[3:])
+                    self.showPathSignal.emit('ShowPath')       #实时显示
+
                 if innerData[2] == 'T':
                     self.SendToDebugWindow(innerData[3])
         except Exception as e:
@@ -782,7 +801,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 else:
                     self.Confirm(21)
             else:
-                self.Confirm(11)
+                self.Confirm(6101)
 
 
     @pyqtSignature("")
@@ -814,7 +833,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # TODO: not implemented yet
         self.ShowInTab('abortMission button clicked')
         if self.Confirm(3) is True:
-            if self.PLANE_STATUS is planeStatus.START_MISSION:
+            if self.PLANE_STATUS is planeStatus.START_MISSION\
+                    or self.PLANE_STATUS is planeStatus.RETURN_TO_BASE:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=3'

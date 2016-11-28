@@ -76,7 +76,7 @@ class sserver(QThread):
 
         while self.RUN_FLAG and self.sserver is not None:
             if self.process_data() is False:
-                self.listen()
+                self.connectOneClient()
 
         print('serverEnd')
         self.update_main('success in end-sserver-thread')
@@ -147,17 +147,17 @@ class sserver(QThread):
             self.sserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             server_address = (self.host, self.port)
             self.sserver.bind(server_address)
-            self.sserver.listen(1)
+            self.sserver.listen(5)
             self.update_main('enter-sserver-func-CREATESERVER-' + str(self))
         except Exception as e:
             self.update_main('enter-sserver-func-CREATESERVER-error-' + str(e))
             self.sserver = None
             self.RUN_FLAG = False
             return
-        self.listen()
+        self.connectOneClient()
 
     ##accept connection from client if there's no connection alive
-    def listen(self):
+    def connectOneClient(self):
         if self.RUN_FLAG and self.sserver is not None:
             (client,  address) = self.sserver.accept()
             self.client = client

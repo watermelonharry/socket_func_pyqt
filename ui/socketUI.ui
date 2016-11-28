@@ -169,7 +169,7 @@
     </font>
    </property>
    <property name="text">
-    <string>发送</string>
+    <string>手动发送</string>
    </property>
   </widget>
   <widget class="QPushButton" name="sock_clear_btn">
@@ -197,7 +197,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>300</y>
+     <y>330</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -208,7 +208,7 @@
     </font>
    </property>
    <property name="text">
-    <string>轨迹监控</string>
+    <string>历史轨迹</string>
    </property>
    <property name="checkable">
     <bool>false</bool>
@@ -293,7 +293,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>330</y>
+     <y>300</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -304,7 +304,7 @@
     </font>
    </property>
    <property name="text">
-    <string>地图选点</string>
+    <string>轨迹设置</string>
    </property>
    <property name="checkable">
     <bool>false</bool>
