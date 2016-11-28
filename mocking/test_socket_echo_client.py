@@ -28,6 +28,9 @@ def echo_client(host, port):
             # sock.sendall(message)
             # # Look for the response
             message = raw_input('\ncontinue receive data? [Y / N]')
+            sendata = raw_input('send something?\n')
+            if sendata is not None:
+                sock.sendall(sendata)
             if message == 'N' or message == 'n':
                 break
             

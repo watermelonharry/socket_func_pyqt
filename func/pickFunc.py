@@ -771,7 +771,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         self.ShowInTab(u'起飞 button clicked')
         if self.Confirm(1) is True:
-            if self.PLANE_STATUS is planeStatus.POINT_SET:
+            if self.PLANE_STATUS is planeStatus.POINT_SET\
+                    or self.PLANE_STATUS is planeStatus.LAND:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=1'
@@ -796,7 +797,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=2'
-                    self.SendOrder(orderId, orderContent)
+                    orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
                 else:
@@ -817,7 +818,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=3'
-                    self.SendOrder(orderId, orderContent)
+                    orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
                 else:
@@ -841,7 +842,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=4'
-                    self.SendOrder(orderId, orderContent)
+                    orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
                 else:
@@ -855,11 +856,13 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         self.ShowInTab('returnToBase button clicked')
         if self.Confirm(5) is True:
-            if self.PLANE_STATUS is planeStatus.FINISH_MISSION or self.PLANE_STATUS is planeStatus.ABORT_MISSION or self.PLANE_STATUS is planeStatus.TAKE_OFF:
+
+            if self.PLANE_STATUS is not planeStatus.START_MISSION \
+                    and self.PLANE_STATUS is not planeStatus.RETURN_TO_BASE:
                 if self.ORDER_STEP == STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=5'
-                    self.SendOrder(orderId, orderContent)
+                    orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId,orderContent)
                     self.ORDER_STEP = STEP_SEND_WAIT
                 else:
@@ -907,7 +910,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         orderId = self.uniqueId()
                         orderContent = 'Z=S='+str(height)+'='+str(speed)
 
-                        self.SendOrder(orderId, orderContent)
+                        orderId, orderContent = self.SendOrder(orderId, orderContent)
                         self.RecordOrder(orderId, orderContent)
                         self.ORDER_STEP = STEP_SEND_WAIT
                     else:
