@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>944</width>
-    <height>672</height>
+    <height>697</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -69,7 +69,7 @@
      <x>0</x>
      <y>490</y>
      <width>951</width>
-     <height>181</height>
+     <height>221</height>
     </rect>
    </property>
    <property name="font">
@@ -160,6 +160,9 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="text">
+     <string>1.0</string>
+    </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
@@ -180,8 +183,8 @@
    <widget class="QPushButton" name="pick_param_set_btn">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>110</y>
+      <x>220</x>
+      <y>170</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -216,6 +219,9 @@
       <width>50</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>2.0</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -284,7 +290,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>220</x>
       <y>80</y>
       <width>75</width>
       <height>23</height>
@@ -467,7 +473,7 @@
       <x>510</x>
       <y>110</y>
       <width>421</width>
-      <height>51</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="font">
@@ -649,6 +655,111 @@
      <string>Status</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="pp_param_return_speed">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>140</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>10.0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>143</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>返航速度:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="pp_param_return_height">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>110</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>100.0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>113</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>返航高度:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pick_homeLoc_btn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft YaHei UI</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>返航点</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="pp_param_obstacle_distance">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>170</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>2.0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>173</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>避障距离:</string>
+    </property>
+   </widget>
    <zorder>groupBox_2</zorder>
    <zorder>pick_status_label</zorder>
    <zorder>label_2</zorder>
@@ -683,6 +794,13 @@
    <zorder>pick_latitude_label</zorder>
    <zorder>pick_height_label</zorder>
    <zorder>pick_speed_label</zorder>
+   <zorder>pp_param_return_speed</zorder>
+   <zorder>label_10</zorder>
+   <zorder>pp_param_return_height</zorder>
+   <zorder>label_11</zorder>
+   <zorder>pick_homeLoc_btn</zorder>
+   <zorder>pp_param_obstacle_distance</zorder>
+   <zorder>label_12</zorder>
   </widget>
  </widget>
  <customwidgets>

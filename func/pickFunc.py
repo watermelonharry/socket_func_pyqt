@@ -89,6 +89,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.showPathSignal.connect(self.AutoLoadPath)
         self.showErrorSignal.connect(self.AddErrorPoint)
 
+        # 存储返航点位置
+        self.omeLoc = None
+
     def ClearAutoLoadPath(self, strArg):
         """
         清除自动更新的描绘路径
@@ -585,17 +588,14 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                                 self.points = []
                                 self.lines = []
                                 self.pathPoints = []
-                                # #test
-                                # self.updateMainSignal.emit('pickpiont from yingyan:' + str(strArg))
-
-                                # 清除地图数据
-                                # self.ClearMapCovers()
+                                return
                         if data[2] == 'N':
                             if self.Confirm(203) is True:
                                 self.SendOrder(orderId, self.orderDict[orderId])
                             else:
                                 ##不重新发送
                                 pass
+                            return
 
                         if data[2] == 'E':
                             # todo:参数错误
@@ -654,6 +654,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                             # 设置参数显示
                             self.pp_param_height.setText(data[2])
                             self.pp_param_speed.setText(data[3])
+                            self.pp_param_return_height.setText((data[4]))
+                            self.pp_param_return_speed.setText((data[5]))
+                            self.pp_param_obstacle_distance.setText(data[6])
                             self.RemoveOrder(orderId)
                             self.ORDER_STEP = STEP_START
                             self.Confirm(6005)
@@ -664,24 +667,36 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                             self.Confirm(6001)
                             self.RemoveOrder(orderId)
                             self.ORDER_STEP = STEP_START
-                        if data[2] == 'N':
+                        elif data[2] == 'N':
                             if self.Confirm(6002) is True:
                                 # 再次发送
                                 self.SendOrder(orderId, self.orderDict[orderId])
                             else:
                                 # 不重新发送
                                 pass
-                        if data[2] == 'E':
+                        elif data[2] == 'E':
                             if self.Confirm(6003) is True:
                                 # 重新设置
                                 pass
                             else:
                                 # 不重新设置
                                 pass
-
-                                # #6 飞行器调试信息
-                                # if data[1] =='T':
-                                #     self.SendToDebugWindow(data[2])
+                        else:
+                            return
+                    ##7 设置返航点
+                    if data[1] == 'R':
+                        if data[2] == 'Y':
+                            #todo：返航点设置成功
+                            self.Confirm()
+                            self.RemoveOrder(orderId)
+                            self.ORDER_STEP = STEP_START
+                        elif data[2] == 'N':
+                            #todo: 返航点设置失败
+                            if self.Confirm() is True:
+                                #再次发送
+                                self.SendOrder(orderId, self.orderDict[orderId])
+                        else:
+                            return
 
                 elif orderId != 'IN' and len(self.orderDict) != 0:
 
@@ -913,6 +928,26 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             else:
                 self.Confirm(5101)
 
+    @pyqtSignature("")
+    def on_pick_homeLoc_btn_clicked(self):
+        """
+        确认返航点按钮
+        """
+        self.ShowInTab(u'确认返航点按钮激活')
+        if self.Confirm(8) is True:
+
+            if self.PLANE_STATUS is planeStatus.WAIT:
+                if self.ORDER_STEP == STEP_START:
+                    orderId = self.uniqueId()
+                    orderContent = 'Z=R'
+                    orderId, orderContent = self.SendOrder(orderId, orderContent)
+                    self.RecordOrder(orderId, orderContent)
+                    self.ORDER_STEP = STEP_SEND_WAIT
+                else:
+                    self.Confirm(21)
+            else:
+                self.Confirm(7101)
+
     """
     飞行器参数查询和设置
     """
@@ -923,12 +958,11 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         参数查询按钮
         :return:
         """
-        self.ShowInTab(u'参数查询按钮 clicked')
+        self.ShowInTab(u'参数查询按钮激活')
         if self.ORDER_STEP == STEP_START:
-            orderId = self.uniqueId()
-            self.SendOrder(self.uniqueId(), content='Z=P')
+            orderId, orderContent = self.SendOrder(self.uniqueId(), content='Z=P')
             self.ORDER_STEP = STEP_SEND_WAIT
-            self.RecordOrder(orderId, 'Z=P')
+            self.RecordOrder(orderId, orderContent)
         else:
             self.Confirm(21)
 
@@ -941,18 +975,22 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         if self.PLANE_STATUS is planeStatus.WAIT:
             if self.Confirm(206) is True:
-                # todo: 获取高度和速度，校验参数，发送命令
                 height = str(self.pp_param_height.text())
                 speed = str(self.pp_param_speed.text())
-                try:
-                    height = float(height)
-                    speed = float(speed)
+                reHeight = str(self.pp_param_return_height.text())
+                reSpeed = str(self.pp_param_return_speed.text())
+                obDistance = str(self.pp_param_obstacle_distance.text())
 
+                paramList = [height,speed,reHeight,reSpeed,obDistance]
+                if self.CheckParams(paramList) is False:
+                    self.Confirm(207)
+                    return
+
+                try:
                     # 发送命令
                     if self.ORDER_STEP is STEP_START:
                         orderId = self.uniqueId()
-                        orderContent = 'Z=S=' + str(height) + '=' + str(speed)
-
+                        orderContent = 'Z=S=' + '='.join(paramList)
                         orderId, orderContent = self.SendOrder(orderId, orderContent)
                         self.RecordOrder(orderId, orderContent)
                         self.ORDER_STEP = STEP_SEND_WAIT
@@ -964,3 +1002,21 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         else:
             ## 提示飞行器处于等待状态
             self.Confirm(205)
+
+    def CheckParams(self,paramList):
+        """
+        参数校验 >0, <150, float or int
+        :param paramList: 参数列表
+        :return: True / False
+        """
+        if len(paramList) ==5:
+            for param in paramList:
+                try:
+                    fParam = float(param)
+                    if fParam <= 0.0 or fParam > 150.0:
+                        return False
+                except Exception as e:
+                    return False
+            return True
+        else:
+            return False
