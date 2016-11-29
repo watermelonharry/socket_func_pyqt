@@ -346,6 +346,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.port = int(str_in[1])
         self.sock.setpara(host = self.host,  port = self.port)
         self.say_hi('set host:port to ' + ':'.join(str_in))
+        self.Confirm(34)
 
 
     @pyqtSignature("")
@@ -419,9 +420,11 @@ class SocketFunc(QDialog, Ui_SocketUi):
             try:
                 self.sock.start()
                 self.SERVER_RUN = True
+                self.Confirm(30)
             except Exception as e:
                 self.say_hi('error in socket-start:', e.message)
                 self.SERVER_RUN = False
+                self.Confirm(33)
             finally:
                 self.SaveConfigToFile()
         else:
