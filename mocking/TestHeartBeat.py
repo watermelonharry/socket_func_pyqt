@@ -55,7 +55,7 @@ def sendHeartBeat(s):
 
         while c != 'n':
             if c == 'y':
-                order = 'H=U=L=%s=%s=20.12=1.0=%s=' %(str(startLongi + count*0.00001),str(startLati + count*0.00001),str((startStatus+count)%9))
+                order = 'H=U=L=%s=%s=20.12=1.0=%s=' %(str(startLongi + count*0.0001),str(startLati + count*0.0001),str((startStatus+count)%9))
                 order += xorFormat(order)
                 s.send(order)
                 print (order)

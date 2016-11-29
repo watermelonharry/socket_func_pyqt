@@ -508,8 +508,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         self.pick_time_label.setText(str(time.asctime()).split(' ')[3])
         if argList is not None:
-            self.pick_longitude_label.setText(argList[:13])
-            self.pick_latitude_label.setText(argList[:13])
+            self.pick_longitude_label.setText(argList[0][:13])
+            self.pick_latitude_label.setText(argList[1][:13])
             self.pick_height_label.setText(argList[2])
             self.pick_speed_label.setText(argList[3])
             self.pick_status_label.setText(STATUS_DICT[int(argList[4])])

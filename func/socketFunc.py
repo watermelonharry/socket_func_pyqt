@@ -162,6 +162,7 @@ class sserver(QThread):
             (client,  address) = self.sserver.accept()
             self.client = client
             # self.send_data('-connected-')
+            # self.Confirm(35)
             self.update_main('enter-sserver-func-CREATESERVER-connected-client:'+ str(address))
 
     ##send data to client, mainly triggered by SEND_BUTTON in main window
@@ -172,6 +173,16 @@ class sserver(QThread):
             self.update_main('enter-sserver-func-SENDDATA-sucess:' + str_arg)
         else:
             self.update_main('enter-sserver-func-SENDDATA-error:NO CONNECTION')
+
+    def Confirm(self,intArg):
+        """
+        确认窗口
+        :param intArg:
+        :return:确定返回True， 取消返回False
+        """
+        noticeWindow = NoticeWindow()
+        noticeWindow.Confirm(intArg)
+        return noticeWindow.status
 
 class SocketFunc(QDialog, Ui_SocketUi):
     """
