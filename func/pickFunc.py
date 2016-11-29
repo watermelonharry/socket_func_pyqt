@@ -329,7 +329,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         if self.PLANE_STATUS is planeStatus.WAIT:
             if self.ORDER_STEP is STEP_START:
-                if len(self.points) > 2:
+                if len(self.points) >= 2:
                     # 处理轨迹点
                     tempPoints = copy.deepcopy(self.points)
                     tempPoints = tempPoints[0:1] + tempPoints[2:] + tempPoints[1:2]
@@ -377,7 +377,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 self.ShowInTab('<error: wrong step>')
                 self.Confirm(23)
         else:
-            self.Confirm(11)
+            self.Confirm(10)
 
     @pyqtSignature("")
     def on_pick_obstacle_btn_clicked(self):
@@ -391,7 +391,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
 
         if self.PLANE_STATUS is planeStatus.WAIT:
-            if self.ORDER_STEP is STEP_START and len(self.points) > 2:
+            if self.ORDER_STEP is STEP_START and len(self.points) >= 2:
                 self.ShowInTab('<calculating>')
                 # 计算维诺图
                 vp = Voronoi(self.points[:])
@@ -445,7 +445,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             else:
                 self.ShowInTab('<error: something wrong>')
         else:
-            self.Confirm(11)
+            self.Confirm(10)
 
     @pyqtSignature("")
     def on_pick_curLoc_btn_clicked(self):
@@ -687,12 +687,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     if data[1] == 'R':
                         if data[2] == 'Y':
                             #todo：返航点设置成功
-                            self.Confirm()
+                            self.Confirm(8001)
                             self.RemoveOrder(orderId)
                             self.ORDER_STEP = STEP_START
                         elif data[2] == 'N':
                             #todo: 返航点设置失败
-                            if self.Confirm() is True:
+                            if self.Confirm(8002) is True:
                                 #再次发送
                                 self.SendOrder(orderId, self.orderDict[orderId])
                         else:
@@ -894,7 +894,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # TODO: not implemented yet
         self.ShowInTab('land button clicked')
         if self.Confirm(4) is True:
-            if self.PLANE_STATUS is planeStatus.WAIT or self.PLANE_STATUS is planeStatus.START_MISSION:
+            if self.PLANE_STATUS is planeStatus.WAIT \
+                    or self.PLANE_STATUS is planeStatus.START_MISSION\
+                    or self.PLANE_STATUS is planeStatus.LAND:
                 self.Confirm(4101)
             else:
 
