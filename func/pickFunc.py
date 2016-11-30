@@ -40,6 +40,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     showPathSignal = pyqtSignal(str)
     deletePathSignal = pyqtSignal(str)
     showErrorSignal = pyqtSignal(list)
+    showHomeLocSignal = pyqtSignal(list)
 
     def __init__(self, parent=None, upsignal=None, downsignal=None, updateMainSignal=None, sendOrderSignal=None,
                  toDebugWindowSingal=None):
@@ -90,7 +91,34 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.showErrorSignal.connect(self.AddErrorPoint)
 
         # 存储返航点位置
-        self.omeLoc = None
+        self.homeLoc = None
+        self.bdHomeLoc = None
+        self.showHomeLocSignal.connect(self.AddHomeLoc)
+
+    def AddHomeLoc(self,list):
+        """
+        在地图上添加返航点
+        :param list: [bd经度， bd纬度]
+        :return:
+        """
+        if self.homeLoc is not None:
+            try:
+                self.bdHomeLoc = self.GtoB(*self.homeLoc)
+                if self.bdHomeLoc is not None:
+                    jscript = """
+        if(SET_FLAG == 1){
+			if(homeMarkers.length > 0){
+				map.removeOverlay(homeMarkers[0]);
+				homeMarkers.pop();
+			}
+			var homePoint = new BMap.Point(%s);
+            var homeMarker = new BMap.Marker(homePoint,{icon: homeIcon});
+            map.addOverlay(homeMarker);
+            homeMarkers.push(homeMarker);
+		}""" % ','.join(self.bdHomeLoc)
+                    self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+            except Exception as e:
+                print('error in pickFunc-addhomeLoc:',e.message)
 
     def ClearAutoLoadPath(self, strArg):
         """
@@ -688,7 +716,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         if data[2] == 'Y':
                             #todo：返航点设置成功
                             self.Confirm(8001)
+                            self.homeLoc = (data[3],data[4])
                             self.RemoveOrder(orderId)
+                            self.showHomeLocSignal.emit([data[3],data[4]])
                             self.ORDER_STEP = STEP_START
                         elif data[2] == 'N':
                             #todo: 返航点设置失败

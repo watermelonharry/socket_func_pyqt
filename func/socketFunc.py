@@ -352,12 +352,15 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         # TODO: not implemented yet
         self.say_hi('get ip button clicked')
-        str_in = [str(i) for i in self.sock_ip_text.text().split(':')]
-        self.host = str_in[0]
-        self.port = int(str_in[1])
-        self.sock.setpara(host = self.host,  port = self.port)
-        self.say_hi('set host:port to ' + ':'.join(str_in))
-        self.Confirm(34)
+        try:
+            str_in = [str(i) for i in self.sock_ip_text.text().split(':')]
+            self.host = str_in[0]
+            self.port = int(str_in[1])
+            self.sock.setpara(host = self.host,  port = self.port)
+            self.say_hi('set host:port to ' + ':'.join(str_in))
+            self.Confirm(34)
+        except Exception as e:
+            self.Confirm(3401)
 
 
     @pyqtSignature("")
@@ -424,7 +427,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         Slot documentation goes here.
         """
-        if self.SERVER_RUN is False:
+        if self.SERVER_RUN is False and self.Confirm(29) is True:
             self.say_hi('start button clicked, start tcpserver with:')
             # self.sock.setpara()
             self.say_hi(str(self.sock))
@@ -446,7 +449,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         Slot documentation goes here.
         """
-        if self.SERVER_RUN is True:
+        if self.SERVER_RUN is True and self.Confirm(3411) is True:
             self.say_hi('close button clicked')
             #self.sock.stop_tcp_server()
             self.sock.close()

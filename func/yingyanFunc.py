@@ -156,6 +156,12 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                         return
                     else:
                         pass
+
+                    if data[1] == 'R':      #命令7：飞行器返航点信息
+                        self.SendToPickFunc(strArg)
+                        return
+                    else:
+                        pass
             else:
                 argList = None
         except Exception as e:

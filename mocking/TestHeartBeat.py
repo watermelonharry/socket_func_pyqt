@@ -113,6 +113,19 @@ def SendErrorInfo(s):
         print('end error info')
     print('no connect')
 
+def SendHomeLocInfo(s):
+    if s is not None:
+        data = s.recv(2048)
+        orderId = data.split('=')[0]
+        print('received:'+data)
+        c = raw_input('send home location info? y/n\n')
+        while c != 'n':
+            if c == 'y':
+                order = orderId + '=U=R=Y=120.13143165691=30.272977524721='
+                order += xorFormat(order)
+                s.send(order)
+                print('send:' + order)
+            c = raw_input('send error info? y/n ')
 if __name__ == '__main__':
     s = startConnect()
     if s is not None:
@@ -120,6 +133,7 @@ if __name__ == '__main__':
                            '1: heartBeat\n'
                            '2: debug info\n'
                            '3: error info\n'
+                           '4: home loc info\n'
                            'n: end test\n')
 
         while choose != 'n':
@@ -129,11 +143,14 @@ if __name__ == '__main__':
                 SendDebugInfo(s)
             if choose == '3':
                 SendErrorInfo(s)
+            if choose == '4':
+                SendHomeLocInfo(s)
 
             choose = raw_input('select test order:\n'
                                '1: heartBeat\n'
                                '2: debug info\n'
                                '3: error info\n'
+                               '4: home loc info\n'
                                'n: end test\n')
         s.close()
         print('<end connection>')
