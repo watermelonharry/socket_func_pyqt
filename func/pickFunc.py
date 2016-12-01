@@ -511,7 +511,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         # TODO: not implemented yet
         # QMessageBox.about(self,u"success", "<loading map finished>\n<ready for next operation>")
-        self.updateMainSignal.emit('Loading map done...')
+        self.updateMainSignal.emit('Loading map done')
         self.Confirm(72)
 
     def ClearMapCovers(self):

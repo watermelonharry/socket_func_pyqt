@@ -220,6 +220,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.port = 9876
         self.mode = 'TCP'
 
+        ##地图加载完成标志
+        self.LOAD_FINISH = False
+
         self.mutex = QMutex()
         self.log = log.logfile('log')
         self.orderDict = {}
@@ -297,6 +300,8 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
     def say_hi(self,  words):
         ##show in the info area in dialog
+        if str(words) == 'Loading map done':
+            self.LOAD_FINISH = True
         try:
             self.sock_show_tb.append(str(words))
         except Exception as e:
@@ -337,13 +342,19 @@ class SocketFunc(QDialog, Ui_SocketUi):
         noticeWindow.Confirm(intArg)
         return noticeWindow.status
 
+    """
+    按钮
+    """
     @pyqtSignature("")
     def on_sock_clear_btn_clicked(self):
         """
         Slot documentation goes here.
         """
-        self.say_hi('clear button clicked')
-        self.sock_show_tb.clear()
+        if self.LOAD_FINISH is True:
+            self.say_hi('clear button clicked')
+            self.sock_show_tb.clear()
+        else:
+            self.Confirm(74)
 
     @pyqtSignature("")
     def on_sock_getip_btn_clicked(self):
@@ -351,112 +362,128 @@ class SocketFunc(QDialog, Ui_SocketUi):
         Slot documentation goes here.
         """
         # TODO: not implemented yet
-        self.say_hi('get ip button clicked')
-        try:
-            str_in = [str(i) for i in self.sock_ip_text.text().split(':')]
-            self.host = str_in[0]
-            self.port = int(str_in[1])
-            self.sock.setpara(host = self.host,  port = self.port)
-            self.say_hi('set host:port to ' + ':'.join(str_in))
-            self.Confirm(34)
-        except Exception as e:
-            self.Confirm(3401)
-
+        if self.LOAD_FINISH is True:
+            self.say_hi('get ip button clicked')
+            try:
+                str_in = [str(i) for i in self.sock_ip_text.text().split(':')]
+                self.host = str_in[0]
+                self.port = int(str_in[1])
+                self.sock.setpara(host = self.host,  port = self.port)
+                self.say_hi('set host:port to ' + ':'.join(str_in))
+                self.Confirm(34)
+            except Exception as e:
+                self.Confirm(3401)
+        else:
+            self.Confirm(74)
 
     @pyqtSignature("")
     def on_sock_tcp_rbtn_clicked(self):
         """
         Slot documentation goes here.
         """
-        # TODO: not implemented yet
-        self.say_hi('tcp clicked')
-        if self.sock_tcp_rbtn.isChecked():
-            self.say_hi('tcp checked')
-        if self.sock_udp_rbtn.isChecked():
-            self.say_hi('udp checked')
-
+        if self.LOAD_FINISH is True:
+            self.say_hi('tcp clicked')
+            if self.sock_tcp_rbtn.isChecked():
+                self.say_hi('tcp checked')
+            if self.sock_udp_rbtn.isChecked():
+                self.say_hi('udp checked')
+        else:
+            self.Confirm(74)
 
     @pyqtSignature("")
     def on_sock_udp_rbtn_clicked(self):
         """
         Slot documentation goes here.
         """
-        # TODO: not implemented yet
-        self.say_hi('udp clicked')
-        if self.sock_tcp_rbtn.isChecked():
-            self.say_hi('tcp checked')
-        if self.sock_udp_rbtn.isChecked():
-            self.say_hi('udp checked')
+        if self.LOAD_FINISH is True:
+            self.say_hi('udp clicked')
+            if self.sock_tcp_rbtn.isChecked():
+                self.say_hi('tcp checked')
+            if self.sock_udp_rbtn.isChecked():
+                self.say_hi('udp checked')
+        else:
+            self.Confirm(74)
 
     @pyqtSignature("")
     def on_sock_send_btn_clicked(self):
         """
         Slot documentation goes here.
         """
-        # TODO: not implemented yet
-        message = str(self.sock_input_3.text())
-        self.say_hi('send button clicked,data:' + message)
-        self.sock.send_data(message)
+        if self.LOAD_FINISH is True:
+            message = str(self.sock_input_3.text())
+            self.say_hi('send button clicked,data:' + message)
+            self.sock.send_data(message)
+        else:
+            self.Confirm(74)
 
     @pyqtSignature("")
     def on_sock_yingyan_web_btn_clicked(self):
         """
         Slot documentation goes here.
         """
-        # TODO: not implemented yet
-        self.say_hi('yingyan_web button clicked')
+        if self.LOAD_FINISH is True:
+            self.say_hi('yingyan_web button clicked')
 
-        ##show SQLLL window
-        self.YingyanDailog.show()
+            ##show SQLLL window
+            self.YingyanDailog.show()
 
-        self.say_hi('trace monitoring window create')
+            self.say_hi('trace monitoring window create')
+        else:
+            self.Confirm(74)
 
     @pyqtSignature("")
     def on_sock_pickPoint_btn_clicked(self):
         """
         Slot documentation goes here.
         """
-        # TODO: not implemented yet
-        self.say_hi('pick point btn button clicked')
-        ##show SQLLL window
-        self.PickPointDialog.show()
-        self.say_hi('pickpoint window create')
-
+        if self.LOAD_FINISH is True:
+            self.say_hi('pick point btn button clicked')
+            ##show SQLLL window
+            self.PickPointDialog.show()
+            self.say_hi('pickpoint window create')
+        else:
+            self.Confirm(74)
     @pyqtSignature("")
     def on_sock_start_btn_clicked(self):
         """
         Slot documentation goes here.
         """
-        if self.SERVER_RUN is False and self.Confirm(29) is True:
-            self.say_hi('start button clicked, start tcpserver with:')
-            # self.sock.setpara()
-            self.say_hi(str(self.sock))
-            try:
-                self.sock.start()
-                self.SERVER_RUN = True
-                self.Confirm(30)
-            except Exception as e:
-                self.say_hi('error in socket-start:', e.message)
-                self.SERVER_RUN = False
-                self.Confirm(33)
-            finally:
-                self.SaveConfigToFile()
+        if self.LOAD_FINISH is True:
+            if self.SERVER_RUN is False and self.Confirm(29) is True:
+                self.say_hi('start button clicked, start tcpserver with:')
+                # self.sock.setpara()
+                self.say_hi(str(self.sock))
+                try:
+                    self.sock.start()
+                    self.SERVER_RUN = True
+                    self.Confirm(30)
+                except Exception as e:
+                    self.say_hi('error in socket-start:', e.message)
+                    self.SERVER_RUN = False
+                    self.Confirm(33)
+                finally:
+                    self.SaveConfigToFile()
+            else:
+                self.Confirm(32)
         else:
-            self.Confirm(32)
+            self.Confirm(74)
 
     @pyqtSignature("")
     def on_sock_close_btn_clicked(self):
         """
         Slot documentation goes here.
         """
-        if self.SERVER_RUN is True and self.Confirm(3411) is True:
-            self.say_hi('close button clicked')
-            #self.sock.stop_tcp_server()
-            self.sock.close()
-            self.sock = sserver(host = self.host,port = self.port, mode='TCP', upMainSig=self.updateMainSignal, recSignal=self.fromSocketfuncSignal)
-            self.SERVER_RUN = False
+        if self.LOAD_FINISH is True:
+            if self.SERVER_RUN is True and self.Confirm(3411) is True:
+                self.say_hi('close button clicked')
+                #self.sock.stop_tcp_server()
+                self.sock.close()
+                self.sock = sserver(host = self.host,port = self.port, mode='TCP', upMainSig=self.updateMainSignal, recSignal=self.fromSocketfuncSignal)
+                self.SERVER_RUN = False
+            else:
+                self.Confirm(31)
         else:
-            self.Confirm(31)
+            self.Confirm(74)
 
     @pyqtSignature("")
     def on_sock_debug_btn_clicked(self):
@@ -464,16 +491,24 @@ class SocketFunc(QDialog, Ui_SocketUi):
         调试信息窗口
         :return:
         """
-        self.debugWindow.show()
+        if self.LOAD_FINISH is True:
+            self.debugWindow.show()
+        else:
+            self.Confirm(74)
 
     def xorFormat(self, str_arg):
         return str(reduce(lambda x, y: chr(ord(x) ^ ord(y)), list(str(str_arg))))
 
     @pyqtSignature("")
     def on_sock_test_btn_clicked(self):
+
         """
         测试按钮
         """
+        if self.LOAD_FINISH is True:
+            pass
+        else:
+            self.Confirm(74)
         #测试路径设置的回复解析
         # self.updateMainSignal.emit('test btn clicked')
         # testStr = '123456=DY='
