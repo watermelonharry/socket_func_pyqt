@@ -30,7 +30,8 @@ class sserver(QThread):
     # update_signal = pyqtSignal(str)
     return_signal = pyqtSignal(str)
 
-    def __init__(self,  parent =None,  mutex = None,  host = 'localhost',  port = 9876,  mode = 'TCP', upMainSig = None,  recSignal = None):
+    def __init__(self,  parent =None,  mutex = None,  host = 'localhost',  port = 9876,  mode = 'TCP',
+                 upMainSig = None,  recSignal = None, readySignal = None):
         super(sserver,  self).__init__(parent)
         self.mutex = mutex
         self.host = host
@@ -41,6 +42,7 @@ class sserver(QThread):
         self.client = None
         self.updateMain = upMainSig
         self.recDataSignal = recSignal
+        self.readySignal = readySignal
 
         with QMutexLocker(self.mutex):
             self.updateMain.emit('new socket server- '+ str(self))
@@ -149,10 +151,12 @@ class sserver(QThread):
             self.sserver.bind(server_address)
             self.sserver.listen(5)
             self.update_main('enter-sserver-func-CREATESERVER-' + str(self))
+            self.readySignal.emit('Y')
         except Exception as e:
             self.update_main('enter-sserver-func-CREATESERVER-error-' + str(e))
             self.sserver = None
             self.RUN_FLAG = False
+            self.readySignal.emit('N')
             return
         self.connectOneClient()
 
@@ -162,7 +166,7 @@ class sserver(QThread):
             (client,  address) = self.sserver.accept()
             self.client = client
             # self.send_data('-connected-')
-            # self.Confirm(35)
+            #self.Confirm(35)
             self.update_main('enter-sserver-func-CREATESERVER-connected-client:'+ str(address))
 
     ##send data to client, mainly triggered by SEND_BUTTON in main window
@@ -203,6 +207,8 @@ class SocketFunc(QDialog, Ui_SocketUi):
 
     # 调用该信号会进行发送socket信息操作
     sendOrderSignal = pyqtSignal(str)
+    # 来自server的成功信号
+    serverCreateSignal = pyqtSignal(str)
 
     def __init__(self, parent=None):
         """
@@ -214,7 +220,7 @@ class SocketFunc(QDialog, Ui_SocketUi):
         QDialog.__init__(self, parent)
         self.setupUi(self)
 
-        self.sock = sserver(upMainSig=self.updateMainSignal,recSignal=self.fromSocketfuncSignal)
+        self.sock = sserver(upMainSig=self.updateMainSignal,recSignal=self.fromSocketfuncSignal, readySignal = self.serverCreateSignal)
         self.SERVER_RUN = False
         self.host = 'localhost'
         self.port = 9876
@@ -245,8 +251,19 @@ class SocketFunc(QDialog, Ui_SocketUi):
         self.debugWindow = DebugWindow(self.toDebugWindowSignal)
         self.ReadConfigFromFile()
 
+        #server成功建立
+        self.serverCreateSignal.connect(self.ServerCreated)
+
     def __str__(self):
         return('sockFunc-para:')
+
+    def ServerCreated(self,strArg):
+        if str(strArg) == 'Y':
+            self.SERVER_RUN = True
+            self.Confirm(30)
+        else:
+            self.SERVER_RUN = False
+            self.Confirm(33)
 
     def ReadConfigFromFile(self):
         """
@@ -352,7 +369,8 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         if self.LOAD_FINISH is True:
             self.say_hi('clear button clicked')
-            self.sock_show_tb.clear()
+            if self.Confirm(36) is True:
+                self.sock_show_tb.clear()
         else:
             self.Confirm(74)
 
@@ -449,20 +467,21 @@ class SocketFunc(QDialog, Ui_SocketUi):
         Slot documentation goes here.
         """
         if self.LOAD_FINISH is True:
-            if self.SERVER_RUN is False and self.Confirm(29) is True:
-                self.say_hi('start button clicked, start tcpserver with:')
-                # self.sock.setpara()
-                self.say_hi(str(self.sock))
-                try:
-                    self.sock.start()
-                    self.SERVER_RUN = True
-                    self.Confirm(30)
-                except Exception as e:
-                    self.say_hi('error in socket-start:', e.message)
-                    self.SERVER_RUN = False
-                    self.Confirm(33)
-                finally:
-                    self.SaveConfigToFile()
+            if self.SERVER_RUN is False:
+                if self.Confirm(29) is True:
+                    self.say_hi('start button clicked, start tcpserver with:')
+                    # self.sock.setpara()
+                    self.say_hi(str(self.sock))
+                    try:
+                        self.sock.start()
+                        # self.SERVER_RUN = True
+                        # self.Confirm(30)
+                    except Exception as e:
+                        self.say_hi('error in socket-start:', e.message)
+                        self.SERVER_RUN = False
+                        self.Confirm(33)
+                    finally:
+                        self.SaveConfigToFile()
             else:
                 self.Confirm(32)
         else:
@@ -478,7 +497,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
                 self.say_hi('close button clicked')
                 #self.sock.stop_tcp_server()
                 self.sock.close()
-                self.sock = sserver(host = self.host,port = self.port, mode='TCP', upMainSig=self.updateMainSignal, recSignal=self.fromSocketfuncSignal)
+                self.sock = sserver(host= self.host, port = self.port,
+                                    upMainSig=self.updateMainSignal, recSignal=self.fromSocketfuncSignal,
+                                    readySignal=self.serverCreateSignal)
                 self.SERVER_RUN = False
             else:
                 self.Confirm(31)

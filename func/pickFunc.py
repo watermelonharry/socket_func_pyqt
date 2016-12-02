@@ -79,7 +79,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         ##设置点的步骤
         self.ORDER_STEP = STEP_START
         ##飞行器的状态
-        self.PLANE_STATUS = None
+        self.PLANE_STATUS = planeStatus.NO_ACCESS
 
         # 存储当前位置
         self.currentLoc = None
@@ -95,6 +95,17 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.bdHomeLoc = None
         self.showHomeLocSignal.connect(self.AddHomeLoc)
 
+    def NoticeMain(self,strArg, paramArg = None):
+        """
+        显示至sock主窗口，以及log记录
+        :param strArg:
+        :return:
+        """
+        if paramArg is not None:
+            self.updateMainSignal.emit(str(strArg) + str(paramArg))
+        else:
+            self.updateMainSignal.emit(str(strArg))
+
     def AddHomeLoc(self,list):
         """
         在地图上添加返航点
@@ -109,7 +120,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         if(SET_FLAG == 1){
 			if(homeMarkers.length > 0){
 				map.removeOverlay(homeMarkers[0]);
-				homeMarkers.pop();
+				homeMarkers=[];
 			}
 			var homePoint = new BMap.Point(%s);
             var homeMarker = new BMap.Marker(homePoint,{icon: homeIcon});
@@ -200,7 +211,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             else:
                 self.ShowInTab('<error:waiting for former progress to be finished>')
                 self.Confirm(21)
-        elif self.PLANE_STATUS is not None:
+        elif self.PLANE_STATUS is not planeStatus.NO_ACCESS:
             self.Confirm(10)
         else:
             self.Confirm(12)
@@ -220,6 +231,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         完成后属性变为 STEP_SEND_WAIT
 
         """
+        self.ShowInTab(u'发送轨迹按钮激活')
+        self.NoticeMain('SendPath button clicked')
         if self.PLANE_STATUS is planeStatus.WAIT:
             if self.ORDER_STEP is STEP_GET_POINT:
                 if len(self.lines) >= 1:
@@ -255,6 +268,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         重新发送
         :return:
         """
+        self.ShowInTab(u'重新发送按钮激活')
+        self.NoticeMain('reSend button clicked')
+
         if self.Confirm(25) is True:
             if len(self.orderDict) > 0:
                 for k, v in self.orderDict.items():
@@ -270,6 +286,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         清除上一条命令
         :return:
         """
+        self.ShowInTab(u'清除命令按钮激活')
+        self.NoticeMain('clearOrder button clicked')
+
         if self.Confirm(27) is True:
             self.ORDER_STEP = STEP_START
             self.orderDict = {}
@@ -322,6 +341,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         删除已选点 路径记录 地图显示记录 障碍点记录
         :return:
         """
+        self.ShowInTab(u'重置按钮激活')
+        self.NoticeMain('reset button clicked')
+
         if self.Confirm(73) is True:
             self.pp_testbrowser.clear()
             self.WAITFLAG = False
@@ -330,7 +352,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             self.lines = []
             self.orderDict = {}
             self.ORDER_STEP = STEP_START
-            self.PLANE_STATUS = planeStatus.WAIT
+            self.PLANE_STATUS = planeStatus.NO_ACCESS
+            self.pick_status_label.setText(STATUS_DICT[self.PLANE_STATUS])
 
             jscript = """
                     map.clearOverlays();
@@ -355,6 +378,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         完成后属性变为 STEP_GET_POINT
         :return:
         """
+        self.ShowInTab(u'轨迹模式按钮激活')
+        self.NoticeMain('pathMode button clicked')
+
         if self.PLANE_STATUS is planeStatus.WAIT:
             if self.ORDER_STEP is STEP_START:
                 if len(self.points) >= 2:
@@ -417,6 +443,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         完成后属性变为 STEP_GET_POINT
         :return:
         """
+        self.ShowInTab(u'障碍模式按钮激活')
+        self.NoticeMain('obstacleMode button clicked')
 
         if self.PLANE_STATUS is planeStatus.WAIT:
             if self.ORDER_STEP is STEP_START and len(self.points) >= 2:
@@ -481,6 +509,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         显示当前坐标
         :return:
         """
+        self.ShowInTab(u'当前位置按钮激活')
+        self.NoticeMain('showCurrentLocation button clicked')
+
         if self.currentLoc is not None:
 
             if self.curBdLoc is not None:
@@ -552,6 +583,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         errorLoc = self.GtoB(argList[2], argList[3])
         if self.AUTO_LOAD_PATH is True and errorLoc is not None:
+            self.NoticeMain('error point added:',','.join(errorLoc))
             jscript = """
                         var errorPoint = new BMap.Point(%s);
                         var errorMarker = new BMap.Marker(errorPoint,{icon: errorIcon});
@@ -830,6 +862,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
     @pyqtSignature("")
     def on_pick_show_curPath_btn_clicked(self):
+        self.ShowInTab(u'位置跟踪按钮激活')
+        self.NoticeMain('track button clicked')
         if self.AUTO_LOAD_PATH is False:
             if self.Confirm(6) is True:
                 self.AUTO_LOAD_PATH = True
@@ -860,7 +894,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         起飞按钮
         """
-        self.ShowInTab(u'起飞 button clicked')
+        self.ShowInTab(u'起飞按钮激活')
+        self.NoticeMain('takeOff button clicked')
         if self.Confirm(1) is True:
             if self.PLANE_STATUS is planeStatus.POINT_SET \
                     or self.PLANE_STATUS is planeStatus.LAND:
@@ -881,7 +916,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         执行任务按钮
         """
         # TODO: not implemented yet
-        self.ShowInTab('startMission button clicked')
+        self.ShowInTab(u'开始任务按钮激活')
+        self.NoticeMain('startMission button clicked')
         if self.Confirm(2) is True:
             if self.PLANE_STATUS is planeStatus.TAKE_OFF or self.PLANE_STATUS is planeStatus.ABORT_MISSION:
                 if self.ORDER_STEP == STEP_START:
@@ -901,7 +937,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         终止任务按钮
         """
         # TODO: not implemented yet
-        self.ShowInTab('abortMission button clicked')
+        self.ShowInTab(u'终止任务按钮激活')
+        self.NoticeMain('abortMission button clicked')
         if self.Confirm(3) is True:
             if self.PLANE_STATUS is planeStatus.START_MISSION \
                     or self.PLANE_STATUS is planeStatus.RETURN_TO_BASE:
@@ -922,7 +959,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         降落按钮
         """
         # TODO: not implemented yet
-        self.ShowInTab('land button clicked')
+        self.ShowInTab(u'降落按钮激活')
+        self.NoticeMain('land button clicked')
         if self.Confirm(4) is True:
             if self.PLANE_STATUS is planeStatus.WAIT \
                     or self.PLANE_STATUS is planeStatus.START_MISSION\
@@ -944,7 +982,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         返航按钮
         """
-        self.ShowInTab('returnToBase button clicked')
+        self.ShowInTab(u'返航按钮激活')
+        self.NoticeMain('returnToBase button clicked')
         if self.Confirm(5) is True:
 
             if self.PLANE_STATUS is not planeStatus.START_MISSION \
@@ -966,6 +1005,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         确认返航点按钮
         """
         self.ShowInTab(u'确认返航点按钮激活')
+        self.NoticeMain('homeLocation button clicked')
         if self.Confirm(8) is True:
 
             if self.PLANE_STATUS is planeStatus.WAIT:
@@ -991,12 +1031,16 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         :return:
         """
         self.ShowInTab(u'参数查询按钮激活')
-        if self.ORDER_STEP == STEP_START:
-            orderId, orderContent = self.SendOrder(self.uniqueId(), content='Z=P')
-            self.ORDER_STEP = STEP_SEND_WAIT
-            self.RecordOrder(orderId, orderContent)
+        self.NoticeMain('paramCheck button clicked')
+        if self.PLANE_STATUS is not planeStatus.NO_ACCESS:
+            if self.ORDER_STEP == STEP_START:
+                orderId, orderContent = self.SendOrder(self.uniqueId(), content='Z=P')
+                self.ORDER_STEP = STEP_SEND_WAIT
+                self.RecordOrder(orderId, orderContent)
+            else:
+                self.Confirm(21)
         else:
-            self.Confirm(21)
+            self.Confirm(12)
 
     @pyqtSignature("")
     def on_pick_param_set_btn_clicked(self):
@@ -1005,6 +1049,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         只能在飞行器等待状态下设置
         :return:
         """
+        self.ShowInTab(u'参数设置按钮激活')
+        self.NoticeMain('paramSet button clicked')
         if self.PLANE_STATUS is planeStatus.WAIT:
             if self.Confirm(206) is True:
                 height = str(self.pp_param_height.text())

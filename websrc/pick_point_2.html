@@ -33,18 +33,16 @@
 
 	var homeMarker = []; //返航点覆盖物
 
-	//故障点图标
 	var errorIcon = new BMap.Icon("components/markers.png", new BMap.Size(23, 25), {
             // 指定定位位置
-            offset: new BMap.Size(10, 25),
+            anchor: new BMap.Size(11, 25),
             // 当需要从一幅较大的图片中截取某部分作为标注图标时，需要指定大图的偏移位置   
             imageOffset: new BMap.Size(1, -250) // 设置图片偏移  
         });
 
-	//返航点图标
 	var homeIcon = new BMap.Icon("components/markers.png", new BMap.Size(23, 25), {
             // 指定定位位置
-            offset: new BMap.Size(10, 25),
+            anchor: new BMap.Size(11, 25),
             // 当需要从一幅较大的图片中截取某部分作为标注图标时，需要指定大图的偏移位置   
             imageOffset: new BMap.Size(1, -300) // 设置图片偏移  
         });

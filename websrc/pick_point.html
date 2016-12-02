@@ -56,14 +56,14 @@
 
 	var errorIcon = new BMap.Icon("components/markers.png", new BMap.Size(23, 25), {
             // 指定定位位置
-            offset: new BMap.Size(10, 25),
+            anchor: new BMap.Size(11, 25),
             // 当需要从一幅较大的图片中截取某部分作为标注图标时，需要指定大图的偏移位置   
             imageOffset: new BMap.Size(1, -250) // 设置图片偏移  
         });
 
 	var homeIcon = new BMap.Icon("components/markers.png", new BMap.Size(23, 25), {
             // 指定定位位置
-            offset: new BMap.Size(10, 25),
+            anchor: new BMap.Size(11, 25),
             // 当需要从一幅较大的图片中截取某部分作为标注图标时，需要指定大图的偏移位置   
             imageOffset: new BMap.Size(1, -300) // 设置图片偏移  
         });
@@ -101,14 +101,19 @@
 
 	function pick_one_path_2(e){
 		if(SET_FLAG == 1){
-			if(homeMarkers.length > 0){
-				map.removeOverlay(homeMarkers[0]);
-				homeMarkers.pop();
-			}
+			// if(homeMarkers.length > 0){
+			// 	map.removeOverlay(homeMarkers[0]);
+			// 	homeMarkers.pop();
+			// }
 			var homePoint = new BMap.Point(e.point.lng, e.point.lat);
-            var homeMarker = new BMap.Marker(homePoint,{icon: homeIcon});
+
+            var homeMarker = new BMap.Marker(homePoint,{icon: errorIcon});
             map.addOverlay(homeMarker);
-            homeMarkers.push(homeMarker);			
+            homeMarkers.push(homeMarker);
+
+            // var circle = new BMap.Circle(homePoint,2,{strokeColor:"blue", strokeWeight:1, strokeOpacity:0.5});
+            // map.addOverlay(circle);
+            // homeMarkers.push(circle);				
 		}
 	}
 
