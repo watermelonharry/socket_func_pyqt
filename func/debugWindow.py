@@ -27,7 +27,7 @@ class DebugWindow(QDialog, Ui_debug_window):
     def ExtractDebugInfo(self,strArg):
         strArg = str(strArg)
         statusCode = int(strArg)
-        if statusCode > 3000:
+        if strArg[0] == '3' and strArg[-1] != '0':
             messageList = copy.deepcopy(DEBUG_STATUS_DICT[300])
             messageList.insert(1, unicode(statusCode % 3000))
             message = u''.join(messageList)

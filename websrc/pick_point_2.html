@@ -28,7 +28,24 @@
 	var SET_FLAG = 1;
 
 	var pathMarkers = []; //飞行路径覆盖物集合
+	var errorMarkers = []; //故障点覆盖物集合
+	var homeMarkers = [];//返航点覆盖物
 
+	var homeMarker = []; //返航点覆盖物
+
+	var errorIcon = new BMap.Icon("components/markers.png", new BMap.Size(23, 25), {
+            // 指定定位位置
+            anchor: new BMap.Size(11, 25),
+            // 当需要从一幅较大的图片中截取某部分作为标注图标时，需要指定大图的偏移位置   
+            imageOffset: new BMap.Size(1, -250) // 设置图片偏移  
+        });
+
+	var homeIcon = new BMap.Icon("components/markers.png", new BMap.Size(23, 25), {
+            // 指定定位位置
+            anchor: new BMap.Size(11, 25),
+            // 当需要从一幅较大的图片中截取某部分作为标注图标时，需要指定大图的偏移位置   
+            imageOffset: new BMap.Size(1, -300) // 设置图片偏移  
+        });
 
 
 	var lineMarkers = []; //计算的路径集合
@@ -46,7 +63,9 @@
 	//添加控件和比例尺
 	map.addControl(top_left_control);        
 	map.addControl(top_left_navigation);     
-	map.addControl(top_right_navigation);
+	//map.addControl(top_right_navigation);
+	var mapType1 = new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP],offset: new BMap.Size(150,5)});
+	map.addControl(mapType1);
 
 	var p_count = 1;
 	
@@ -143,7 +162,7 @@
 
 	map.addEventListener("click", pick_one_path);
 	//ymap.addEventListener("rightclick", pick_one_obstacle);
-	map.addEventListener("rightclick", testFunc);
+	//map.addEventListener("rightclick", testFunc);
 
 
 

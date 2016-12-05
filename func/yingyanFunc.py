@@ -110,7 +110,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                         #上传至鹰眼
                         self.uploadGpsData((float(data[2]), float(data[3])))
                         #更新取点窗口的当前坐标数据，飞行器的状态数据
-                        self.SendToPickFunc('IN=YY=LOC='+ str(data[2]) + '=' + str(data[3])+ '=' + str(data[6]))
+                        self.SendToPickFunc('IN=YY=LOC='+ '='.join(argList[2:7]))
                     else:
                         #todo: wrong heartbeat info
                         argList = None
@@ -138,6 +138,7 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                         #故障信息转存到文件
                         if self.SaveErrorToFile(data[:]) is True:
                             self.SendOrder(id=data[0],content='Z=E=Y')
+                            self.SendToPickFunc('IN=YY=E='+'='.join(data[2:6]))
                         else:
                             self.SendOrder(id=data[0],content='Z=E=N')
                         return
@@ -152,6 +153,12 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
 
                     if data[1] == 'T':      #命令6：飞行器调试信息
                         self.SendToPickFunc('IN=YY=T=' + str(data[2]))
+                        return
+                    else:
+                        pass
+
+                    if data[1] == 'R':      #命令7：飞行器返航点信息
+                        self.SendToPickFunc(strArg)
                         return
                     else:
                         pass

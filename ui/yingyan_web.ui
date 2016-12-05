@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>轨迹监控</string>
+   <string>历史轨迹</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -54,6 +54,9 @@
    </property>
   </widget>
   <widget class="QPushButton" name="web_fresh_btn">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -70,8 +73,14 @@
    <property name="text">
     <string>刷新</string>
    </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="web_emit_btn">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -86,7 +95,10 @@
     </font>
    </property>
    <property name="text">
-    <string>emit</string>
+    <string>退出</string>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QGroupBox" name="web_group_box">
