@@ -535,15 +535,24 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     @pyqtSignature("bool")
     def on_pp_webView_loadFinished(self, p0):
         """
-        Slot documentation goes here.
-        
+        页面加载完成
         @param p0 DESCRIPTION
         @type bool
         """
-        # TODO: not implemented yet
-        # QMessageBox.about(self,u"success", "<loading map finished>\n<ready for next operation>")
-        self.updateMainSignal.emit('Loading map done')
-        self.Confirm(72)
+        import requests as rq
+        try:
+            res = rq.get('http://www.baidu.com')
+            resBody = res.content
+            if 'STATUS OK' in resBody:
+                self.updateMainSignal.emit('Loading map done')
+                self.Confirm(72)
+            else:
+                self.updateMainSignal.emit('Loading map failed')
+                self.Confirm(7201)
+        except Exception as e:
+            print('error in pick-loadFinished:',e.message)
+            self.updateMainSignal.emit('Loading map failed')
+            self.Confirm(7201)
 
     def ClearMapCovers(self):
         jscript = """
