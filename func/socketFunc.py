@@ -176,6 +176,7 @@ class sserver(QThread):
             self.client.send(str_arg)
             self.update_main('enter-sserver-func-SENDDATA-sucess:' + str_arg)
         else:
+            self.Confirm(3412)
             self.update_main('enter-sserver-func-SENDDATA-error:NO CONNECTION')
 
     def Confirm(self,intArg):
@@ -493,14 +494,15 @@ class SocketFunc(QDialog, Ui_SocketUi):
         Slot documentation goes here.
         """
         if self.LOAD_FINISH is True:
-            if self.SERVER_RUN is True and self.Confirm(3411) is True:
-                self.say_hi('close button clicked')
-                #self.sock.stop_tcp_server()
-                self.sock.close()
-                self.sock = sserver(host= self.host, port = self.port,
-                                    upMainSig=self.updateMainSignal, recSignal=self.fromSocketfuncSignal,
-                                    readySignal=self.serverCreateSignal)
-                self.SERVER_RUN = False
+            if self.SERVER_RUN is True:
+                if self.Confirm(3411) is True:
+                    self.say_hi('close button clicked')
+                    #self.sock.stop_tcp_server()
+                    self.sock.close()
+                    self.sock = sserver(host= self.host, port = self.port,
+                                        upMainSig=self.updateMainSignal, recSignal=self.fromSocketfuncSignal,
+                                        readySignal=self.serverCreateSignal)
+                    self.SERVER_RUN = False
             else:
                 self.Confirm(31)
         else:
