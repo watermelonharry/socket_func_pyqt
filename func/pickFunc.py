@@ -47,7 +47,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                  toDebugWindowSingal=None):
         """
         Constructor
-        
+
         @param parent reference to the parent widget
         @type QWidget
         """
@@ -98,6 +98,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
         # 存储路径点到文件
         self.PathSaver = pathSaver()
+        # 存储的坐标点类型： BD / GPS
+        self.POINT_TYPE = 'BD'
 
     def NoticeMain(self,strArg, paramArg = None):
         """
@@ -220,12 +222,6 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         else:
             self.Confirm(12)
 
-    # @pyqtSlot(str)
-    # #input str_arg: point number
-    # def delete_one_point_js(self, str_arg):
-    #
-    #     delete_p = list(self.points.pop(len(self.points) -1))
-    #     self.ShowInTab('point '+ str(len(self.points) +1)+' deleted:'+ str(delete_p[0]) + '-' + str(delete_p[1]))
 
     @pyqtSignature("")
     def on_pick_send_btn_clicked(self):
@@ -245,7 +241,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     orderId = self.uniqueId()
                     orderContent = 'Z=D=' + str(len(self.pathPoints)) + '='
                     orderContent += '='.join(
-                        [str(p[0]) + '|' + str(p[1]) for p in self.CalculatePoints(self.pathPoints)])
+                        [str(p[0]) + '|' + str(p[1]) for p in self.CalculatePoints(self.pathPoints, self.POINT_TYPE)])
 
                     # 加入字典
                     self.RecordOrder(orderId, orderContent)
@@ -297,26 +293,41 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             self.ORDER_STEP = STEP_START
             self.orderDict = {}
 
-    def CalculatePoints(self, pointsList):
+    def CalculatePoints(self, pointsList, type='BD'):
         """
         输入路径点，输出差值
         :param pointsList:
         :return:
         """
         resultList = []
-        if self.curBdLoc is not None:
-            formerPoint = self.curBdLoc
-            for singlePoint in pointsList:
-                cLongi = int(1000000000.0 * (float(singlePoint[0]) - float(formerPoint[0])))
-                clati = int(1000000000.0 * (float(singlePoint[1]) - float(formerPoint[1])))
-                formerPoint = singlePoint
-                resultList.append((str(cLongi), str(clati)))
-        if len(resultList) > 0:
-            return resultList
-        else:
-            print('error in pickFunc-CalculatePoint: not enough points')
-            QtGui.QMessageBox.about(self, u'错误', u'计算失败，路径点不足')
-            return None
+        if type == 'BD':
+            if self.curBdLoc is not None:
+                formerPoint = self.curBdLoc
+                for singlePoint in pointsList:
+                    cLongi = int(1000000000.0 * (float(singlePoint[0]) - float(formerPoint[0])))
+                    clati = int(1000000000.0 * (float(singlePoint[1]) - float(formerPoint[1])))
+                    formerPoint = singlePoint
+                    resultList.append((str(cLongi), str(clati)))
+            if len(resultList) > 0:
+                return resultList
+            else:
+                print('error in pickFunc-CalculatePoint: not enough points')
+                QtGui.QMessageBox.about(self, u'错误', u'计算失败，路径点不足')
+                return None
+        elif type == 'GPS':
+            if self.currentLoc is not None:
+                formerPoint = self.currentLoc
+                for singlePoint in pointsList:
+                    cLongi = int(1000000000.0 * (float(singlePoint[0]) - float(formerPoint[0])))
+                    clati = int(1000000000.0 * (float(singlePoint[1]) - float(formerPoint[1])))
+                    formerPoint = singlePoint
+                    resultList.append((str(cLongi), str(clati)))
+            if len(resultList) > 0:
+                return resultList
+            else:
+                print('error in pickFunc-CalculatePoint: not enough points')
+                QtGui.QMessageBox.about(self, u'错误', u'计算失败，路径点不足')
+                return None
 
     def SendOrder(self, id=None, content=None):
         """
@@ -398,6 +409,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                     # 改变步骤状态
                     self.ORDER_STEP = STEP_GET_POINT
+                    self.POINT_TYPE = 'BD'
 
                     # 路径显示
                     try:
@@ -470,6 +482,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                 # 改变步骤状态
                 self.ORDER_STEP = STEP_GET_POINT
+                self.POINT_TYPE = 'BD'
 
                 # 显示到地图
                 try:
@@ -773,6 +786,24 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         else:
                             return
 
+                    ##8 记录当前坐标点
+                    if data[1] == 'G':
+                        if data[2] != 'N':
+                            ##坐标点回传成功
+                            if self.PathSaver.addOnePoint((data[3],data[4])) is True:
+                                self.Confirm(8101)
+                                self.RemoveOrder(orderId)
+                                self.ORDER_STEP = STEP_START
+                            else:
+                                self.Confirm(8102)
+                        elif data[2] == 'N':
+                            # 坐标点设置失败
+                            if self.Confirm(8103) is True:
+                                # 再次发送
+                                self.SendOrder(orderId, self.orderDict[orderId])
+                        else:
+                            return
+
                 elif orderId != 'IN' and len(self.orderDict) != 0:
 
                     print(self.orderDict)
@@ -829,6 +860,30 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             import requests
             url = 'http://api.map.baidu.com/geoconv/v1/?coords=%s,%s&from=1&to=5&ak=znRegmlIFbPc0LHl1IUUnQju' % (
             str(G_lon), str(G_lat))
+            source_code = requests.get(url)
+            plain_text = source_code.text
+            c = json.loads(plain_text)
+            if c['status'] == 0:
+                return (str(c['result'][0]['x']), str(c['result'][0]['y']))  # lat,lon in string type
+            else:
+                return None
+        except Exception as e:
+            print('error in GtoB:', e.message)
+            return None
+
+    def GtoBs(self, gpsList):
+        """
+        GPS坐标批量转换为百度坐标
+        基于webAPI:http://lbsyun.baidu.com/index.php?title=webapi/guide/changeposition
+        :param gpsList:经纬度坐标列表
+        :return: list(百度经度,百度纬度) 或 None
+        """
+        try:
+            #todo: 批量转换
+            combineStr = map
+            import json
+            import requests
+            url = 'http://api.map.baidu.com/geoconv/v1/?coords=%s&from=1&to=5&ak=znRegmlIFbPc0LHl1IUUnQju' % ()
             source_code = requests.get(url)
             plain_text = source_code.text
             c = json.loads(plain_text)
@@ -1111,3 +1166,82 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             return True
         else:
             return False
+
+    """
+    坐标点文件记录
+    """
+    @pyqtSignature("")
+    def on_pick_recordPoint_btn_clicked(self):
+        """
+        记录坐标按钮
+        发送 获取当前位置 命令，命令的返回值记录到文件
+        """
+        self.ShowInTab(u'记录坐标按钮激活')
+        self.NoticeMain('recordPoint button clicked')
+        if self.ORDER_STEP == STEP_START:
+            orderId, orderContent = self.SendOrder(self.uniqueId(), content='Z=G')
+            self.ORDER_STEP = STEP_SEND_WAIT
+            self.RecordOrder(orderId, orderContent)
+        else:
+            self.Confirm(21)
+
+    @pyqtSignature("")
+    def on_pick_loadPath_btn_clicked(self):
+        """
+        载入轨迹按钮
+        """
+        if self.PLANE_STATUS is planeStatus.WAIT:
+            if self.ORDER_STEP is STEP_START:
+                if self.PathSaver.IS_EMPTY is False:
+                    self.Confirm(8104)
+                else:
+
+                    pointList = self.PathSaver.LoadPath()
+
+                    #todo 绘制到地图上
+                    # 改变步骤状态
+                    self.ORDER_STEP = STEP_GET_POINT
+                    self.POINT_TYPE = 'GPS'
+
+                    # 路径显示
+                    try:
+                        lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
+                    except Exception as e:
+                        print(e.message)
+                    jscript = """
+                                                var lineMarkers = [];
+                                                var lineData = "%s";
+                                                var lineList = lineData.split("=");
+                                                //document.write(lineData + "<br />");
+                                                //document.write(lineList[0] + "<br />");
+
+                                                for (var i = 0; i<lineList.length ; i++){
+                                                    var lines = lineList[i].split("|");
+                                                    var polyline = new BMap.Polyline([
+                                                    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
+                                                    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
+                                            ], {strokeColor:"red", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+
+                                                    map.addOverlay(polyline);   //增加折线
+                                                }
+                                                SET_FLAG = 0;
+
+                                                """ % lineData
+                    self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
+                pass
+            else:
+                self.Confirm(21)
+        else:
+            self.Confirm(8108)
+
+
+    @pyqtSignature("")
+    def on_pick_deleteRecord_btn_clicked(self):
+        """
+        删除记录按钮
+        """
+        if self.Confirm(8105) is True:
+            if self.PathSaver.ClearRecord() is True:
+                self.Confirm(8106)
+            else:
+                self.Confirm(8107)
