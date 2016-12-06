@@ -528,10 +528,9 @@ class SocketFunc(QDialog, Ui_SocketUi):
         """
         测试按钮
         """
-        if self.LOAD_FINISH is True:
-            pass
-        else:
-            self.Confirm(74)
+        testWaitCmd = 'H=U=L=120.13143165691=30.272977524721=20.12=1.0=1='
+        testWaitCmd += self.xorFormat(testWaitCmd)
+        self.sockToYingyan(testWaitCmd)
         #测试路径设置的回复解析
         # self.updateMainSignal.emit('test btn clicked')
         # testStr = '123456=DY='

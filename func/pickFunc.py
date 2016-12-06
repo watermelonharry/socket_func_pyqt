@@ -1196,42 +1196,52 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         if self.PLANE_STATUS is planeStatus.WAIT:
             if self.ORDER_STEP is STEP_START:
-                if self.PathSaver.IS_EMPTY is False:
+                if self.PathSaver.IS_EMPTY is True:
                     self.Confirm(8104)
                 else:
 
                     pointList = self.PathSaver.LoadPath()
-                    showList = self.GtoBs(pointList)
-
-                    #todo 绘制到地图上
+                    bdShowList = self.GtoBs(pointList)
+                    #调整位置
+                    bdShowList = bdShowList[0:1] + bdShowList[-1:] + bdShowList[1:-1]
+                    self.points = bdShowList
                     # 改变步骤状态
-                    self.ORDER_STEP = STEP_GET_POINT
-                    self.POINT_TYPE = 'GPS'
+                    self.ORDER_STEP = STEP_START
+                    self.POINT_TYPE = 'BD'
 
-                    # 路径显示
+                    # todo 绘制到地图上
                     try:
-                        lineData = '='.join(['|'.join(str(t) for t in x) for x in self.lines])
+                        lineData = '='.join(['|'.join(str(t) for t in x) for x in bdShowList])
                     except Exception as e:
                         print(e.message)
                     jscript = """
-                                                var lineMarkers = [];
-                                                var lineData = "%s";
-                                                var lineList = lineData.split("=");
-                                                //document.write(lineData + "<br />");
-                                                //document.write(lineList[0] + "<br />");
+                    var points = [];
+                    var markers = [];
+                    var pointData = "%s";
+                    var pointList = pointData.split("=");
+                    var p_count = 1;
 
-                                                for (var i = 0; i<lineList.length ; i++){
-                                                    var lines = lineList[i].split("|");
-                                                    var polyline = new BMap.Polyline([
-                                                    new BMap.Point(parseFloat(lines[0]), parseFloat(lines[1])),
-                                                    new BMap.Point(parseFloat(lines[2]), parseFloat(lines[3])),
-                                            ], {strokeColor:"red", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+                    for (var i = 0; i<pointList.length ; i++){
+                        var singlePoint = pointList[i].split("|");
+                        var new_p = new BMap.Point(parseFloat(singlePoint[0]), parseFloat(singlePoint[1]));
+			            points.push(new_p);
 
-                                                    map.addOverlay(polyline);   //增加折线
-                                                }
-                                                SET_FLAG = 0;
+                        var marker = new BMap.Marker(new_p);
+                        map.addOverlay(marker);
+                        markers.push(marker);
 
-                                                """ % lineData
+                        //添加标签
+                        if(p_count == 1){
+                            var label = new BMap.Label("S",{offset:new BMap.Size(5,0)});
+                        }
+                        else if(p_count == 2){
+                            var label = new BMap.Label("E",{offset:new BMap.Size(5,0)});
+                        }
+                        else{var label = new BMap.Label(p_count-2,{offset:new BMap.Size(5,0)});}
+
+                        p_count++;
+                        marker.setLabel(label);
+                    }""" % lineData
                     self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
                 pass
             else:
