@@ -879,16 +879,20 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         :return: list(百度经度,百度纬度) 或 None
         """
         try:
-            #todo: 批量转换
-            combineStr = map
+            strList = [','.join([str(t) for t in x]) for x in gpsList]
+            combineStr = ';'.join(strList)
             import json
             import requests
-            url = 'http://api.map.baidu.com/geoconv/v1/?coords=%s&from=1&to=5&ak=znRegmlIFbPc0LHl1IUUnQju' % ()
+            url = 'http://api.map.baidu.com/geoconv/v1/?coords=%s&from=1&to=5&ak=znRegmlIFbPc0LHl1IUUnQju' % combineStr
             source_code = requests.get(url)
             plain_text = source_code.text
             c = json.loads(plain_text)
+            bdPointList = []
             if c['status'] == 0:
-                return (str(c['result'][0]['x']), str(c['result'][0]['y']))  # lat,lon in string type
+                pointDictList = c['result']
+                for pDict in pointDictList:
+                    bdPointList.append((str(pDict['x']), str(pDict['y'])))
+                return bdPointList
             else:
                 return None
         except Exception as e:
@@ -1197,6 +1201,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 else:
 
                     pointList = self.PathSaver.LoadPath()
+                    showList = self.GtoBs(pointList)
 
                     #todo 绘制到地图上
                     # 改变步骤状态
