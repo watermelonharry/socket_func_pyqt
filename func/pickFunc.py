@@ -19,6 +19,7 @@ _fromUtf8 = QtCore.QString.fromUtf8
 from ui.Ui_pick_point import Ui_PickPoint
 from popWindow import NoticeWindow
 from package.planeStatus import STATUS_DICT, PlaneStatus, PlaneControl
+from package.savePath import pathSaver
 import time
 
 STEP_START = 1
@@ -94,6 +95,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.homeLoc = None
         self.bdHomeLoc = None
         self.showHomeLocSignal.connect(self.AddHomeLoc)
+
+        # 存储路径点到文件
+        self.PathSaver = pathSaver()
 
     def NoticeMain(self,strArg, paramArg = None):
         """

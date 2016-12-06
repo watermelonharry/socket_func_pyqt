@@ -138,6 +138,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 *.pyc
-*.dat
 *.pyc
 *.pyc
