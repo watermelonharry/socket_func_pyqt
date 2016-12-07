@@ -126,6 +126,26 @@ def SendHomeLocInfo(s):
                 s.send(order)
                 print('send:' + order)
             c = raw_input('send error info? y/n ')
+
+def SendLoadPointInfo(s):
+    startLongi = 120.13143165691
+    startLati = 30.272977524721
+    count = 0
+    if s is not None:
+
+        c = raw_input('send LoadPoint location info? y/n\n')
+        while c != 'n':
+            if c == 'y':
+                data = s.recv(2048)
+                orderId = data.split('=')[0]
+                print('received:' + data)
+                order = orderId + '=U=G=%s=%s=' %(str(startLongi + count*0.001),str(startLati + count*0.001))
+                order += xorFormat(order)
+                s.send(order)
+                print('send:' + order)
+                count += 1
+            c = raw_input('send LoadPoint info? y/n ')
+
 if __name__ == '__main__':
     s = startConnect()
     if s is not None:
@@ -134,6 +154,7 @@ if __name__ == '__main__':
                            '2: debug info\n'
                            '3: error info\n'
                            '4: home loc info\n'
+                           '5: load point info\n'
                            'n: end test\n')
 
         while choose != 'n':
@@ -145,14 +166,17 @@ if __name__ == '__main__':
                 SendErrorInfo(s)
             if choose == '4':
                 SendHomeLocInfo(s)
+            if choose == '5':
+                SendLoadPointInfo(s)
 
             choose = raw_input('select test order:\n'
                                '1: heartBeat\n'
                                '2: debug info\n'
                                '3: error info\n'
                                '4: home loc info\n'
+                               '5: load point info\n'
                                'n: end test\n')
         s.close()
         print('<end connection>')
     else:
-        print('failedc to connect, please retry.\n')
+        print('failed to connect, please retry.\n')

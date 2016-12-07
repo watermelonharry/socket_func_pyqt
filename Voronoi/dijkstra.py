@@ -146,9 +146,9 @@ def distOfPoints(x1,y1,x2,y2):
     :return:
     """
     if __name__ == '__main__':
-        return (x1 - x2)**2 + (y1 - y2)**2
+        return (float(x1) - float(x2))**2 + (float(y1) - float(y2))**2
     else:
-        return ((x1 - x2)**2 + (y1 - y2)**2) *100000
+        return ((float(x1) - float(x2))**2 + (float(y1) - float(y2))**2) *100000
 
 def GetPath(lines,StartPoint, EndPoint):
     # 建立index 和 point字典

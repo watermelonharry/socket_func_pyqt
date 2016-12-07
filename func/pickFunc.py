@@ -790,7 +790,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     if data[1] == 'G':
                         if data[2] != 'N':
                             ##坐标点回传成功
-                            if self.PathSaver.addOnePoint((data[3],data[4])) is True:
+                            if self.PathSaver.addOnePoint((data[2],data[3])) is True:
                                 self.Confirm(8101)
                                 self.RemoveOrder(orderId)
                                 self.ORDER_STEP = STEP_START

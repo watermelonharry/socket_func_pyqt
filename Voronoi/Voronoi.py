@@ -24,7 +24,7 @@ class Voronoi:
 
         # insert points to site event
         for pts in points:
-            point = Point(pts[0], pts[1])
+            point = Point(float(pts[0]), float(pts[1]))
             self.points.push(point)
             # keep track of bounding box size
             if self.START is True:

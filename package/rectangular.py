@@ -121,7 +121,7 @@ class Rectangular:
         return res
 
     def distOfPoints(self,x1,y1,x2,y2):
-        return (x1 - x2)**2 + (y1 - y2)**2
+        return (float(x1) - float(x2))**2 + (float(y1) - float(y2))**2
 
     def pointOnLine(self, m,n,x1,y1,x2,y2):
         px = (m*(x2-x1)**2 + n*(y2-y1)*(x2-x1) + (x1*y2 - x2*y1)*(y2 - y1)) / ((x2-x1)**2 + (y2 -y1)**2 + 0.0000001)
