@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 STATUS_DICT = {
     0:u'等待状态更新',
     1:u'等待状态',
@@ -148,3 +149,16 @@ class PlaneControl():
         self.ABORT_MISSION = 3          #终止任务
         self.LAND = 4                   #降落
         self.RETURN_TO_BASE = 5         #返航
+
+class OrderSteps():
+    """
+    命令设置状态
+    """
+    def __init__(self):
+        self.STEP_START = 1             #等待设置
+        self.STEP_GET_POINT = 2         #手动设置点完成
+        self.STEP_POINT_LOAD = 3        #载入点完成
+        self.STEP_PATH_CALCULATE = 4         #路径计算完成
+        self.STEP_SEND_WAIT = 5         #发送成功，等待回复
+        self.STEP_SEND_FIN = 6          #接收到回复成功
+        self.STEP_SEND_FAIL = 7         #发送失败/回复失败

@@ -18,19 +18,15 @@ _fromUtf8 = QtCore.QString.fromUtf8
 
 from ui.Ui_pick_point import Ui_PickPoint
 from popWindow import NoticeWindow
-from package.planeStatus import STATUS_DICT, PlaneStatus, PlaneControl
+from package.planeStatus import STATUS_DICT, PlaneStatus, PlaneControl, OrderSteps
 from package.savePath import pathSaver
 import time
 
-STEP_START = 1
-STEP_GET_POINT = 2
-STEP_SEND_WAIT = 3
-STEP_SEND_FIN = 4
-STEP_SEND_FAIL = 5
+
 
 planeStatus = PlaneStatus()
 planeControl = PlaneControl()
-
+orderStatus = OrderSteps()
 
 class PickPointfunc(QDialog, Ui_PickPoint):
     """
@@ -55,6 +51,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.setupUi(self)
         self.js_signal.connect(self.ShowInTab)
         self.points = []
+        #用于显示的百度坐标
+        self.bdShowPoints = []
         self.lines = []
         self.pathPoints = []
         # 输入信号
@@ -67,7 +65,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         # 发送socket命令
         self.sendOrderSignal = sendOrderSignal
         # 发送到debug窗口
-        self.toDebugWindowSingal = toDebugWindowSingal
+        self.toDebugWindowSignal = toDebugWindowSingal
 
         # 存储已发送命令 用于验证发送成功
         self.orderDict = {}
@@ -78,7 +76,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.pp_webView.page().mainFrame().addToJavaScriptWindowObject("js_buffer", self)
 
         ##设置点的步骤
-        self.ORDER_STEP = STEP_START
+        self.ORDER_STEP = orderStatus.STEP_START
         ##飞行器的状态
         self.PLANE_STATUS = planeStatus.NO_ACCESS
 
@@ -210,10 +208,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
         # todo: debug 时注意
         if self.PLANE_STATUS is planeStatus.WAIT:
-            if self.ORDER_STEP is STEP_START:
+            if self.ORDER_STEP is orderStatus.STEP_START \
+                    or self.ORDER_STEP is orderStatus.STEP_GET_POINT:
                 self.ShowInTab('point added:' + str_arg)
 
                 self.points.append(tuple(float(x) for x in str_arg.split('|')))
+                self.ORDER_STEP = orderStatus.STEP_GET_POINT
             else:
                 self.ShowInTab('<error:waiting for former progress to be finished>')
                 self.Confirm(21)
@@ -227,15 +227,15 @@ class PickPointfunc(QDialog, Ui_PickPoint):
     def on_pick_send_btn_clicked(self):
         """
         确定按钮，按下后发送轨迹命令,等待接收飞行器回复
-        要求当前状态处于 STEP_GET_POINT
-        完成后属性变为 STEP_SEND_WAIT
+        要求当前状态处于 orderStatus.STEP_GET_POINT
+        完成后属性变为 orderStatus.STEP_SEND_WAIT
 
         """
         self.ShowInTab(u'发送轨迹按钮激活')
         self.NoticeMain('SendPath button clicked')
         if self.PLANE_STATUS is planeStatus.WAIT:
-            if self.ORDER_STEP is STEP_GET_POINT:
-                if len(self.lines) >= 1:
+            if self.ORDER_STEP is orderStatus.STEP_PATH_CALCULATE:
+                if len(self.pathPoints) >= 1:
                     # TODO：生成、发送命令
 
                     orderId = self.uniqueId()
@@ -247,16 +247,18 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                     self.RecordOrder(orderId, orderContent)
                     self.SendOrder(id=orderId, content=orderContent)
                     # 改变状态
-                    self.ORDER_STEP = STEP_SEND_WAIT
+                    self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
                     self.ShowInTab('<sending path data:orderId-' + str(orderId) + '>')
+                    # 改变类型
+                    self.POINT_TYPE = 'BD'
 
                 else:
                     self.ShowInTab('<error: not enough points>')
                     self.Confirm(24)
-            elif self.ORDER_STEP is STEP_SEND_WAIT:
+            elif self.ORDER_STEP is orderStatus.STEP_SEND_WAIT:
                 self.ShowInTab('<error: wrong step>')
                 self.Confirm(21)
-            elif self.ORDER_STEP is STEP_START:
+            elif self.ORDER_STEP is orderStatus.STEP_START:
                 self.ShowInTab(u'<error: 步骤错误>')
                 self.Confirm(14)
         else:
@@ -290,7 +292,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.NoticeMain('clearOrder button clicked')
 
         if self.Confirm(27) is True:
-            self.ORDER_STEP = STEP_START
+            self.ORDER_STEP = orderStatus.STEP_START
             self.orderDict = {}
 
     def CalculatePoints(self, pointsList, type='BD'):
@@ -363,12 +365,14 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             self.pp_testbrowser.clear()
             self.WAITFLAG = False
             self.points = []
+            self.bdShowPoints = []
             self.pathPoints = []
             self.lines = []
             self.orderDict = {}
-            self.ORDER_STEP = STEP_START
+            self.ORDER_STEP = orderStatus.STEP_START
             self.PLANE_STATUS = planeStatus.NO_ACCESS
             self.pick_status_label.setText(STATUS_DICT[self.PLANE_STATUS])
+            self.POINT_TYPE = 'BD'
 
             jscript = """
                     map.clearOverlays();
@@ -389,27 +393,38 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         轨迹模式按钮
         按照 起点-轨迹点-终点 生成轨迹
-        要求当前状态处于 STEP_START
-        完成后属性变为 STEP_GET_POINT
+        要求当前状态处于 orderStatus.STEP_GET_POINT or STEP_POINT_LOAD
+        完成后属性变为 orderStatus.STEP_PATH_CALCULATE
         :return:
         """
         self.ShowInTab(u'轨迹模式按钮激活')
         self.NoticeMain('pathMode button clicked')
 
         if self.PLANE_STATUS is planeStatus.WAIT:
-            if self.ORDER_STEP is STEP_START:
+            if self.ORDER_STEP is orderStatus.STEP_GET_POINT\
+                    or self.ORDER_STEP is orderStatus.STEP_POINT_LOAD:
                 if len(self.points) >= 2:
-                    # 处理轨迹点
-                    tempPoints = copy.deepcopy(self.points)
-                    tempPoints = tempPoints[0:1] + tempPoints[2:] + tempPoints[1:2]
+                    if self.POINT_TYPE == 'BD':
+                        # 处理轨迹点
+                        tempPoints = copy.deepcopy(self.points)
+                        #调整位置
+                        tempPoints = tempPoints[0:1] + tempPoints[2:] + tempPoints[1:2]
 
-                    # 生成路径
-                    self.lines = map(lambda x: x[0] + x[1], zip(tempPoints[:-1], tempPoints[1:]))
-                    self.pathPoints = tempPoints
+                        # 生成路径
+                        self.lines = map(lambda x: x[0] + x[1], zip(tempPoints[:-1], tempPoints[1:]))
+                        self.pathPoints = tempPoints
+                    elif self.POINT_TYPE == 'GPS':
+                        # 处理轨迹点
+                        tempPoints = copy.deepcopy(self.bdShowPoints)
+                        # 调整位置
+                        tempPoints = tempPoints[0:1] + tempPoints[2:] + tempPoints[1:2]
+
+                        # 生成路径
+                        self.lines = map(lambda x: x[0] + x[1], zip(tempPoints[:-1], tempPoints[1:]))
+                        self.pathPoints = self.points[0:1] + self.points[2:] + self.points[1:2]
 
                     # 改变步骤状态
-                    self.ORDER_STEP = STEP_GET_POINT
-                    self.POINT_TYPE = 'BD'
+                    self.ORDER_STEP = orderStatus.STEP_PATH_CALCULATE
 
                     # 路径显示
                     try:
@@ -455,15 +470,17 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         障碍模式按钮
         起点-终点-障碍点
         按照计算路径运行
-        要求当前状态处于 STEP_START
-        完成后属性变为 STEP_GET_POINT
+        要求当前状态处于 orderStatus.STEP_GET_POINT or STEP_POINT_LOAD
+        完成后属性变为 orderStatus.STEP_PATH_CALCULATE
         :return:
         """
         self.ShowInTab(u'障碍模式按钮激活')
         self.NoticeMain('obstacleMode button clicked')
 
         if self.PLANE_STATUS is planeStatus.WAIT:
-            if self.ORDER_STEP is STEP_START and len(self.points) >= 2:
+            if self.ORDER_STEP is orderStatus.STEP_GET_POINT \
+                    or self.ORDER_STEP is orderStatus.STEP_POINT_LOAD \
+                            and len(self.points) >= 2:
                 self.ShowInTab('<calculating>')
                 # 计算维诺图
                 vp = Voronoi(self.points[:])
@@ -481,7 +498,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 self.pathPoints.append(self.lines[-1][2:])
 
                 # 改变步骤状态
-                self.ORDER_STEP = STEP_GET_POINT
+                self.ORDER_STEP = orderStatus.STEP_PATH_CALCULATE
                 self.POINT_TYPE = 'BD'
 
                 # 显示到地图
@@ -512,7 +529,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             elif len(self.points) <= 2:
                 self.ShowInTab('<error: not enough points>')
                 self.Confirm(22)
-            elif self.ORDER_STEP is not STEP_START:
+            elif self.ORDER_STEP is not orderStatus.STEP_START:
                 self.ShowInTab('<error: wrong step>')
                 self.Confirm(23)
             else:
@@ -653,7 +670,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             print('error in ReiceveStrData.innerData:', e.message)
 
         # 外部数据收发操作
-        if self.ORDER_STEP is STEP_SEND_WAIT:
+        if self.ORDER_STEP is orderStatus.STEP_SEND_WAIT:
 
             # 校验通过,在yingyan中已有校验，无需重复
             if True:
@@ -670,7 +687,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                                 self.Confirm(201)
 
                                 # 清空历史数据
-                                self.ORDER_STEP = STEP_START
+                                self.ORDER_STEP = orderStatus.STEP_START
                                 self.points = []
                                 self.lines = []
                                 self.pathPoints = []
@@ -693,7 +710,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         if data[2] == '1' and data[3] == 'Y':
                             self.Confirm(1001)
                             self.RemoveOrder(orderId)
-                            self.ORDER_STEP = STEP_START
+                            self.ORDER_STEP = orderStatus.STEP_START
                         if data[2] == '1' and data[3] == 'N':
                             if self.Confirm(1002) is True:
                                 self.SendOrder(orderId, self.orderDict[orderId])
@@ -703,7 +720,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         if data[2] == '2' and data[3] == 'Y':
                             self.Confirm(2001)
                             self.RemoveOrder(orderId)
-                            self.ORDER_STEP = STEP_START
+                            self.ORDER_STEP = orderStatus.STEP_START
                         if data[2] == '2' and data[3] == 'N':
                             if self.Confirm(2002) is True:
                                 self.SendOrder(orderId, self.orderDict[orderId])
@@ -711,7 +728,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         if data[2] == '3' and data[3] == 'Y':
                             self.Confirm(3001)
                             self.RemoveOrder(orderId)
-                            self.ORDER_STEP = STEP_START
+                            self.ORDER_STEP = orderStatus.STEP_START
                         if data[2] == '3' and data[3] == 'N':
                             if self.Confirm(3002) is True:
                                 self.SendOrder(orderId, self.orderDict[orderId])
@@ -719,7 +736,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         if data[2] == '4' and data[3] == 'Y':
                             self.Confirm(4001)
                             self.RemoveOrder(orderId)
-                            self.ORDER_STEP = STEP_START
+                            self.ORDER_STEP = orderStatus.STEP_START
                         if data[2] == '4' and data[3] == 'N':
                             if self.Confirm(4002) is True:
                                 self.SendOrder(orderId, self.orderDict[orderId])
@@ -727,7 +744,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         if data[2] == '5' and data[3] == 'Y':
                             self.Confirm(5001)
                             self.RemoveOrder(orderId)
-                            self.ORDER_STEP = STEP_START
+                            self.ORDER_STEP = orderStatus.STEP_START
                         if data[2] == '5' and data[3] == 'N':
                             if self.Confirm(5002) is True:
                                 self.SendOrder(orderId, self.orderDict[orderId])
@@ -744,7 +761,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                             self.pp_param_return_speed.setText((data[5]))
                             self.pp_param_obstacle_distance.setText(data[6])
                             self.RemoveOrder(orderId)
-                            self.ORDER_STEP = STEP_START
+                            self.ORDER_STEP = orderStatus.STEP_START
                             self.Confirm(6005)
 
                     # 3.1 参数设置命令回复
@@ -752,7 +769,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         if data[2] == 'Y':
                             self.Confirm(6001)
                             self.RemoveOrder(orderId)
-                            self.ORDER_STEP = STEP_START
+                            self.ORDER_STEP = orderStatus.STEP_START
                         elif data[2] == 'N':
                             if self.Confirm(6002) is True:
                                 # 再次发送
@@ -777,7 +794,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                             self.homeLoc = (data[3],data[4])
                             self.RemoveOrder(orderId)
                             self.showHomeLocSignal.emit([data[3],data[4]])
-                            self.ORDER_STEP = STEP_START
+                            self.ORDER_STEP = orderStatus.STEP_START
                         elif data[2] == 'N':
                             #todo: 返航点设置失败
                             if self.Confirm(8002) is True:
@@ -793,7 +810,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                             if self.PathSaver.addOnePoint((data[2],data[3])) is True:
                                 self.Confirm(8101)
                                 self.RemoveOrder(orderId)
-                                self.ORDER_STEP = STEP_START
+                                self.ORDER_STEP = orderStatus.STEP_START
                             else:
                                 self.Confirm(8102)
                         elif data[2] == 'N':
@@ -926,7 +943,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             return False
 
     def SendToDebugWindow(self, strArg):
-        self.toDebugWindowSingal.emit(strArg)
+        self.toDebugWindowSignal.emit(strArg)
 
     """
     实时显示按钮
@@ -971,12 +988,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         if self.Confirm(1) is True:
             if self.PLANE_STATUS is planeStatus.POINT_SET \
                     or self.PLANE_STATUS is planeStatus.LAND:
-                if self.ORDER_STEP == STEP_START:
+                if self.ORDER_STEP == orderStatus.STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=1'
                     orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId, orderContent)
-                    self.ORDER_STEP = STEP_SEND_WAIT
+                    self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
                 else:
                     self.Confirm(21)
             else:
@@ -992,12 +1009,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.NoticeMain('startMission button clicked')
         if self.Confirm(2) is True:
             if self.PLANE_STATUS is planeStatus.TAKE_OFF or self.PLANE_STATUS is planeStatus.ABORT_MISSION:
-                if self.ORDER_STEP == STEP_START:
+                if self.ORDER_STEP == orderStatus.STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=2'
                     orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId, orderContent)
-                    self.ORDER_STEP = STEP_SEND_WAIT
+                    self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
                 else:
                     self.Confirm(21)
             else:
@@ -1014,12 +1031,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         if self.Confirm(3) is True:
             if self.PLANE_STATUS is planeStatus.START_MISSION \
                     or self.PLANE_STATUS is planeStatus.RETURN_TO_BASE:
-                if self.ORDER_STEP == STEP_START:
+                if self.ORDER_STEP == orderStatus.STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=3'
                     orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId, orderContent)
-                    self.ORDER_STEP = STEP_SEND_WAIT
+                    self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
                 else:
                     self.Confirm(21)
             else:
@@ -1040,12 +1057,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 self.Confirm(4101)
             else:
 
-                if self.ORDER_STEP == STEP_START:
+                if self.ORDER_STEP == orderStatus.STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=4'
                     orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId, orderContent)
-                    self.ORDER_STEP = STEP_SEND_WAIT
+                    self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
                 else:
                     self.Confirm(21)
 
@@ -1060,12 +1077,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
             if self.PLANE_STATUS is not planeStatus.START_MISSION \
                     and self.PLANE_STATUS is not planeStatus.RETURN_TO_BASE:
-                if self.ORDER_STEP == STEP_START:
+                if self.ORDER_STEP == orderStatus.STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=C=5'
                     orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId, orderContent)
-                    self.ORDER_STEP = STEP_SEND_WAIT
+                    self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
                 else:
                     self.Confirm(21)
             else:
@@ -1081,12 +1098,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         if self.Confirm(8) is True:
 
             if self.PLANE_STATUS is planeStatus.WAIT:
-                if self.ORDER_STEP == STEP_START:
+                if self.ORDER_STEP == orderStatus.STEP_START:
                     orderId = self.uniqueId()
                     orderContent = 'Z=R'
                     orderId, orderContent = self.SendOrder(orderId, orderContent)
                     self.RecordOrder(orderId, orderContent)
-                    self.ORDER_STEP = STEP_SEND_WAIT
+                    self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
                 else:
                     self.Confirm(21)
             else:
@@ -1105,9 +1122,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.ShowInTab(u'参数查询按钮激活')
         self.NoticeMain('paramCheck button clicked')
         if self.PLANE_STATUS is not planeStatus.NO_ACCESS:
-            if self.ORDER_STEP == STEP_START:
+            if self.ORDER_STEP == orderStatus.STEP_START:
                 orderId, orderContent = self.SendOrder(self.uniqueId(), content='Z=P')
-                self.ORDER_STEP = STEP_SEND_WAIT
+                self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
                 self.RecordOrder(orderId, orderContent)
             else:
                 self.Confirm(21)
@@ -1138,12 +1155,12 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                 try:
                     # 发送命令
-                    if self.ORDER_STEP is STEP_START:
+                    if self.ORDER_STEP is orderStatus.STEP_START:
                         orderId = self.uniqueId()
                         orderContent = 'Z=S=' + '='.join(paramList)
                         orderId, orderContent = self.SendOrder(orderId, orderContent)
                         self.RecordOrder(orderId, orderContent)
-                        self.ORDER_STEP = STEP_SEND_WAIT
+                        self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
                     else:
                         self.Confirm(21)
                 except Exception as e:
@@ -1163,7 +1180,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
             for param in paramList:
                 try:
                     fParam = float(param)
-                    if fParam <= 0.0 or fParam > 150.0:
+                    if fParam < 0.0 or fParam > 150.0:
                         return False
                 except Exception as e:
                     return False
@@ -1182,9 +1199,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         self.ShowInTab(u'记录坐标按钮激活')
         self.NoticeMain('recordPoint button clicked')
-        if self.ORDER_STEP == STEP_START:
+        if self.ORDER_STEP == orderStatus.STEP_START:
             orderId, orderContent = self.SendOrder(self.uniqueId(), content='Z=G')
-            self.ORDER_STEP = STEP_SEND_WAIT
+            self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
             self.RecordOrder(orderId, orderContent)
         else:
             self.Confirm(21)
@@ -1196,23 +1213,23 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         if self.Confirm(8109) is True:
             if self.PLANE_STATUS is planeStatus.WAIT:
-                if self.ORDER_STEP is STEP_START:
+                if self.ORDER_STEP is orderStatus.STEP_START:
                     if self.PathSaver.IS_EMPTY is True:
                         self.Confirm(8104)
                     else:
 
-                        pointList = self.PathSaver.LoadPath()
-                        bdShowList = self.GtoBs(pointList)
+                        gpsPointList = self.PathSaver.LoadPath()
+                        bdShowList = self.GtoBs(gpsPointList)
                         #调整位置
-                        bdShowList = bdShowList[0:1] + bdShowList[-1:] + bdShowList[1:-1]
-                        self.points = bdShowList
+                        self.bdShowPoints = bdShowList[0:1] + bdShowList[-1:] + bdShowList[1:-1]
+                        self.points = gpsPointList[0:1] + gpsPointList[-1:] + gpsPointList[1:-1]
                         # 改变步骤状态
-                        self.ORDER_STEP = STEP_START
-                        self.POINT_TYPE = 'BD'
+                        self.ORDER_STEP = orderStatus.STEP_POINT_LOAD
+                        self.POINT_TYPE = 'GPS'
 
                         # todo 绘制到地图上
                         try:
-                            lineData = '='.join(['|'.join(str(t) for t in x) for x in bdShowList])
+                            lineData = '='.join(['|'.join(str(t) for t in x) for x in self.bdShowPoints])
                         except Exception as e:
                             print(e.message)
                         jscript = """
@@ -1242,7 +1259,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
 
                             p_count++;
                             marker.setLabel(label);
-                        }""" % lineData
+                        }
+                        SET_FLAG = 0;
+                        """ % lineData
                         self.pp_webView.page().mainFrame().documentElement().evaluateJavaScript(jscript)
                     pass
                 else:

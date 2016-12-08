@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project DemoSocket -->
-<!-- Saved: 2016-11-17, 16:26:30 -->
+<!-- Saved: 2016-12-07, 15:20:26 -->
 <!-- Copyright (C) 2016 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -26,15 +26,14 @@
     <Source>run.py</Source>
     <Source>ui/Ui_pick_point.py</Source>
     <Source>ui/Ui_poowindow.py</Source>
-    <Source>ui/Ui_popwindow.py</Source>
     <Source>ui/Ui_socketUI.py</Source>
     <Source>ui/Ui_yingyan_web.py</Source>
     <Source>ui/__init__.py</Source>
   </Sources>
   <Forms>
-    <Form>ui/poowindow.ui</Form>
     <Form>ui/MainWindow.ui</Form>
     <Form>ui/pick_point.ui</Form>
+    <Form>ui/poowindow.ui</Form>
     <Form>ui/socketUI.ui</Form>
     <Form>ui/yingyan_web.ui</Form>
   </Forms>
