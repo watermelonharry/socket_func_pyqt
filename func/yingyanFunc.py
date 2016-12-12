@@ -169,6 +169,12 @@ class YingyanFunc(QDialog, Ui_yingyan_web):
                     else:
                         pass
 
+                    if data[1] == 'F':      #命令9：开启/关闭故障信息上报功能
+                        self.SendToPickFunc(strArg)
+                        return
+                    else:
+                        pass
+
             else:
                 argList = None
         except Exception as e:

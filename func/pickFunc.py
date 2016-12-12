@@ -98,6 +98,8 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         self.PathSaver = pathSaver()
         # 存储的坐标点类型： BD / GPS
         self.POINT_TYPE = 'BD'
+        # 开启/关闭故障检测
+        self.LINE_CHECK = False
 
     def NoticeMain(self,strArg, paramArg = None):
         """
@@ -821,6 +823,33 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                         else:
                             return
 
+                    ##9 开启/关闭故障信息上报
+                    if data[1] == 'F':
+                        if data[2] == 'A':
+                            ##功能开启
+                            if data[3]=='Y':
+                                self.Confirm(90011)
+                                self.RemoveOrder(orderId)
+                                self.ORDER_STEP = orderStatus.STEP_START
+                                self.LINE_CHECK = True
+                                self.pick_lineCheck_btn.setText(u'关闭检测')
+                            elif data[3] == 'N':
+                                if self.Confirm(90012) is True:
+                                    self.SendOrder(orderId, self.orderDict[orderId])
+                        elif data[2] == 'D':
+                            # 功能关闭
+                            if data[3]=='Y':
+                                self.Confirm(90021)
+                                self.RemoveOrder(orderId)
+                                self.ORDER_STEP = orderStatus.STEP_START
+                                self.LINE_CHECK = True
+                                self.pick_lineCheck_btn.setText(u'开启检测')
+                            elif data[3] == 'N':
+                                if self.Confirm(90022) is True:
+                                    self.SendOrder(orderId, self.orderDict[orderId])
+                        else:
+                            return
+
                 elif orderId != 'IN' and len(self.orderDict) != 0:
 
                     print(self.orderDict)
@@ -936,7 +965,9 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         """
         try:
             self.orderDict.pop(strOrderId)
-            self.ShowInTab('<send success: orderId-' + str(strOrderId) + '>')
+            showContent = '<send success: orderId-' + str(strOrderId) + '>'
+            self.ShowInTab(showContent)
+            self.NoticeMain(showContent)
             return True
         except Exception as e:
             print('e10001:', e.message)
@@ -977,6 +1008,37 @@ class PickPointfunc(QDialog, Ui_PickPoint):
         chooseWindow = NoticeWindow()
         chooseWindow.Confirm(intArg)
         return chooseWindow.status
+
+    @pyqtSignature("")
+    def on_pick_lineCheck_btn_clicked(self):
+        """
+        开启/关闭检测按钮
+        """
+        if self.LINE_CHECK is False:
+            self.ShowInTab(u'开启检测按钮激活')
+            self.NoticeMain('Start line monitoring button clicked')
+            if self.Confirm(9001) is True:
+                if self.ORDER_STEP is orderStatus.STEP_START:
+                    orderId = self.uniqueId()
+                    orderContent = 'Z=F=A'
+                    orderId, orderContent = self.SendOrder(orderId, orderContent)
+                    self.RecordOrder(orderId, orderContent)
+                    self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
+                else:
+                    self.Confirm(21)
+        else:
+            self.ShowInTab(u'关闭检测按钮激活')
+            self.NoticeMain('Stop line monitoring button clicked')
+            if self.Confirm(9002) is True:
+                if self.ORDER_STEP is orderStatus.STEP_START:
+                    orderId = self.uniqueId()
+                    orderContent = 'Z=F=D'
+                    orderId, orderContent = self.SendOrder(orderId, orderContent)
+                    self.RecordOrder(orderId, orderContent)
+                    self.ORDER_STEP = orderStatus.STEP_SEND_WAIT
+                else:
+                    self.Confirm(21)
+
 
     @pyqtSignature("")
     def on_pick_takeoff_btn_clicked(self):
