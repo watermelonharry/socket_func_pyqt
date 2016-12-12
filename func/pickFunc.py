@@ -842,7 +842,7 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                                 self.Confirm(90021)
                                 self.RemoveOrder(orderId)
                                 self.ORDER_STEP = orderStatus.STEP_START
-                                self.LINE_CHECK = True
+                                self.LINE_CHECK = False
                                 self.pick_lineCheck_btn.setText(u'开启检测')
                             elif data[3] == 'N':
                                 if self.Confirm(90022) is True:
