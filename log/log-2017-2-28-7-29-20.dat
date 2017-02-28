@@ -1,0 +1,867 @@
+Tue Feb 28 15:29:20 2017--enter-socketFuc-class-INIT-sockFunc-para:
+Tue Feb 28 15:29:23 2017--Loading map done
+Tue Feb 28 15:30:29 2017--pick point btn button clicked
+Tue Feb 28 15:30:29 2017--pickpoint window create
+Tue Feb 28 15:31:11 2017--get ip button clicked
+Tue Feb 28 15:31:11 2017--enter-sserver-func-SETPARA-sucess-SET sserver-host:115.230.98.102:9876; mode-TCP
+Tue Feb 28 15:31:11 2017--set host:port to 115.230.98.102:9876
+Tue Feb 28 15:31:14 2017--clear button clicked
+Tue Feb 28 15:31:16 2017--start button clicked, start tcpserver with:
+Tue Feb 28 15:31:16 2017--sserver-host:115.230.98.102:9876; mode-TCP
+Tue Feb 28 15:31:16 2017--success in sock-run
+Tue Feb 28 15:31:16 2017--enter-sserver-func-CREATESERVER-sserver-host:115.230.98.102:9876; mode-TCP
+Tue Feb 28 15:33:06 2017--enter-sserver-func-CREATESERVER-connected-client:('117.136.43.118', 18249)
+Tue Feb 28 15:33:11 2017--yinyan-to pickpiont:IN=YY=T=1001
+Tue Feb 28 15:33:11 2017--enter-sserver-func-PROCDATA-recv:57000680=U=T=1001=
+Tue Feb 28 15:33:14 2017--yinyan-to pickpiont:IN=YY=LOC=0.00000000000=0.000000000000=0.0=0.0=1
+Tue Feb 28 15:33:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=0.00000000000=0.000000000000=0.00=0.0=1=i
+Tue Feb 28 15:33:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:33:19 2017--paramCheck button clicked
+Tue Feb 28 15:33:19 2017--enter-sserver-func-SENDDATA-sucess:1488267199256=Z=P=
+Tue Feb 28 15:33:19 2017--yinyan-to pickpiont:IN=YY=LOC=0.00000000000=0.000000000000=0.0=0.0=1
+Tue Feb 28 15:33:19 2017--enter-sserver-func-PROCDATA-recv:H=U=L=0.00000000000=0.000000000000=0.00=0.0=1=i
+Tue Feb 28 15:33:19 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:33:27 2017--yinyan-to pickpiont:IN=YY=LOC=0.00000000000=0.000000000000=0.0=0.0=1
+Tue Feb 28 15:33:27 2017--enter-sserver-func-PROCDATA-recv:H=U=L=0.00000000000=0.000000000000=0.00=0.0=1=i
+Tue Feb 28 15:33:27 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:33:30 2017--paramCheck button clicked
+Tue Feb 28 15:33:33 2017--reSend button clicked
+Tue Feb 28 15:33:35 2017--enter-sserver-func-SENDDATA-sucess:1488267199256=Z=P=
+Tue Feb 28 15:33:36 2017--yinyan-to pickpiont:IN=YY=LOC=0.00000000000=0.000000000000=0.0=0.0=1
+Tue Feb 28 15:33:36 2017--enter-sserver-func-PROCDATA-recv:H=U=L=0.00000000000=0.000000000000=0.00=0.0=1=i
+Tue Feb 28 15:33:36 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:33:43 2017--yinyan-to pickpiont:IN=YY=LOC=0.00000000000=0.000000000000=0.0=0.0=1
+Tue Feb 28 15:33:43 2017--enter-sserver-func-PROCDATA-recv:H=U=L=0.00000000000=0.000000000000=0.00=0.0=1=i
+Tue Feb 28 15:33:43 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:33:51 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251525345=-30.612047895821=0.0=0.0=1
+Tue Feb 28 15:33:51 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251525345=-30.612047895821=0.00=0.0=1=z
+Tue Feb 28 15:33:52 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:33:59 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251526041=-30.612047880408=0.0=0.0=1
+Tue Feb 28 15:33:59 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251526041=-30.612047880408=0.00=0.0=1=}
+Tue Feb 28 15:34:00 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:34:00 2017--paramCheck button clicked
+Tue Feb 28 15:34:01 2017--pathMode button clicked
+Tue Feb 28 15:34:03 2017--reSend button clicked
+Tue Feb 28 15:34:04 2017--enter-sserver-func-SENDDATA-sucess:1488267199256=Z=P=
+Tue Feb 28 15:34:08 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251528240=-30.612047907059=0.0=0.0=1
+Tue Feb 28 15:34:08 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251528240=-30.612047907059=0.00=-0.0=1=S
+Tue Feb 28 15:34:08 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:34:15 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251528676=-30.612047899296=0.0=0.0=1
+Tue Feb 28 15:34:15 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251528676=-30.612047899296=0.00=0.0=1=x
+Tue Feb 28 15:34:15 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:34:19 2017--reSend button clicked
+Tue Feb 28 15:34:21 2017--reset button clicked
+Tue Feb 28 15:34:22 2017--clearOrder button clicked
+Tue Feb 28 15:34:23 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251527780=-30.612047885884=0.0=0.0=1
+Tue Feb 28 15:34:23 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251527780=-30.612047885884=-0.00=0.0=1=V
+Tue Feb 28 15:34:23 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:34:26 2017--paramCheck button clicked
+Tue Feb 28 15:34:26 2017--enter-sserver-func-SENDDATA-sucess:1488267266509=Z=P=
+Tue Feb 28 15:34:31 2017--yinyan-to pickpiont:1488267266509=U=P=2.00=2.0=80.00=5.0=2.00=
+Tue Feb 28 15:34:31 2017--<send success: orderId-1488267266509>
+Tue Feb 28 15:34:31 2017--enter-sserver-func-PROCDATA-recv:1488267266509=U=P=2.00=2.0=80.00=5.0=2.00=
+Tue Feb 28 15:34:33 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251527317=-30.612047897072=0.0=0.0=1
+Tue Feb 28 15:34:33 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251527317=-30.612047897072=0.00=0.0=1=s
+Tue Feb 28 15:34:33 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:34:35 2017--paramCheck button clicked
+Tue Feb 28 15:34:35 2017--enter-sserver-func-SENDDATA-sucess:1488267275733=Z=P=
+Tue Feb 28 15:34:40 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251529494=-30.612047909000=0.0=0.0=1
+Tue Feb 28 15:34:40 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251529494=-30.612047909000=-0.00=0.0=1=_
+Tue Feb 28 15:34:40 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:34:42 2017--yinyan-to pickpiont:1488267275733=U=P=2.00=2.0=80.00=5.0=2.00=
+Tue Feb 28 15:34:42 2017--<send success: orderId-1488267275733>
+Tue Feb 28 15:34:42 2017--enter-sserver-func-PROCDATA-recv:1488267275733=U=P=2.00=2.0=80.00=5.0=2.00=
+Tue Feb 28 15:34:47 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251528340=-30.612047921642=0.0=0.0=1
+Tue Feb 28 15:34:47 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251528340=-30.612047921642=0.00=-0.0=1=Z
+Tue Feb 28 15:34:47 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:34:55 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251525131=-30.612047942102=0.0=0.0=1
+Tue Feb 28 15:34:55 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251525131=-30.612047942102=0.00=-0.0=1=U
+Tue Feb 28 15:34:55 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:35:03 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251527513=-30.612047883765=0.0=0.0=1
+Tue Feb 28 15:35:04 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251527513=-30.612047883765=0.00=0.0=1=u
+Tue Feb 28 15:35:04 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:35:11 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251529340=-30.612047940570=0.0=0.0=1
+Tue Feb 28 15:35:11 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251529340=-30.612047940570=0.00=-0.0=1=^
+Tue Feb 28 15:35:11 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:35:19 2017--yinyan-to pickpiont:IN=YY=LOC=127.60251529153=-30.612047918094=0.0=0.0=1
+Tue Feb 28 15:35:19 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.60251529153=-30.612047918094=0.00=-0.0=1=\
+Tue Feb 28 15:35:19 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:36:53 2017--close button clicked
+Tue Feb 28 15:36:53 2017--enter-sserver-func-CLOSE-
+Tue Feb 28 15:36:53 2017--new socket server- sserver-host:115.230.98.102:9876; mode-TCP
+Tue Feb 28 15:36:56 2017--clear button clicked
+Tue Feb 28 15:37:03 2017--start button clicked, start tcpserver with:
+Tue Feb 28 15:37:03 2017--sserver-host:115.230.98.102:9876; mode-TCP
+Tue Feb 28 15:37:03 2017--success in sock-run
+Tue Feb 28 15:37:03 2017--enter-sserver-func-CREATESERVER-sserver-host:115.230.98.102:9876; mode-TCP
+Tue Feb 28 15:37:52 2017--enter-sserver-func-PROCDATA-CLOSE BY CLIENT-0
+Tue Feb 28 15:37:52 2017--enter-sserver-func-PROCDATA-CLOSE BY CLIENT
+Tue Feb 28 15:37:52 2017--success in end-sserver-thread
+Tue Feb 28 15:38:13 2017--enter-sserver-func-CREATESERVER-connected-client:('117.136.43.79', 14900)
+Tue Feb 28 15:38:19 2017--yinyan-to pickpiont:IN=YY=T=1001
+Tue Feb 28 15:38:19 2017--enter-sserver-func-PROCDATA-recv:57308155=U=T=1001=
+Tue Feb 28 15:38:21 2017--yinyan-to pickpiont:IN=YY=LOC=126.85516906698=-28.169932804159=0.0=0.0=1
+Tue Feb 28 15:38:21 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.85516906698=-28.169932804159=0.00=-0.0=1=V
+Tue Feb 28 15:38:21 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:38:25 2017--yinyan-to pickpiont:IN=YY=LOC=126.86832177638=-28.100835404719=0.0=0.0=1
+Tue Feb 28 15:38:25 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.86832177638=-28.100835404719=0.00=-0.0=1=]
+Tue Feb 28 15:38:25 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:38:34 2017--yinyan-to pickpiont:IN=YY=LOC=126.87946247061=-28.042012504910=0.0=0.0=1
+Tue Feb 28 15:38:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.87946247061=-28.042012504910=-0.00=0.0=1=X
+Tue Feb 28 15:38:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:38:42 2017--yinyan-to pickpiont:IN=YY=LOC=126.89055506191=-27.983172211969=0.0=0.0=1
+Tue Feb 28 15:38:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.89055506191=-27.983172211969=-0.00=-0.0=1=}
+Tue Feb 28 15:38:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:38:50 2017--yinyan-to pickpiont:IN=YY=LOC=126.90159956348=-27.924314508668=0.0=0.0=1
+Tue Feb 28 15:38:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.90159956348=-27.924314508668=0.00=-0.0=1=T
+Tue Feb 28 15:38:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:38:58 2017--yinyan-to pickpiont:IN=YY=LOC=126.91259575830=-27.865441936541=0.0=0.0=1
+Tue Feb 28 15:38:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.91259575830=-27.865441936541=0.00=-0.0=1=U
+Tue Feb 28 15:38:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:39:06 2017--yinyan-to pickpiont:IN=YY=LOC=126.92354436444=-27.806552208794=0.0=0.0=1
+Tue Feb 28 15:39:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.92354436444=-27.806552208794=-0.00=0.0=1=Y
+Tue Feb 28 15:39:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:39:14 2017--yinyan-to pickpiont:IN=YY=LOC=126.93444516423=-27.747645807005=0.0=0.0=1
+Tue Feb 28 15:39:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.93444516423=-27.747645807005=0.00=0.0=1=t
+Tue Feb 28 15:39:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:39:22 2017--yinyan-to pickpiont:IN=YY=LOC=126.94529846773=-27.688723126264=0.0=0.0=1
+Tue Feb 28 15:39:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.94529846773=-27.688723126264=-0.00=-0.0=1={
+Tue Feb 28 15:39:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:39:30 2017--yinyan-to pickpiont:IN=YY=LOC=126.95610435886=-27.629784406946=0.0=0.0=1
+Tue Feb 28 15:39:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.95610435886=-27.629784406946=0.00=0.0=1=t
+Tue Feb 28 15:39:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:39:37 2017--yinyan-to pickpiont:IN=YY=LOC=126.96686295721=-27.570829107016=0.0=0.0=1
+Tue Feb 28 15:39:37 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.96686295721=-27.570829107016=0.00=0.0=1=y
+Tue Feb 28 15:39:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:39:46 2017--yinyan-to pickpiont:IN=YY=LOC=126.97757456960=-27.511857833463=0.0=0.0=1
+Tue Feb 28 15:39:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.97757456960=-27.511857833463=-0.00=-0.0=1=q
+Tue Feb 28 15:39:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:39:54 2017--yinyan-to pickpiont:IN=YY=LOC=126.98504458259=-27.470568421268=0.0=0.0=1
+Tue Feb 28 15:39:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.98504458259=-27.470568421268=0.00=0.0=1=p
+Tue Feb 28 15:39:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:40:02 2017--yinyan-to pickpiont:IN=YY=LOC=126.99885685860=-27.393866992648=0.0=0.0=1
+Tue Feb 28 15:40:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=126.99885685860=-27.393866992648=-0.00=0.0=1=P
+Tue Feb 28 15:40:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:40:07 2017--clear button clicked
+Tue Feb 28 15:40:09 2017--yinyan-to pickpiont:IN=YY=LOC=127.00942673469=-27.334854301070=0.0=0.0=1
+Tue Feb 28 15:40:09 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.00942673469=-27.334854301070=-0.00=0.0=1=V
+Tue Feb 28 15:40:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:40:18 2017--yinyan-to pickpiont:IN=YY=LOC=127.01995127083=-27.275819623077=0.0=0.0=1
+Tue Feb 28 15:40:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.01995127083=-27.275819623077=0.00=-0.0=1=T
+Tue Feb 28 15:40:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:40:26 2017--yinyan-to pickpiont:IN=YY=LOC=127.03042946022=-27.216768398506=0.0=0.0=1
+Tue Feb 28 15:40:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.03042946022=-27.216768398506=-0.00=0.0=1=[
+Tue Feb 28 15:40:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:40:34 2017--yinyan-to pickpiont:IN=YY=LOC=127.04086144928=-27.157701305256=0.0=0.0=1
+Tue Feb 28 15:40:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.04086144928=-27.157701305256=-0.00=0.0=1=R
+Tue Feb 28 15:40:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:40:41 2017--yinyan-to pickpiont:IN=YY=LOC=127.05124745595=-27.098618296094=0.0=0.0=1
+Tue Feb 28 15:40:41 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.05124745595=-27.098618296094=0.00=0.0=1=v
+Tue Feb 28 15:40:41 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:40:50 2017--yinyan-to pickpiont:IN=YY=LOC=127.06158743974=-27.039519980020=0.0=0.0=1
+Tue Feb 28 15:40:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.06158743974=-27.039519980020=-0.00=0.0=1=\
+Tue Feb 28 15:40:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:40:58 2017--yinyan-to pickpiont:IN=YY=LOC=127.07188176287=-26.980405727039=0.0=0.0=1
+Tue Feb 28 15:40:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.07188176287=-26.980405727039=-0.00=-0.0=1=w
+Tue Feb 28 15:40:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:41:06 2017--yinyan-to pickpiont:IN=YY=LOC=127.08213035707=-26.921275813884=0.0=0.0=1
+Tue Feb 28 15:41:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.08213035707=-26.921275813884=0.00=-0.0=1=S
+Tue Feb 28 15:41:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:41:14 2017--yinyan-to pickpiont:IN=YY=LOC=127.09233357048=-26.862130619455=0.0=0.0=1
+Tue Feb 28 15:41:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.09233357048=-26.862130619455=-0.00=-0.0=1=v
+Tue Feb 28 15:41:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:41:22 2017--yinyan-to pickpiont:IN=YY=LOC=127.10248624920=-26.802999199276=0.0=0.0=1
+Tue Feb 28 15:41:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.10248624920=-26.802999199276=-0.00=0.0=1=\
+Tue Feb 28 15:41:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:41:30 2017--yinyan-to pickpiont:IN=YY=LOC=127.11260395454=-26.743793410712=0.0=0.0=1
+Tue Feb 28 15:41:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.11260395454=-26.743793410712=0.00=0.0=1=v
+Tue Feb 28 15:41:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:41:38 2017--yinyan-to pickpiont:IN=YY=LOC=127.12267155202=-26.684601904817=0.0=0.0=1
+Tue Feb 28 15:41:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.12267155202=-26.684601904817=-0.00=-0.0=1={
+Tue Feb 28 15:41:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:41:46 2017--yinyan-to pickpiont:IN=YY=LOC=127.13269417018=-26.625395101403=0.0=0.0=1
+Tue Feb 28 15:41:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.13269417018=-26.625395101403=0.00=0.0=1=y
+Tue Feb 28 15:41:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:41:53 2017--yinyan-to pickpiont:IN=YY=LOC=127.14267214726=-26.566172832458=0.0=0.0=1
+Tue Feb 28 15:41:53 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.14267214726=-26.566172832458=0.00=-0.0=1=Z
+Tue Feb 28 15:41:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:42:02 2017--yinyan-to pickpiont:IN=YY=LOC=127.15260544950=-26.506935112737=0.0=0.0=1
+Tue Feb 28 15:42:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.15260544950=-26.506935112737=-0.00=0.0=1=]
+Tue Feb 28 15:42:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:42:10 2017--yinyan-to pickpiont:IN=YY=LOC=127.16249425445=-26.447683025617=0.0=0.0=1
+Tue Feb 28 15:42:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.16249425445=-26.447683025617=0.00=-0.0=1=Z
+Tue Feb 28 15:42:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:42:18 2017--yinyan-to pickpiont:IN=YY=LOC=127.17233877063=-26.388415336504=0.0=0.0=1
+Tue Feb 28 15:42:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.17233877063=-26.388415336504=-0.00=-0.0=1=y
+Tue Feb 28 15:42:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:42:27 2017--yinyan-to pickpiont:IN=YY=LOC=127.18213905541=-26.329132814195=0.0=0.0=1
+Tue Feb 28 15:42:27 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.18213905541=-26.329132814195=-0.00=-0.0=1=y
+Tue Feb 28 15:42:27 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:42:34 2017--yinyan-to pickpiont:IN=YY=LOC=127.19189535746=-26.269835101513=0.0=0.0=1
+Tue Feb 28 15:42:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.19189535746=-26.269835101513=-0.00=0.0=1=S
+Tue Feb 28 15:42:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:42:42 2017--yinyan-to pickpiont:IN=YY=LOC=127.20160775542=-26.210522538465=0.0=0.0=1
+Tue Feb 28 15:42:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.20160775542=-26.210522538465=-0.00=-0.0=1=x
+Tue Feb 28 15:42:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:42:50 2017--yinyan-to pickpiont:IN=YY=LOC=127.21127636191=-26.151195026505=0.0=0.0=1
+Tue Feb 28 15:42:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.21127636191=-26.151195026505=-0.00=-0.0=1=u
+Tue Feb 28 15:42:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:42:58 2017--yinyan-to pickpiont:IN=YY=LOC=127.22090135194=-26.091852892817=0.0=0.0=1
+Tue Feb 28 15:42:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.22090135194=-26.091852892817=-0.00=0.0=1=Q
+Tue Feb 28 15:42:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:43:05 2017--yinyan-to pickpiont:IN=YY=LOC=127.23048288570=-26.032495932173=0.0=0.0=1
+Tue Feb 28 15:43:05 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.23048288570=-26.032495932173=-0.00=-0.0=1=}
+Tue Feb 28 15:43:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:43:14 2017--yinyan-to pickpiont:IN=YY=LOC=127.24002106408=-25.973123997266=0.0=0.0=1
+Tue Feb 28 15:43:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.24002106408=-25.973123997266=-0.00=0.0=1=]
+Tue Feb 28 15:43:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:43:22 2017--yinyan-to pickpiont:IN=YY=LOC=127.24951603778=-25.913737794868=0.0=0.0=1
+Tue Feb 28 15:43:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.24951603778=-25.913737794868=0.00=0.0=1=u
+Tue Feb 28 15:43:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:43:30 2017--yinyan-to pickpiont:IN=YY=LOC=127.25896795371=-25.854337123430=0.0=0.0=1
+Tue Feb 28 15:43:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.25896795371=-25.854337123430=0.00=-0.0=1=]
+Tue Feb 28 15:43:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:43:37 2017--yinyan-to pickpiont:IN=YY=LOC=127.26837696875=-25.794921509163=0.0=0.0=1
+Tue Feb 28 15:43:37 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.26837696875=-25.794921509163=-0.00=0.0=1=Y
+Tue Feb 28 15:43:37 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:43:46 2017--yinyan-to pickpiont:IN=YY=LOC=127.27774313796=-25.735491493315=0.0=0.0=1
+Tue Feb 28 15:43:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.27774313796=-25.735491493315=0.00=0.0=1={
+Tue Feb 28 15:43:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:43:54 2017--yinyan-to pickpiont:IN=YY=LOC=127.28706675100=-25.676047210962=0.0=0.0=1
+Tue Feb 28 15:43:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.28706675100=-25.676047210962=-0.00=0.0=1=^
+Tue Feb 28 15:43:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:44:02 2017--yinyan-to pickpiont:IN=YY=LOC=127.29634784736=-25.616588307820=0.0=0.0=1
+Tue Feb 28 15:44:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.29634784736=-25.616588307820=-0.00=0.0=1=S
+Tue Feb 28 15:44:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:44:10 2017--yinyan-to pickpiont:IN=YY=LOC=127.30558654394=-25.557115416206=0.0=0.0=1
+Tue Feb 28 15:44:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.30558654394=-25.557115416206=0.00=-0.0=1=]
+Tue Feb 28 15:44:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:44:13 2017--clear button clicked
+Tue Feb 28 15:44:14 2017--yinyan-to pickpiont:IN=YY=T=2001
+Tue Feb 28 15:44:14 2017--enter-sserver-func-PROCDATA-recv:57664288=U=T=2001=
+Tue Feb 28 15:44:18 2017--yinyan-to pickpiont:IN=YY=LOC=127.31478305900=-25.497627903677=0.0=0.0=1
+Tue Feb 28 15:44:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.31478305900=-25.497627903677=-0.00=0.0=1=Y
+Tue Feb 28 15:44:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:44:22 2017--close button clicked
+Tue Feb 28 15:44:22 2017--enter-sserver-func-CLOSE-
+Tue Feb 28 15:44:22 2017--new socket server- sserver-host:115.230.98.102:9876; mode-TCP
+Tue Feb 28 15:44:25 2017--clear button clicked
+Tue Feb 28 15:44:27 2017--yinyan-to pickpiont:IN=YY=LOC=127.32393745702=-25.438126530843=0.0=0.0=1
+Tue Feb 28 15:44:27 2017--enter-sserver-func-PROCDATA-recv:H=U=L=127.32393745702=-25.438126530843=-0.00=-0.0=1=
+Tue Feb 28 15:44:27 2017--success in end-sserver-thread
+Tue Feb 28 15:44:27 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 15:46:00 2017--clear button clicked
+Tue Feb 28 16:04:59 2017--start button clicked, start tcpserver with:
+Tue Feb 28 16:04:59 2017--sserver-host:115.230.98.102:9876; mode-TCP
+Tue Feb 28 16:04:59 2017--success in sock-run
+Tue Feb 28 16:04:59 2017--enter-sserver-func-CREATESERVER-sserver-host:115.230.98.102:9876; mode-TCP
+Tue Feb 28 16:05:07 2017--reset button clicked
+Tue Feb 28 16:14:48 2017--enter-sserver-func-CREATESERVER-connected-client:('117.136.43.37', 21151)
+Tue Feb 28 16:14:54 2017--yinyan-to pickpiont:IN=YY=T=1001
+Tue Feb 28 16:14:54 2017--enter-sserver-func-PROCDATA-recv:59503166=U=T=1001=
+Tue Feb 28 16:14:56 2017--yinyan-to pickpiont:IN=YY=LOC=120.11887035091=30.265033552027=0.0=0.0=1
+Tue Feb 28 16:14:56 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11887035091=30.265033552027=0.00=0.0=1=V
+Tue Feb 28 16:14:56 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:15:01 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885635997=30.265030666904=0.0=0.0=1
+Tue Feb 28 16:15:01 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885635997=30.265030666904=0.00=0.0=1=R
+Tue Feb 28 16:15:01 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:15:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885035501=30.265039563585=0.0=0.0=1
+Tue Feb 28 16:15:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885035501=30.265039563585=0.00=0.0=1=]
+Tue Feb 28 16:15:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:15:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884985802=30.265047872647=0.0=0.0=1
+Tue Feb 28 16:15:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884985802=30.265047872647=-0.00=0.0=1=t
+Tue Feb 28 16:15:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:15:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884885877=30.265048157360=0.0=0.0=1
+Tue Feb 28 16:15:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884885877=30.265048157360=-0.00=0.0=1=v
+Tue Feb 28 16:15:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:15:33 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885366248=30.265053056117=0.0=0.0=1
+Tue Feb 28 16:15:33 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885366248=30.265053056117=0.00=0.0=1=R
+Tue Feb 28 16:15:33 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:15:42 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885925176=30.265061453199=0.0=0.0=1
+Tue Feb 28 16:15:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885925176=30.265061453199=0.00=-0.0=1=z
+Tue Feb 28 16:15:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:15:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885945113=30.265061659144=0.0=0.0=1
+Tue Feb 28 16:15:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885945113=30.265061659144=0.00=0.0=1=Z
+Tue Feb 28 16:15:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:15:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885567508=30.265053763225=0.0=0.0=1
+Tue Feb 28 16:15:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885567508=30.265053763225=0.00=0.0=1=U
+Tue Feb 28 16:15:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:16:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886994333=30.265094583038=0.0=2.4=1
+Tue Feb 28 16:16:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886994333=30.265094583038=0.00=2.4=1=W
+Tue Feb 28 16:16:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:16:13 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893227168=30.265143747161=0.23=0.5=1
+Tue Feb 28 16:16:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893227168=30.265143747161=-0.23=0.5=1=
+Tue Feb 28 16:16:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:16:22 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893447487=30.265140319722=0.0=0.0=1
+Tue Feb 28 16:16:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893447487=30.265140319722=-0.00=-0.0=1=_
+Tue Feb 28 16:16:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:16:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893793820=30.265144706369=0.0=0.0=1
+Tue Feb 28 16:16:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893793820=30.265144706369=-0.00=-0.0=1=Q
+Tue Feb 28 16:16:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:16:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894471571=30.265146295125=0.0=0.0=1
+Tue Feb 28 16:16:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894471571=30.265146295125=0.00=-0.0=1=z
+Tue Feb 28 16:16:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:16:45 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894923059=30.265142603774=0.0=0.0=1
+Tue Feb 28 16:16:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894923059=30.265142603774=0.00=-0.0=1=r
+Tue Feb 28 16:16:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:17:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894932760=30.265138810754=0.0=0.0=1
+Tue Feb 28 16:17:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894932760=30.265138810754=-0.00=0.0=1=AT+CIPSENDH=U=L=120.11894682218=30.265136397387=0.00=-0.0=1=r
+Tue Feb 28 16:17:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:17:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894370586=30.265136192197=0.0=0.0=1
+Tue Feb 28 16:17:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894370586=30.265136192197=-0.00=-0.0=1=S
+Tue Feb 28 16:17:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:17:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894423903=30.265137311299=0.0=0.0=1
+Tue Feb 28 16:17:19 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894423903=30.265137311299=0.00=0.0=1=V
+Tue Feb 28 16:17:19 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:17:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894371175=30.265138500131=0.01=0.0=1
+Tue Feb 28 16:17:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894371175=30.265138500131=-0.01=-0.0=1=V
+Tue Feb 28 16:17:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:17:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11895023188=30.265138277547=1.34=0.1=1
+Tue Feb 28 16:17:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11895023188=30.265138277547=1.34=0.1=1=U
+Tue Feb 28 16:17:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:17:42 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894442580=30.265138320350=1.79=0.1=1
+Tue Feb 28 16:17:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894442580=30.265138320350=1.79=0.1=1=Q
+Tue Feb 28 16:17:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:17:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893988858=30.265141020510=1.59=0.0=1
+Tue Feb 28 16:17:51 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893988858=30.265141020510=1.59=-0.0=1=t
+Tue Feb 28 16:17:51 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:17:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893695397=30.265140824671=0.0=0.0=1
+Tue Feb 28 16:17:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893695397=30.265140824671=-0.00=-0.0=1=V
+Tue Feb 28 16:17:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:18:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893249410=30.265142321406=0.0=0.0=1
+Tue Feb 28 16:18:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893249410=30.265142321406=-0.00=0.0=1=x
+Tue Feb 28 16:18:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:18:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893481970=30.265147593057=0.0=0.0=1
+Tue Feb 28 16:18:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893481970=30.265147593057=-0.00=-0.0=1=V
+Tue Feb 28 16:18:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:18:22 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893774212=30.265153484960=0.0=0.0=1
+Tue Feb 28 16:18:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893774212=30.265153484960=0.00=-0.0=1=r
+Tue Feb 28 16:18:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:18:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893985038=30.265158984137=0.0=0.0=1
+Tue Feb 28 16:18:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893985038=30.265158984137=0.00=-0.0=1=t
+Tue Feb 28 16:18:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:18:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894134067=30.265164304544=0.0=0.0=1
+Tue Feb 28 16:18:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894134067=30.265164304544=-0.00=0.0=1=v
+Tue Feb 28 16:18:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:18:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894273515=30.265166389160=0.72=0.1=1
+Tue Feb 28 16:18:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894273515=30.265166389160=0.72=-0.1=1=w
+Tue Feb 28 16:18:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:18:54 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894443225=30.265156578973=1.01=0.5=1
+Tue Feb 28 16:18:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894443225=30.265156578973=1.01=-0.5=1=v
+Tue Feb 28 16:18:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:19:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892200606=30.265089110327=1.01=0.1=1
+Tue Feb 28 16:19:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892200606=30.265089110327=1.01=-0.1=1=r
+Tue Feb 28 16:19:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:19:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891997598=30.265086521339=1.05=0.2=1
+Tue Feb 28 16:19:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891997598=30.265086521339=1.05=-0.2=1=q
+Tue Feb 28 16:19:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:19:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891122609=30.265073101452=1.08=0.0=1
+Tue Feb 28 16:19:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891122609=30.265073101452=1.08=-0.0=1=u
+Tue Feb 28 16:19:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:19:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891084138=30.265073496854=1.06=0.1=1
+Tue Feb 28 16:19:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891084138=30.265073496854=1.06=-0.1=1=s
+Tue Feb 28 16:19:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:19:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891031041=30.265072289721=2.55=0.0=1
+Tue Feb 28 16:19:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891031041=30.265072289721=2.55=0.0=1=_
+Tue Feb 28 16:19:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:19:41 2017--yinyan-to pickpiont:IN=YY=LOC=120.11890845068=30.265070467155=2.58=0.1=1
+Tue Feb 28 16:19:41 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11890845068=30.265070467155=2.58=-0.1=1=~
+Tue Feb 28 16:19:41 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:19:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11890871247=30.265069774301=2.5=0.3=1
+Tue Feb 28 16:19:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11890871247=30.265069774301=2.50=0.3=1=[
+Tue Feb 28 16:19:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:19:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893024971=30.265113552569=2.5=0.9=1
+Tue Feb 28 16:19:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893024971=30.265113552569=2.50=0.9=1=V
+Tue Feb 28 16:19:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:20:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893904704=30.265114866229=2.35=0.2=1
+Tue Feb 28 16:20:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893904704=30.265114866229=2.35=0.2=1=W
+Tue Feb 28 16:20:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:20:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894380224=30.265122383027=2.63=0.4=1
+Tue Feb 28 16:20:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894380224=30.265122383027=2.63=0.4=1=]
+Tue Feb 28 16:20:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:20:22 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894500565=30.265126117460=2.46=0.0=1
+Tue Feb 28 16:20:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894500565=30.265126117460=2.46=0.0=1=^
+Tue Feb 28 16:20:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:20:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894535210=30.265128370040=0.0=0.0=1
+Tue Feb 28 16:20:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894535210=30.265128370040=-0.00=0.0=1={
+Tue Feb 28 16:20:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:20:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894488122=30.265128789811=0.0=0.0=1
+Tue Feb 28 16:20:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894488122=30.265128789811=-0.00=0.0=1=p
+Tue Feb 28 16:20:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:20:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11894238435=30.265128003903=0.0=0.0=1
+Tue Feb 28 16:20:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11894238435=30.265128003903=-0.00=0.0=1=y
+Tue Feb 28 16:20:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:20:54 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893488397=30.265125770198=0.0=0.0=1
+Tue Feb 28 16:20:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893488397=30.265125770198=-0.00=-0.0=1=U
+Tue Feb 28 16:20:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:21:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892907823=30.265123686450=0.0=0.0=1
+Tue Feb 28 16:21:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892907823=30.265123686450=-0.00=-0.0=1=U
+Tue Feb 28 16:21:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:21:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892898704=30.265123079596=0.0=0.0=1
+Tue Feb 28 16:21:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892898704=30.265123079596=-0.00=-0.0=1=U
+Tue Feb 28 16:21:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:21:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893247336=30.265125096712=0.0=0.0=1
+Tue Feb 28 16:21:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893247336=30.265125096712=-0.00=0.0=1=}
+Tue Feb 28 16:21:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:21:25 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893428479=30.265126286361=0.0=0.0=1
+Tue Feb 28 16:21:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893428479=30.265126286361=-0.00=0.0=1=~
+Tue Feb 28 16:21:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:21:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893416850=30.265127300964=0.0=0.0=1
+Tue Feb 28 16:21:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893416850=30.265127300964=0.00=0.0=1=X
+Tue Feb 28 16:21:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:21:43 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893098421=30.265128190286=0.0=0.0=1
+Tue Feb 28 16:21:43 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893098421=30.265128190286=-0.00=0.0=1=~
+Tue Feb 28 16:21:43 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:21:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892508227=30.265126286939=0.0=0.0=1
+Tue Feb 28 16:21:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892508227=30.265126286939=-0.00=0.0=1=v
+Tue Feb 28 16:21:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:21:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892306297=30.265124197335=0.0=0.0=1
+Tue Feb 28 16:21:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892306297=30.265124197335=-0.00=0.0=1=r
+Tue Feb 28 16:21:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:22:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892569078=30.265121791979=0.0=0.0=1
+Tue Feb 28 16:22:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892569078=30.265121791979=-0.00=0.0=1=y
+Tue Feb 28 16:22:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:22:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892578954=30.265117793907=0.0=0.0=1
+Tue Feb 28 16:22:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892578954=30.265117793907=0.00=0.0=1=]
+Tue Feb 28 16:22:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:22:22 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892458013=30.265113997988=0.0=0.0=1
+Tue Feb 28 16:22:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892458013=30.265113997988=0.00=0.0=1=]
+Tue Feb 28 16:22:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:22:37 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892389552=30.265112299208=0.0=0.0=1
+Tue Feb 28 16:22:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892389552=30.265112299208=-0.00=0.0=1=AT+CIPSENDH=U=L=120.11892490378=30.265113595168=-0.00=0.0=1=r
+Tue Feb 28 16:22:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:22:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892959379=30.265116299366=0.0=0.0=1
+Tue Feb 28 16:22:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892959379=30.265116299366=0.00=0.0=1=T
+Tue Feb 28 16:22:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:23:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11893298997=30.265119486185=0.0=0.0=1
+Tue Feb 28 16:23:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11893298997=30.265119486185=-0.00=0.0=1=AT+CIPSENDH=U=L=120.11891524340=30.265107186571=0.00=0.0=1=V
+Tue Feb 28 16:23:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:23:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891513426=30.265107253933=0.0=0.1=1
+Tue Feb 28 16:23:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891513426=30.265107253933=-0.00=0.1=1=x
+Tue Feb 28 16:23:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:23:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891603299=30.265106920186=0.0=0.0=1
+Tue Feb 28 16:23:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891603299=30.265106920186=0.00=0.0=1=\
+Tue Feb 28 16:23:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:23:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11889012270=30.265106613367=0.0=0.0=1
+Tue Feb 28 16:23:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11889012270=30.265106613367=-0.00=-0.0=1=V
+Tue Feb 28 16:23:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:23:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11889417660=30.265111942280=0.01=0.0=1
+Tue Feb 28 16:23:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11889417660=30.265111942280=-0.01=-0.0=1=V
+Tue Feb 28 16:23:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:23:42 2017--yinyan-to pickpiont:IN=YY=LOC=120.11889456108=30.265110574808=1.36=0.0=1
+Tue Feb 28 16:23:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11889456108=30.265110574808=1.36=0.0=1=]
+Tue Feb 28 16:23:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:23:49 2017--yinyan-to pickpiont:IN=YY=LOC=120.11889602324=30.265110390407=1.44=0.2=1
+Tue Feb 28 16:23:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11889602324=30.265110390407=1.44=0.2=1=Z
+Tue Feb 28 16:23:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:23:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11889881824=30.265110433439=1.59=0.1=1
+Tue Feb 28 16:23:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11889881824=30.265110433439=1.59=0.1=1=X
+Tue Feb 28 16:23:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:24:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11889555289=30.265110475577=1.5=0.0=1
+Tue Feb 28 16:24:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11889555289=30.265110475577=1.50=0.0=1=P
+Tue Feb 28 16:24:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:24:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11890114731=30.265109929749=1.4=0.0=1
+Tue Feb 28 16:24:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11890114731=30.265109929749=1.40=-0.0=1=p
+Tue Feb 28 16:24:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:24:21 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891039363=30.265123774317=1.38=0.3=1
+Tue Feb 28 16:24:21 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891039363=30.265123774317=1.38=0.3=1=\
+Tue Feb 28 16:24:21 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:24:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891544355=30.265129981496=1.39=0.0=1
+Tue Feb 28 16:24:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891544355=30.265129981496=1.39=0.0=1=T
+Tue Feb 28 16:24:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:24:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891242343=30.265110956448=1.36=0.1=1
+Tue Feb 28 16:24:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891242343=30.265110956448=1.36=-0.1=1=r
+Tue Feb 28 16:24:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:24:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891114824=30.265111978057=0.51=0.0=1
+Tue Feb 28 16:24:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891114824=30.265111978057=0.51=0.0=1=S
+Tue Feb 28 16:24:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:24:55 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891226921=30.265112783523=0.0=0.0=1
+Tue Feb 28 16:24:55 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891226921=30.265112783523=0.00=0.0=1=^
+Tue Feb 28 16:24:55 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:25:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891227298=30.265111485865=0.0=0.0=1
+Tue Feb 28 16:25:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891227298=30.265111485865=0.00=0.0=1=_
+Tue Feb 28 16:25:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:25:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891327499=30.265110079757=0.0=0.0=1
+Tue Feb 28 16:25:19 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891327499=30.265110079757=-0.00=0.0=1=AT+CIPSENDH=U=L=120.11891327962=30.265108462732=-0.00=-0.0=1=\
+Tue Feb 28 16:25:19 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:25:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891255742=30.265107694380=0.0=0.0=1
+Tue Feb 28 16:25:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891255742=30.265107694380=-0.00=0.0=1=p
+Tue Feb 28 16:25:27 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:25:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891078094=30.265108380189=0.0=0.0=1
+Tue Feb 28 16:25:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891078094=30.265108380189=-0.00=0.0=1=u
+Tue Feb 28 16:25:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:25:42 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891377394=30.265109984005=0.0=0.0=1
+Tue Feb 28 16:25:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891377394=30.265109984005=0.00=0.0=1=]
+Tue Feb 28 16:25:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:25:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891627933=30.265111279791=0.0=0.0=1
+Tue Feb 28 16:25:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891627933=30.265111279791=0.00=0.0=1=P
+Tue Feb 28 16:25:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:25:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891427549=30.265112563607=0.0=0.0=1
+Tue Feb 28 16:25:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891427549=30.265112563607=-0.00=0.0=1=
+Tue Feb 28 16:25:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:26:05 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891446907=30.265114871560=0.0=0.0=1
+Tue Feb 28 16:26:05 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891446907=30.265114871560=0.00=0.0=1=Y
+Tue Feb 28 16:26:05 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:26:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891826191=30.265116168956=0.0=0.0=1
+Tue Feb 28 16:26:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891826191=30.265116168956=-0.00=0.0=1=s
+Tue Feb 28 16:26:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:26:22 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892267103=30.265115888674=0.0=0.0=1
+Tue Feb 28 16:26:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892267103=30.265115888674=-0.00=0.0=1=
+Tue Feb 28 16:26:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:26:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892617159=30.265114682644=0.0=0.0=1
+Tue Feb 28 16:26:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892617159=30.265114682644=-0.00=0.0=1=u
+Tue Feb 28 16:26:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:26:39 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892825378=30.265113674878=0.0=0.0=1
+Tue Feb 28 16:26:39 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892825378=30.265113674878=0.00=-0.0=1=t
+Tue Feb 28 16:26:39 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:26:45 2017--yinyan-to pickpiont:IN=YY=LOC=120.11892566805=30.265112066501=0.0=0.0=1
+Tue Feb 28 16:26:45 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11892566805=30.265112066501=-0.00=-0.0=1=U
+Tue Feb 28 16:26:45 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:26:54 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891997660=30.265109683972=0.0=0.0=1
+Tue Feb 28 16:26:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891997660=30.265109683972=0.00=0.0=1=V
+Tue Feb 28 16:26:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:27:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891295787=30.265107778552=0.0=0.0=1
+Tue Feb 28 16:27:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891295787=30.265107778552=0.00=0.0=1=R
+Tue Feb 28 16:27:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:27:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11890896614=30.265106585274=0.0=0.0=1
+Tue Feb 28 16:27:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11890896614=30.265106585274=-0.00=0.0=1=~
+Tue Feb 28 16:27:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:27:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11890827655=30.265105480083=0.0=0.0=1
+Tue Feb 28 16:27:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11890827655=30.265105480083=-0.00=0.0=1=AT+CIPSENDH=U=L=120.11890616514=30.265108768040=-0.00=-0.0=1=\
+Tue Feb 28 16:27:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:27:35 2017--yinyan-to pickpiont:IN=YY=LOC=120.11888339786=30.265082763167=0.0=0.1=1
+Tue Feb 28 16:27:35 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11888339786=30.265082763167=0.00=-0.1=1=t
+Tue Feb 28 16:27:35 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:27:43 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884798648=30.265064170802=0.0=0.2=1
+Tue Feb 28 16:27:43 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884798648=30.265064170802=0.00=-0.2=1=q
+Tue Feb 28 16:27:43 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:27:51 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885598309=30.265065419853=0.0=0.0=1
+Tue Feb 28 16:27:51 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885598309=30.265065419853=0.00=-0.0=1=
+Tue Feb 28 16:27:51 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:27:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885847691=30.265064934403=0.0=0.0=1
+Tue Feb 28 16:27:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885847691=30.265064934403=0.00=-0.0=1=~
+Tue Feb 28 16:27:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:28:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885964961=30.265069145871=0.0=0.0=1
+Tue Feb 28 16:28:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885964961=30.265069145871=-0.00=0.0=1=t
+Tue Feb 28 16:28:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:28:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885720918=30.265070945482=0.0=0.0=1
+Tue Feb 28 16:28:15 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885720918=30.265070945482=0.00=0.0=1=Y
+Tue Feb 28 16:28:15 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:28:23 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885272076=30.265075655009=0.0=0.0=1
+Tue Feb 28 16:28:23 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885272076=30.265075655009=0.00=0.0=1=V
+Tue Feb 28 16:28:23 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:28:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884248456=30.265070813779=0.0=0.0=1
+Tue Feb 28 16:28:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884248456=30.265070813779=-0.00=0.0=1=AT+CIPSENDH=U=L=120.11884136113=30.265065939323=-0.00=0.0=1=t
+Tue Feb 28 16:28:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:28:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884173730=30.265069140690=0.0=0.0=1
+Tue Feb 28 16:28:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884173730=30.265069140690=-0.00=0.0=1=u
+Tue Feb 28 16:28:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:28:54 2017--yinyan-to pickpiont:IN=YY=LOC=120.11883904291=30.265071832469=0.0=0.0=1
+Tue Feb 28 16:28:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11883904291=30.265071832469=-0.00=-0.0=1=X
+Tue Feb 28 16:28:55 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:29:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11883673143=30.265071235564=0.0=0.0=1
+Tue Feb 28 16:29:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11883673143=30.265071235564=-0.00=0.0=1=w
+Tue Feb 28 16:29:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:29:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11883764052=30.265071031604=0.0=0.0=1
+Tue Feb 28 16:29:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11883764052=30.265071031604=-0.00=-0.0=1=_
+Tue Feb 28 16:29:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:29:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884114205=30.265074140497=0.0=0.0=1
+Tue Feb 28 16:29:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884114205=30.265074140497=-0.00=0.0=1=~
+Tue Feb 28 16:29:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:29:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884087631=30.265090597393=0.0=0.0=1
+Tue Feb 28 16:29:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884087631=30.265090597393=-0.00=0.0=1=q
+Tue Feb 28 16:29:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:29:35 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884344374=30.265085569122=0.0=0.0=1
+Tue Feb 28 16:29:35 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884344374=30.265085569122=-0.00=0.0=1=t
+Tue Feb 28 16:29:35 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:29:42 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884306500=30.265081640130=0.0=0.0=1
+Tue Feb 28 16:29:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884306500=30.265081640130=-0.00=-0.0=1=U
+Tue Feb 28 16:29:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:29:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884454934=30.265079753784=0.0=0.0=1
+Tue Feb 28 16:29:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884454934=30.265079753784=-0.00=0.0=1=~
+Tue Feb 28 16:29:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:29:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884446114=30.265076142700=0.0=0.0=1
+Tue Feb 28 16:29:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884446114=30.265076142700=-0.00=-0.0=1=_
+Tue Feb 28 16:29:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:30:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884757283=30.265072646018=0.0=0.0=1
+Tue Feb 28 16:30:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884757283=30.265072646018=0.00=0.0=1=X
+Tue Feb 28 16:30:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:30:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884998386=30.265072844716=0.0=0.0=1
+Tue Feb 28 16:30:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884998386=30.265072844716=-0.00=-0.0=1=T
+Tue Feb 28 16:30:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:30:23 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884686751=30.265076618623=0.43=0.0=1
+Tue Feb 28 16:30:23 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884686751=30.265076618623=0.43=0.0=1=Y
+Tue Feb 28 16:30:23 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:30:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884346767=30.265076437985=0.87=0.1=1
+Tue Feb 28 16:30:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884346767=30.265076437985=0.87=0.1=1=P
+Tue Feb 28 16:30:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:30:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884576559=30.265065314088=1.02=0.1=1
+Tue Feb 28 16:30:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884576559=30.265065314088=1.02=-0.1=1={
+Tue Feb 28 16:30:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:30:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885745955=30.265050838623=0.97=0.2=1
+Tue Feb 28 16:30:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885745955=30.265050838623=0.97=-0.2=1=r
+Tue Feb 28 16:30:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:30:54 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885611960=30.265051840176=0.91=0.0=1
+Tue Feb 28 16:30:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885611960=30.265051840176=0.91=0.0=1=T
+Tue Feb 28 16:30:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:31:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885543072=30.265055060826=1.28=0.0=1
+Tue Feb 28 16:31:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885543072=30.265055060826=1.28=-0.0=1=v
+Tue Feb 28 16:31:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:31:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886407933=30.265052091520=1.28=0.0=1
+Tue Feb 28 16:31:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886407933=30.265052091520=1.28=0.0=1=W
+Tue Feb 28 16:31:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:31:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886237927=30.265055101765=1.2=0.0=1
+Tue Feb 28 16:31:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886237927=30.265055101765=1.20=-0.0=1=~
+Tue Feb 28 16:31:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:31:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886724153=30.265056750123=1.4=0.1=1
+Tue Feb 28 16:31:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886724153=30.265056750123=1.40=-0.1=1=p
+Tue Feb 28 16:31:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:31:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11887050809=30.265059309670=1.39=0.0=1
+Tue Feb 28 16:31:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11887050809=30.265059309670=1.39=-0.0=1=z
+Tue Feb 28 16:31:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:31:42 2017--yinyan-to pickpiont:IN=YY=LOC=120.11887825280=30.265085903672=1.12=0.4=1
+Tue Feb 28 16:31:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11887825280=30.265085903672=1.12=0.4=1=X
+Tue Feb 28 16:31:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:31:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11890373290=30.265124951501=1.1=0.6=1
+Tue Feb 28 16:31:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11890373290=30.265124951501=1.10=0.6=1=]
+Tue Feb 28 16:31:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:31:57 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891376956=30.265137408466=1.09=0.0=1
+Tue Feb 28 16:31:57 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891376956=30.265137408466=1.09=0.0=1=U
+Tue Feb 28 16:31:57 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:32:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891360526=30.265138911592=1.21=0.0=1
+Tue Feb 28 16:32:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891360526=30.265138911592=1.21=0.0=1=S
+Tue Feb 28 16:32:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:32:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891338252=30.265137604529=2.3=0.1=1
+Tue Feb 28 16:32:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891338252=30.265137604529=2.30=-0.1=1=q
+Tue Feb 28 16:32:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:32:22 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891169607=30.265138907030=3.11=0.1=1
+Tue Feb 28 16:32:23 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891169607=30.265138907030=3.11=0.1=1=R
+Tue Feb 28 16:32:23 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:32:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891116462=30.265139996446=3.2=0.0=1
+Tue Feb 28 16:32:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891116462=30.265139996446=3.20=0.0=1=T
+Tue Feb 28 16:32:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:32:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11890838718=30.265143724371=2.78=0.1=1
+Tue Feb 28 16:32:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11890838718=30.265143724371=2.78=0.1=1=Z
+Tue Feb 28 16:32:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:32:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891104838=30.265144321088=3.01=0.0=1
+Tue Feb 28 16:32:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891104838=30.265144321088=3.01=-0.0=1=p
+Tue Feb 28 16:32:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:32:54 2017--yinyan-to pickpiont:IN=YY=LOC=120.11891179334=30.265142554573=3.12=0.1=1
+Tue Feb 28 16:32:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11891179334=30.265142554573=3.12=0.1=1=P
+Tue Feb 28 16:32:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:33:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11890689540=30.265140188426=2.99=0.4=1
+Tue Feb 28 16:33:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11890689540=30.265140188426=2.99=-0.4=1=p
+Tue Feb 28 16:33:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:33:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11888630307=30.265100197146=2.94=0.6=1
+Tue Feb 28 16:33:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11888630307=30.265100197146=2.94=-0.6=1=x
+Tue Feb 28 16:33:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:33:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11887167226=30.265094860488=3.09=0.0=1
+Tue Feb 28 16:33:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11887167226=30.265094860488=3.09=-0.0=1=y
+Tue Feb 28 16:33:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:33:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884826981=30.265092654423=3.06=0.0=1
+Tue Feb 28 16:33:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884826981=30.265092654423=3.06=0.0=1=\
+Tue Feb 28 16:33:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:33:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884938073=30.265091370173=0.41=0.0=1
+Tue Feb 28 16:33:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884938073=30.265091370173=0.41=-0.0=1={
+Tue Feb 28 16:33:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:33:41 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885307672=30.265088185667=0.0=0.0=1
+Tue Feb 28 16:33:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885307672=30.265088185667=-0.00=-0.0=1=Q
+Tue Feb 28 16:33:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:33:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885536632=30.265086000196=0.0=0.0=1
+Tue Feb 28 16:33:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885536632=30.265086000196=-0.00=-0.0=1=Z
+Tue Feb 28 16:33:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:33:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885554382=30.265084897618=0.0=0.0=1
+Tue Feb 28 16:33:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885554382=30.265084897618=-0.00=-0.0=1=U
+Tue Feb 28 16:33:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:34:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885285652=30.265084791933=0.0=0.0=1
+Tue Feb 28 16:34:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885285652=30.265084791933=-0.00=-0.0=1=Y
+Tue Feb 28 16:34:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:34:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885084954=30.265086786999=0.0=0.0=1
+Tue Feb 28 16:34:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885084954=30.265086786999=-0.00=-0.0=1=W
+Tue Feb 28 16:34:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:34:22 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885164116=30.265088295442=0.0=0.0=1
+Tue Feb 28 16:34:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885164116=30.265088295442=-0.00=-0.0=1=T
+Tue Feb 28 16:34:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:34:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885455114=30.265089497082=0.0=0.0=1
+Tue Feb 28 16:34:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885455114=30.265089497082=-0.00=-0.0=1=\
+Tue Feb 28 16:34:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:34:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886014961=30.265091485289=0.0=0.0=1
+Tue Feb 28 16:34:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886014961=30.265091485289=-0.00=-0.0=1=W
+Tue Feb 28 16:34:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:34:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886775152=30.265093874162=0.0=0.0=1
+Tue Feb 28 16:34:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886775152=30.265093874162=-0.00=-0.0=1=Y
+Tue Feb 28 16:34:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:34:53 2017--yinyan-to pickpiont:IN=YY=LOC=120.11887294046=30.265095785414=0.0=0.0=1
+Tue Feb 28 16:34:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11887294046=30.265095785414=-0.00=-0.0=1=U
+Tue Feb 28 16:34:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:35:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886925130=30.265090394287=0.0=0.0=1
+Tue Feb 28 16:35:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886925130=30.265090394287=-0.00=0.0=1=u
+Tue Feb 28 16:35:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:35:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885894025=30.265079884832=0.0=0.0=1
+Tue Feb 28 16:35:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885894025=30.265079884832=0.00=-0.0=1=q
+Tue Feb 28 16:35:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:35:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884944633=30.265073991517=0.0=0.0=1
+Tue Feb 28 16:35:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884944633=30.265073991517=-0.00=-0.0=1=U
+Tue Feb 28 16:35:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:35:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884726213=30.265073576543=0.0=0.0=1
+Tue Feb 28 16:35:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884726213=30.265073576543=-0.00=-0.0=1=]
+Tue Feb 28 16:35:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:35:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884793796=30.265078391427=0.0=0.0=1
+Tue Feb 28 16:35:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884793796=30.265078391427=-0.00=-0.0=1=\
+Tue Feb 28 16:35:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:35:42 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885424848=30.265083996187=0.0=0.0=1
+Tue Feb 28 16:35:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885424848=30.265083996187=-0.00=-0.0=1=X
+Tue Feb 28 16:35:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:35:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885893997=30.265088687332=0.0=0.0=1
+Tue Feb 28 16:35:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885893997=30.265088687332=-0.00=-0.0=1=S
+Tue Feb 28 16:35:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:35:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886313893=30.265091674734=0.0=0.0=1
+Tue Feb 28 16:35:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886313893=30.265091674734=-0.00=-0.0=1=P
+Tue Feb 28 16:35:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:36:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886603109=30.265090494588=0.0=0.0=1
+Tue Feb 28 16:36:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886603109=30.265090494588=0.00=0.0=1=V
+Tue Feb 28 16:36:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:36:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11886454405=30.265087795198=0.0=0.0=1
+Tue Feb 28 16:36:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11886454405=30.265087795198=-0.00=-0.0=1=^
+Tue Feb 28 16:36:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:36:22 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885863021=30.265085484235=0.0=0.0=1
+Tue Feb 28 16:36:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885863021=30.265085484235=0.00=-0.0=1=
+Tue Feb 28 16:36:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:36:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885424503=30.265085979819=0.0=0.0=1
+Tue Feb 28 16:36:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885424503=30.265085979819=-0.00=-0.0=1=S
+Tue Feb 28 16:36:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:36:37 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885364342=30.265085585540=0.0=0.0=1
+Tue Feb 28 16:36:37 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885364342=30.265085585540=-0.00=-0.0=1=]
+Tue Feb 28 16:36:37 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:36:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885464268=30.265085195080=0.0=0.0=1
+Tue Feb 28 16:36:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885464268=30.265085195080=0.00=0.0=1=_
+Tue Feb 28 16:36:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:36:54 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885585456=30.265084179159=0.0=0.0=1
+Tue Feb 28 16:36:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885585456=30.265084179159=0.00=-0.0=1=q
+Tue Feb 28 16:36:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:37:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885544406=30.265082875423=0.0=0.0=1
+Tue Feb 28 16:37:03 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885544406=30.265082875423=-0.00=-0.0=1=_
+Tue Feb 28 16:37:03 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:37:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885434853=30.265082988030=0.0=0.0=1
+Tue Feb 28 16:37:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885434853=30.265082988030=-0.00=-0.0=1=P
+Tue Feb 28 16:37:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:37:17 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885454971=30.265083706805=0.0=0.0=1
+Tue Feb 28 16:37:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885454971=30.265083706805=0.00=0.0=1=P
+Tue Feb 28 16:37:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:37:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885334506=30.265084599219=0.0=0.0=1
+Tue Feb 28 16:37:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885334506=30.265084599219=-0.00=0.0=1=t
+Tue Feb 28 16:37:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:37:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885233492=30.265085206043=0.0=0.0=1
+Tue Feb 28 16:37:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885233492=30.265085206043=-0.00=0.0=1=s
+Tue Feb 28 16:37:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:37:42 2017--yinyan-to pickpiont:IN=YY=LOC=0.00000000000=0.000000000000=0.0=0.0=1
+Tue Feb 28 16:37:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=0.00000000000=0.000000000000=0.00=0.0=1=i
+Tue Feb 28 16:37:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:37:49 2017--yinyan-to pickpiont:IN=YY=LOC=120.11883018398=30.265107043725=0.0=0.0=1
+Tue Feb 28 16:37:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11883018398=30.265107043725=0.00=0.0=1=Q
+Tue Feb 28 16:37:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:37:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11883110466=30.265110453258=0.0=0.0=1
+Tue Feb 28 16:37:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11883110466=30.265110453258=0.00=0.0=1=R
+Tue Feb 28 16:37:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:38:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11883712350=30.265113285069=0.0=0.0=1
+Tue Feb 28 16:38:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11883712350=30.265113285069=-0.00=0.0=1=w
+Tue Feb 28 16:38:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:38:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884502693=30.265114384425=0.0=0.0=1
+Tue Feb 28 16:38:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884502693=30.265114384425=0.00=0.0=1=_
+Tue Feb 28 16:38:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:38:21 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884694147=30.265113872847=0.0=0.0=1
+Tue Feb 28 16:38:21 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884694147=30.265113872847=-0.00=-0.0=1=P
+Tue Feb 28 16:38:21 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:38:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884973105=30.265114475058=0.0=0.0=1
+Tue Feb 28 16:38:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884973105=30.265114475058=0.00=-0.0=1=w
+Tue Feb 28 16:38:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:38:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884940833=30.265113382456=0.0=0.0=1
+Tue Feb 28 16:38:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884940833=30.265113382456=-0.00=-0.0=1=T
+Tue Feb 28 16:38:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:38:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884714478=30.265109799645=0.0=0.0=1
+Tue Feb 28 16:39:07 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884714478=30.265109799645=0.00=0.0=1=]
+Tue Feb 28 16:39:08 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:39:08 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884522561=30.265106788437=0.0=0.0=1
+Tue Feb 28 16:39:08 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884522561=30.265106788437=-0.00=-0.0=1=[
+Tue Feb 28 16:39:08 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884523964=30.265104088510=0.0=0.0=1
+Tue Feb 28 16:39:08 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884523964=30.265104088510=0.00=-0.0=1=
+Tue Feb 28 16:39:08 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:39:08 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:39:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884924118=30.265102293490=0.0=0.0=1
+Tue Feb 28 16:39:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884924118=30.265102293490=-0.00=-0.0=1=]
+Tue Feb 28 16:39:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:39:18 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885324551=30.265102598956=0.0=0.0=1
+Tue Feb 28 16:39:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885324551=30.265102598956=0.00=-0.0=1=y
+Tue Feb 28 16:39:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:39:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885283608=30.265101692093=0.01=0.0=1
+Tue Feb 28 16:39:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885283608=30.265101692093=-0.01=0.0=1=q
+Tue Feb 28 16:39:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:39:33 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885283627=30.265099895039=0.08=0.0=1
+Tue Feb 28 16:39:33 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885283627=30.265099895039=0.08=0.0=1=Q
+Tue Feb 28 16:39:33 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:39:42 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885574503=30.265098154877=0.5=0.0=1
+Tue Feb 28 16:39:42 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885574503=30.265098154877=0.50=0.0=1=Q
+Tue Feb 28 16:39:42 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:39:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885064149=30.265097289258=0.0=0.0=1
+Tue Feb 28 16:39:50 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885064149=30.265097289258=0.00=0.0=1=Q
+Tue Feb 28 16:39:50 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:39:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884684676=30.265092185963=0.0=0.0=1
+Tue Feb 28 16:39:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884684676=30.265092185963=0.00=0.0=1=Z
+Tue Feb 28 16:39:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:40:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884593395=30.265092388403=0.0=0.0=1
+Tue Feb 28 16:40:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884593395=30.265092388403=0.00=0.0=1=S
+Tue Feb 28 16:40:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:40:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884623692=30.265090977857=0.0=0.0=1
+Tue Feb 28 16:40:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884623692=30.265090977857=0.00=-0.0=1=q
+Tue Feb 28 16:40:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:40:22 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884663677=30.265090386492=0.0=0.0=1
+Tue Feb 28 16:40:22 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884663677=30.265090386492=0.00=-0.0=1=
+Tue Feb 28 16:40:22 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:40:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884633523=30.265090582400=0.0=0.0=1
+Tue Feb 28 16:40:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884633523=30.265090582400=0.00=-0.0=1=q
+Tue Feb 28 16:40:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:40:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884883355=30.265090171827=0.0=0.0=1
+Tue Feb 28 16:40:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884883355=30.265090171827=0.00=-0.0=1=r
+Tue Feb 28 16:40:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:40:46 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885053129=30.265088782534=0.0=0.0=1
+Tue Feb 28 16:40:46 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885053129=30.265088782534=0.00=-0.0=1=s
+Tue Feb 28 16:40:46 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:40:54 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885185313=30.265090191292=0.0=0.0=1
+Tue Feb 28 16:40:54 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885185313=30.265090191292=0.00=0.0=1=Y
+Tue Feb 28 16:40:54 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:41:02 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885403923=30.265090787137=0.0=0.0=1
+Tue Feb 28 16:41:02 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885403923=30.265090787137=0.00=-0.0=1={
+Tue Feb 28 16:41:02 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:41:10 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885615633=30.265088985994=0.0=0.0=1
+Tue Feb 28 16:41:10 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885615633=30.265088985994=0.00=-0.0=1=t
+Tue Feb 28 16:41:10 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:41:17 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885926244=30.265086786531=0.0=0.0=1
+Tue Feb 28 16:41:18 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885926244=30.265086786531=0.00=-0.0=1=
+Tue Feb 28 16:41:18 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:41:26 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885924317=30.265085275937=0.0=0.0=1
+Tue Feb 28 16:41:26 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885924317=30.265085275937=-0.00=0.0=1=z
+Tue Feb 28 16:41:26 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:41:34 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885975193=30.265085186499=0.0=0.0=1
+Tue Feb 28 16:41:34 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885975193=30.265085186499=-0.00=-0.0=1=[
+Tue Feb 28 16:41:34 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:41:50 2017--yinyan-to pickpiont:IN=YY=LOC=120.11885804007=30.265085578077=0.0=0.0=1
+Tue Feb 28 16:41:51 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11885804007=30.265085578077=-0.00=0.0=1=AT+CIPSENDH=U=L=120.11885383693=30.265084678663=-0.00=-0.0=1=_
+Tue Feb 28 16:41:51 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:41:58 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884763945=30.265084473521=0.0=0.0=1
+Tue Feb 28 16:41:58 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884763945=30.265084473521=-0.00=-0.0=1=\
+Tue Feb 28 16:41:58 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:42:06 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884275954=30.265086570721=0.0=0.0=1
+Tue Feb 28 16:42:06 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884275954=30.265086570721=0.00=-0.0=1=q
+Tue Feb 28 16:42:06 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:42:14 2017--yinyan-to pickpiont:IN=YY=LOC=120.11884125538=30.265088978788=0.0=0.0=1
+Tue Feb 28 16:42:14 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11884125538=30.265088978788=0.00=-0.0=1=x
+Tue Feb 28 16:42:14 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:42:23 2017--yinyan-to pickpiont:IN=YY=LOC=120.11883972447=30.265092770153=0.0=0.0=1
+Tue Feb 28 16:42:23 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11883972447=30.265092770153=-0.00=-0.0=1=\
+Tue Feb 28 16:42:23 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:42:30 2017--yinyan-to pickpiont:IN=YY=LOC=120.11883805611=30.265097595907=0.0=0.0=1
+Tue Feb 28 16:42:30 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11883805611=30.265097595907=-0.00=0.0=1=t
+Tue Feb 28 16:42:30 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.
+Tue Feb 28 16:42:38 2017--yinyan-to pickpiont:IN=YY=LOC=120.11883793115=30.265100382989=0.0=0.0=1
+Tue Feb 28 16:42:38 2017--enter-sserver-func-PROCDATA-recv:H=U=L=120.11883793115=30.265100382989=0.00=-0.0=1=~
+Tue Feb 28 16:42:38 2017--enter-func-GpsUploader-run: 1 uploaded, 0 failed, 0 deleted.

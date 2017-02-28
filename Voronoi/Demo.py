@@ -69,7 +69,7 @@ class MainWindow:
 
             vp = Voronoi(points)
             vp.process()
-            lines = vp.get_output()
+            lines = vp.getOutput()
             self.drawLinesOnCanvas(lines, tag = 'Voro')
             
             print(lines)

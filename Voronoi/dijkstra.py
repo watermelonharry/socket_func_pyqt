@@ -44,6 +44,7 @@ class Graph:
     def __init__(self):
         self.vert_dict = {}
         self.num_vertices = 0
+        self.num_edges = 0
 
     def __iter__(self):
         return iter(self.vert_dict.values())
@@ -68,6 +69,7 @@ class Graph:
 
         self.vert_dict[frm].add_neighbor(self.vert_dict[to], cost)
         self.vert_dict[to].add_neighbor(self.vert_dict[frm], cost)
+        self.num_edges += 1
 
     def get_vertices(self):
         return self.vert_dict.keys()
@@ -197,7 +199,13 @@ def GetPath(lines,StartPoint, EndPoint):
         try:
             startIndex = pointDict['|'.join(str(x) for x in StartPoint)]
             endIndex = pointDict['|'.join(str(x) for x in EndPoint)]
+            import time
+            startTime = time.time()
             dijkstra(indexedGraph, indexedGraph.get_vertex(startIndex), indexedGraph.get_vertex(endIndex))
+            endTime = time.time()
+            print('total vertex:' + str(indexedGraph.num_vertices))
+            print('total edge:' + str(indexedGraph.num_edges))
+            print('total time:' + str(endTime-startTime))
 
             target = indexedGraph.get_vertex(endIndex)
             path = [target.get_id()]
