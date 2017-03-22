@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/func/pickFunc.py" line="557" />
+    <bookmark url="file://$PROJECT_DIR$/func/pickFunc.py" line="564" />
     <bookmark url="file://$PROJECT_DIR$/mocking/TestHeartBeat.py" line="133" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b3c2155-2834-480c-ae19-9bb750e201be" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/上位机-GPRS通信部分数据格式161110.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/上位机-GPRS通信部分数据格式161116.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/上位机-GPRS通信部分数据格式161117.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/上位机-GPRS通信部分数据格式161118.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/上位机-GPRS通信部分数据格式161121.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/上位机-GPRS通信部分数据格式161123.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/上位机-GPRS通信部分数据格式161127.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/上位机-GPRS通信部分数据格式161129.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/上位机-GPRS通信部分数据格式161201.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/科技报告20161014_汇总2.doc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/科技报告20161130-hy.doc" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Voronoi/Demo.py" afterPath="$PROJECT_DIR$/Voronoi/Demo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Voronoi/dijkstra.py" afterPath="$PROJECT_DIR$/Voronoi/dijkstra.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_eric6project/DemoSocket.e4q" afterPath="$PROJECT_DIR$/_eric6project/DemoSocket.e4q" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_eric6project/DemoSocket.e6t" afterPath="$PROJECT_DIR$/_eric6project/DemoSocket.e6t" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/websrc/path_config.dat" afterPath="$PROJECT_DIR$/websrc/path_config.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/websrc/socket_config.dat" afterPath="$PROJECT_DIR$/websrc/socket_config.dat" />
+    <list default="true" id="9b3c2155-2834-480c-ae19-9bb750e201be" name="Default" comment="开启/关闭功能小bug修复&#10;添加9-开启/关闭故障信息上报功能">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorInfo/BugInfo-Fri-Jan-13-14-13-29-2017.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorInfo/BugInfo-Mon-Feb-27-16-28-24-2017.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorInfo/BugInfo-Mon-Feb-27-16-40-12-2017.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorInfo/BugInfo-Mon-Feb-27-16-40-29-2017.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorInfo/BugInfo-Mon-Feb-27-16-47-04-2017.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorInfo/BugInfo-Mon-Feb-27-16-49-58-2017.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ErrorInfo/BugInfo-Tue-Feb-28-15-29-20-2017.dat" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="socket_func_pyqt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,7 +29,7 @@
     <SUITE FILE_PATH="coverage/socket_func_pyqt$heartbeatTest.coverage" NAME="heartbeatTest Coverage Results" MODIFIED="1479435898297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mocking" />
     <SUITE FILE_PATH="coverage/socket_func_pyqt$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1483447670761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Voronoi" />
     <SUITE FILE_PATH="coverage/socket_func_pyqt$pSaver.coverage" NAME="pSaver Coverage Results" MODIFIED="1480992839946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/package" />
-    <SUITE FILE_PATH="coverage/socket_func_pyqt$run.coverage" NAME="run Coverage Results" MODIFIED="1488266955407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/socket_func_pyqt$run.coverage" NAME="run Coverage Results" MODIFIED="1488862796466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -52,18 +43,60 @@
       <file leaf-file-name="pickFunc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/func/pickFunc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10269">
-              <caret line="498" column="0" lean-forward="false" selection-start-line="498" selection-start-column="0" selection-end-line="498" selection-end-column="0" />
+            <state relative-caret-position="455">
+              <caret line="1025" column="21" lean-forward="true" selection-start-line="1025" selection-start-column="21" selection-end-line="1025" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dijkstra.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="popWindow.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/func/popWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="24" column="8" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+              <folding>
+                <element signature="e#25#69#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="planeStatus.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package/planeStatus.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="563">
+              <caret line="124" column="36" lean-forward="true" selection-start-line="124" selection-start-column="36" selection-end-line="124" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gpsuploader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package/gpsuploader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="21">
+              <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Voronoi.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Voronoi/Voronoi.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="987">
+              <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dijkstra.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Voronoi/dijkstra.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="198" column="12" lean-forward="false" selection-start-line="198" selection-start-column="12" selection-end-line="198" selection-end-column="12" />
+            <state relative-caret-position="4305">
+              <caret line="205" column="12" lean-forward="false" selection-start-line="205" selection-start-column="12" selection-end-line="205" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -106,6 +139,8 @@
       <find>segment</find>
       <find>uniq</find>
       <find>Dijkstra's shortest path</find>
+      <find>obs</find>
+      <find>删除</find>
     </findStrings>
     <replaceStrings>
       <replace>orderStatus.STEP_POINT_LOAD</replace>
@@ -135,15 +170,15 @@
         <option value="$PROJECT_DIR$/websrc/path_config.dat" />
         <option value="$PROJECT_DIR$/package/savePath.py" />
         <option value="$PROJECT_DIR$/func/socketFunc.py" />
-        <option value="$PROJECT_DIR$/Voronoi/Voronoi.py" />
         <option value="$PROJECT_DIR$/package/rectangular.py" />
         <option value="$PROJECT_DIR$/mocking/TestHeartBeat.py" />
         <option value="$PROJECT_DIR$/ui/Ui_pick_point.py" />
         <option value="$PROJECT_DIR$/func/yingyanFunc.py" />
-        <option value="$PROJECT_DIR$/package/planeStatus.py" />
-        <option value="$PROJECT_DIR$/func/pickFunc.py" />
         <option value="$PROJECT_DIR$/Voronoi/Demo.py" />
         <option value="$PROJECT_DIR$/Voronoi/dijkstra.py" />
+        <option value="$PROJECT_DIR$/Voronoi/Voronoi.py" />
+        <option value="$PROJECT_DIR$/package/planeStatus.py" />
+        <option value="$PROJECT_DIR$/func/pickFunc.py" />
       </list>
     </option>
   </component>
@@ -157,7 +192,7 @@
     <option name="x" value="-9" />
     <option name="y" value="-9" />
     <option name="width" value="1604" />
-    <option name="height" value="1062" />
+    <option name="height" value="1068" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -177,34 +212,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="socket_func_pyqt">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="socket_func_pyqt">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="func">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -317,6 +324,34 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Voronoi" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="socket_func_pyqt">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="socket_func_pyqt">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="func">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -996,16 +1031,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1604" height="1062" extended-state="1" />
+    <frame x="-9" y="-9" width="1604" height="1068" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17528373" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2332913" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1738649" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3039742" sideWeight="0.50945777" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32890365" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23891892" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26530612" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1072,7 +1107,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/func/pickFunc.py</url>
-          <line>1143</line>
+          <line>1150</line>
           <option name="timeStamp" value="118" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1087,12 +1122,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/func/pickFunc.py</url>
-          <line>1339</line>
+          <line>1346</line>
           <option name="timeStamp" value="130" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/func/pickFunc.py</url>
-          <line>1276</line>
+          <line>1283</line>
           <option name="timeStamp" value="132" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1107,7 +1142,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/func/pickFunc.py</url>
-          <line>653</line>
+          <line>660</line>
           <option name="timeStamp" value="136" />
         </line-breakpoint>
       </breakpoints>
@@ -1315,13 +1350,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/func/popWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="6" lean-forward="false" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/func/debugWindow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="609">
@@ -1384,13 +1412,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package/gpsuploader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="91" column="32" lean-forward="false" selection-start-line="91" selection-start-column="32" selection-end-line="91" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -1433,13 +1454,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Voronoi/Voronoi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="261" column="18" lean-forward="false" selection-start-line="261" selection-start-column="18" selection-end-line="261" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Voronoi/Demo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="74">
@@ -1461,13 +1475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package/planeStatus.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="146" column="0" lean-forward="true" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/func/socketFunc.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11172">
@@ -1476,18 +1483,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/func/pickFunc.py">
+    <entry file="file://$PROJECT_DIR$/Voronoi/Voronoi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10269">
-          <caret line="498" column="0" lean-forward="false" selection-start-line="498" selection-start-column="0" selection-end-line="498" selection-end-column="0" />
+        <state relative-caret-position="987">
+          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Voronoi/dijkstra.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="198" column="12" lean-forward="false" selection-start-line="198" selection-start-column="12" selection-end-line="198" selection-end-column="12" />
+        <state relative-caret-position="4305">
+          <caret line="205" column="12" lean-forward="false" selection-start-line="205" selection-start-column="12" selection-end-line="205" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package/gpsuploader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/func/popWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="24" column="8" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+          <folding>
+            <element signature="e#25#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/func/pickFunc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="1025" column="21" lean-forward="true" selection-start-line="1025" selection-start-column="21" selection-end-line="1025" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package/planeStatus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="563">
+          <caret line="124" column="36" lean-forward="true" selection-start-line="124" selection-start-column="36" selection-end-line="124" selection-end-column="36" />
           <folding />
         </state>
       </provider>
