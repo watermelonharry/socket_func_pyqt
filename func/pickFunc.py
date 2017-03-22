@@ -486,8 +486,15 @@ class PickPointfunc(QDialog, Ui_PickPoint):
                 self.ShowInTab('<calculating>')
                 # 计算维诺图
                 vp = Voronoi(self.points[:])
+                # 计时
+                import time
+                vpStartTime = time.time()
                 vp.process()
+                vpEndTime = time.time()
+                print('Voronoi point in:'+str(len(self.points)))
+                print('Voronoi process time:'+str(vpEndTime-vpStartTime))
                 self.lines = vp.getOutput()
+                print('Voronoi ouput:'+str(len(self.lines))+' edges')
 
                 # 路径初筛
                 rec = Rectangular(lineList=self.lines, startPoint=self.points[0], endPoint=self.points[1])
